@@ -178,3 +178,5 @@ The key insight: each pattern enforces independence differently. Critic-fixer us
 
 [LEARN:quarto] **Standalone Quarto RevealJS presentations require `embed-resources: true` in format options when referencing local figures to prevent browser CORS/lazy-load failures under `file://` viewing.** RevealJS defaults to asynchronous `data-src` lazy-loading; without embedding, modern browsers block cross-directory image retrieval from parent folders (`../Figures/`) in offline contexts.
 
+[LEARN:r] **In R microdata workflows (e.g. `fixest` / `feols`), `saveRDS()` serializes the entire lexical environment captured by formula attributes (`attr(fml, ".Environment")`).** Setting `environment(m$fml) <- baseenv()` and packing summary statistics shrinks model artifacts by $>99.9\%$ (from 400 MB to $<6$ KB) while maintaining 100% coefficient extraction fidelity and preventing GitHub 100MB push blocks.
+
