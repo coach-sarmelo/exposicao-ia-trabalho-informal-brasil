@@ -233,8 +233,9 @@ class IssueDetector:
         None (could-not-verify: timed out or Rscript missing — NOT a failure)."""
         limit = _timeout("QUALITY_RSCRIPT_TIMEOUT", 10)
         try:
+            posix_path = Path(filepath).as_posix()
             result = subprocess.run(
-                ['Rscript', '-e', f'parse("{filepath}")'],
+                ['Rscript', '-e', f'parse("{posix_path}")'],
                 capture_output=True,
                 text=True,
                 timeout=limit
@@ -249,12 +250,12 @@ class IssueDetector:
 
     @staticmethod
     def check_hardcoded_paths(content: str) -> List[int]:
-        """Detect absolute paths in R scripts."""
+        r"""Detect absolute paths in R scripts (e.g. /home/..., /Users/..., C:\...)."""
         issues = []
         lines = content.split('\n')
 
         for i, line in enumerate(lines, 1):
-            if re.search(r'["\'][/\\]|["\'][A-Za-z]:[/\\]', line):
+            if re.search(r'["\'](?:/(?:Users|home|root|var|etc|opt|usr|bin)|[A-Za-z]:[/\\]|//\w+)', line):
                 if not re.search(r'http:|https:|file://|/tmp/', line):
                     issues.append(i)
 
@@ -532,10 +533,13 @@ class QualityScorer:
             return self._generate_report()
 
         # Check for undefined/broken citations (\cite, \citep, \citet patterns)
-        bib_file = self.filepath.parent.parent / 'Bibliography_base.bib'
-        if not bib_file.exists():
-            # Also check same directory
-            bib_file = self.filepath.parent / 'Bibliography_base.bib'
+        candidates = [
+            self.filepath.parent / 'references.bib',
+            self.filepath.parent.parent / 'references.bib',
+            self.filepath.parent / 'Bibliography_base.bib',
+            self.filepath.parent.parent / 'Bibliography_base.bib'
+        ]
+        bib_file = next((f for f in candidates if f.exists()), candidates[-1])
         broken_citations = IssueDetector.check_broken_citations(content, bib_file)
         for key in broken_citations:
             self.issues['critical'].append({

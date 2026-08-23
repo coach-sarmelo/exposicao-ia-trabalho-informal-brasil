@@ -1,23 +1,20 @@
-# CLAUDE.MD -- Academic Project Development with Claude Code
+# CLAUDE.md -- Academic & Empirical Research with Claude Code
 
-<!-- HOW TO USE: Replace [BRACKETED PLACEHOLDERS] with your project info.
-     Customize Beamer environments and CSS classes for your theme.
-     Keep this file under ~150 lines — Claude loads it every session.
-     See the guide at docs/workflow-guide.html for full documentation. -->
-
-**Project:** [YOUR PROJECT NAME]
-**Institution:** [YOUR INSTITUTION]
-**Branch:** main
+**Project:** Exposição à Inteligência Artificial em um Mercado de Trabalho Informal: Teoria e Evidências para o Brasil  
+**Author:** Marcelo Moura Freire  
+**Repository:** https://github.com/coach-sarmelo/claude-code-my-workflow  
+**Branch:** main  
+**Standard:** AEA Data Editor Standard for Reproducibility (Social Science Data Editors DCAS / `template_README`)
 
 ---
 
 ## Core Principles
 
 - **Plan first** -- enter plan mode before non-trivial tasks; save plans to `quality_reports/plans/`
-- **Verify after** -- compile/render and confirm output at the end of every task
-- **Single source of truth** -- Beamer `.tex` is authoritative; Quarto `.qmd` derives from it
-- **Quality gates** -- nothing ships below 80/100
-- **[LEARN] tags** -- when corrected, save `[LEARN:category] wrong → right` to [MEMORY.md](MEMORY.md)
+- **Verify after** -- run test suites (`pytest`), execute data pipelines, and verify compiled paper/figures at the end of every task
+- **Single source of truth** -- Python data pipeline (`data/scripts/run_all.py`) generates authoritative datasets in `data/output/`; LaTeX paper (`paper/`) and figures derive directly from them
+- **Quality gates** -- strict standards (80 Commit / 90 PR / 95 Excellence); nothing ships unverified
+- **[LEARN] tags & Knowledge** -- when corrected, record patterns to [MEMORY.md](MEMORY.md) or use `/learn`
 
 Cross-session context lives in [MEMORY.md](MEMORY.md); past plans, specs, and session logs are in [quality_reports/](quality_reports/).
 
@@ -26,100 +23,55 @@ Cross-session context lives in [MEMORY.md](MEMORY.md); past plans, specs, and se
 ## Folder Structure
 
 ```
-[YOUR-PROJECT]/
-├── CLAUDE.MD                    # This file
-├── .claude/                     # Rules, skills, agents, hooks
-├── Bibliography_base.bib        # Centralized bibliography
-├── Figures/                     # Figures and images
-├── Preambles/header.tex         # LaTeX headers
-├── Slides/                      # Beamer .tex files
-├── Quarto/                      # RevealJS .qmd files + theme
-├── docs/                        # GitHub Pages (auto-generated)
-├── scripts/                     # Utility scripts + R code
-├── quality_reports/             # Plans, session logs, merge reports, decision records
-├── explorations/                # Research sandbox (see rules)
-├── templates/                   # Session log, quality report templates
-└── master_supporting_docs/      # Papers and existing slides
+claude-code-my-workflow/
+├── AGENTS.md / GEMINI.md / CLAUDE.md # Core AI instructions
+├── .agents/ / .claude/               # 18 agents, 52 skills, 33 rules, 7 hooks
+├── data/                             # Data pipeline & microdata processing
+│   ├── external/                     # Benchmark datasets (O*NET-SOC, ISCO crosswalks) + SOURCES.md
+│   ├── output/                       # Authoritative JSON & CSV datasets
+│   ├── scripts/                      # 13-step Python pipeline (run_all.py)
+│   └── tests/                        # 137 unit and econometric tests (pytest)
+├── paper/                            # LaTeX research paper
+│   ├── main.tex                      # Primary paper source
+│   ├── sections/                     # Modular section files (00_resumo .. 06_conclusao, apendice)
+│   ├── tables/                       # Generated regression & summary tables
+│   ├── figures/                      # Publication-ready vector plots (PDF + PNG)
+│   └── references.bib                # Verified bibliography
+├── Figures/                          # Mirror of publication figures for slides/reports
+├── quality_reports/                  # Plans, session logs, merge reports, decision records
+└── templates/                        # Templates for session logs, specs, and reports
 ```
 
 ---
 
-## Commands
+## Commands (Git Bash / PowerShell)
 
 ```bash
-# LaTeX (3-pass, XeLaTeX only)
-cd Slides && TEXINPUTS=../Preambles:$TEXINPUTS xelatex -interaction=nonstopmode file.tex
-BIBINPUTS=..:$BIBINPUTS bibtex file
-TEXINPUTS=../Preambles:$TEXINPUTS xelatex -interaction=nonstopmode file.tex
-TEXINPUTS=../Preambles:$TEXINPUTS xelatex -interaction=nonstopmode file.tex
+# Run complete data pipeline
+python data/scripts/run_all.py
 
-# Deploy Quarto to GitHub Pages
-./scripts/sync_to_docs.sh LectureN
+# Run econometric & pipeline test suite
+pytest -q
 
-# Quality score
-python scripts/quality_score.py Quarto/file.qmd
+# Compile LaTeX paper (fresh 3-pass / latexmk)
+cd paper && latexmk -pdf -interaction=nonstopmode main.tex
 
-# Palette sync (LaTeX ↔ SCSS)
-./scripts/check-palette-sync.sh
+# Quality scoring
+python scripts/quality_score.py paper/main.tex
 
-# Surface-count sync (README ↔ CLAUDE.md ↔ guide ↔ landing page)
-./scripts/check-surface-sync.sh
+# Workflow integrity & surface checks
+bash scripts/check-surface-sync.sh
+bash scripts/check-palette-sync.sh
 ```
 
-**Palette contract:** color names in `Preambles/header.tex` must match SCSS variables in `Quarto/theme-template.scss`. See [`Preambles/README.md`](Preambles/README.md).
-
 ---
 
-## Quality Thresholds (advisory)
+## Quality Thresholds (Advisory & Gate)
 
 | Score | Checkpoint | Meaning |
-|-------|------|---------|
-| 80 | Commit | Good enough to save |
-| 90 | PR | Ready for deployment |
-| 95 | Excellence | Aspirational |
+|-------|------------|---------|
+| 80 | Commit | Methodologically sound, tests passing, verified numbers |
+| 90 | PR / Showcase | Ready for public portfolio presentation (LinkedIn / GitHub) |
+| 95 | Excellence | Publication-grade academic & visual polish |
 
-Enforced by `/commit` (halts + asks for override) **and** — once you run `./scripts/install-hooks.sh` — by a real git pre-commit hook (`.githooks/pre-commit`) that runs the surface-sync + quality (≥80) gates on every commit. Bypass sparingly with `SKIP_QUALITY_GATE=1` or `--no-verify`.
-
----
-
-## Skills Quick Reference
-
-The full table of all skills lives in [README.md](README.md#skills-claudeskills). Most-used, by workflow:
-
-- **Slides / teaching:** `/create-lecture` `/compile-latex` `/deploy` `/qa-quarto` `/slide-excellence` `/syllabus` `/teach-from-paper` `/scaffold-exercises`
-- **Papers / review:** `/review-paper` (`--peer`) `/seven-pass-review` `/respond-to-referees` `/verify-claims` `/proofread` `/humanize` `/submission-disclosures`
-- **Data / reproducibility:** `/data-analysis` `/did-event-study` `/simulation-study` `/audit-reproducibility` `/diagnose` `/replication-package` `/capture-environment` `/power-analysis` `/disclosure-check`
-- **Research / writing:** `/interview-me` `/lit-review` `/research-ideation` `/preregister` `/grant-proposal` `/data-management-plan`
-- **Meta / workflow:** `/commit` `/learn` `/new-skill` `/checkpoint` `/context-status` `/deep-audit` `/coauthor-brief` `/triage-inbox`
-
-Stata (`/stata-replication`), R packages (`/r-package-check`), TikZ (`/extract-tikz`, `/new-diagram`), and more — see the README for the complete index.
-
----
-
-<!-- CUSTOMIZE: Replace placeholder rows ([your-env], [.your-class]) with your own.
-     Delete the rows marked "(example — delete)" once you've added yours. -->
-
-## Beamer Custom Environments
-
-| Environment | Effect | Use Case |
-| --- | --- | --- |
-| `[your-env]` | [Description] | [When to use] |
-| `keybox` | Gold background box | Key points *(example — delete)* |
-| `definitionbox[Title]` | Blue-bordered titled box | Formal definitions *(example — delete)* |
-
-## Quarto CSS Classes
-
-| Class | Effect | Use Case |
-| --- | --- | --- |
-| `[.your-class]` | [Description] | [When to use] |
-| `.smaller` | 85% font | Dense content *(example — delete)* |
-| `.positive` | Green bold | Good annotations *(example — delete)* |
-
----
-
-## Current Project State
-
-| Lecture | Beamer | Quarto | Key Content |
-| --- | --- | --- | --- |
-| HelloWorld *(sample — delete when ready)* | `HelloWorld.tex` | `HelloWorld.qmd` | Minimal deck to verify setup |
-| 1: [Topic] | `Lecture01_Topic.tex` | `Lecture1_Topic.qmd` | [Brief description] |
+Enforced by git pre-commit hook (`.githooks/pre-commit` installed via `bash scripts/install-hooks.sh`).

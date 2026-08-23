@@ -1,0 +1,70 @@
+{
+  "specifications": {
+    "S1": {
+      "description": "Regressão de exposição sobre escolaridade com controles mincerianos (individual-level)",
+      "results_clustered_occupation": {
+        "beta": [1.1004, 0.2288, -0.0399, 0.0005, 0.0509, -0.4237, 0.2293, -0.3213, -0.3726, 0.202],
+        "se": [0.6001, 0.0278, 0.0235, 0.0002, 0.3096, 0.0764, 0.1069, 0.0602, 0.1027, 0.4662],
+        "p_value": [0.0691, 2.2862e-13, 0.0927, 0.0318, 0.8697, 1.7208e-07, 0.0339, 4.5083e-07, 0.0004, 0.6656],
+        "r_squared": 0.2457,
+        "n": 227629,
+        "n_clusters": 122,
+        "names": ["(Intercept)", "years_of_study", "age", "age_sq", "is_female", "race::2", "race::3", "race::4", "race::5", "race::9"]
+      }
+    },
+    "S2": {
+      "description": "Regressão de exposição sobre escolaridade, renda e mincerianos",
+      "results_clustered_occupation": {
+        "beta": [1.319, 0.2097, 0.0427, -0.0473, 0.0005, 0.1132, -0.3717, 0.2019, -0.2744, -0.3366, 0.2091],
+        "se": [0.5751, 0.026, 0.01, 0.0234, 0.0002, 0.3002, 0.0716, 0.1006, 0.0536, 0.1026, 0.4549],
+        "p_value": [0.0235, 6.3958e-13, 0, 0.0452, 0.0172, 0.7067, 8.5293e-07, 0.047, 1.1784e-06, 0.0014, 0.6466],
+        "r_squared": 0.2595,
+        "n": 227629,
+        "n_clusters": 122,
+        "names": ["(Intercept)", "years_of_study", "income_thousands", "age", "age_sq", "is_female", "race::2", "race::3", "race::4", "race::5", "race::9"]
+      }
+    },
+    "S3a": {
+      "description": "Regressão da taxa de informalidade sobre exposição e mincerianos (incondicional escolaridade)",
+      "results_clustered_occupation": {
+        "beta": [97.7117, -6.2285, -2.3633, 0.0286, 1.5789, 4.539, -3.5005, 6.7996, 16.3793, 20.4999],
+        "se": [6.5691, 0.9871, 0.2186, 0.0022, 3.0033, 1.2393, 1.8076, 0.9284, 2.8757, 12.5814],
+        "p_value": [4.2982e-29, 4.7677e-09, 1.7755e-19, 3.3506e-24, 0.6, 0.0004, 0.0551, 2.9334e-11, 8.7845e-08, 0.1058],
+        "r_squared": 0.08,
+        "n": 227629,
+        "n_clusters": 122,
+        "names": ["(Intercept)", "exposure", "age", "age_sq", "is_female", "race::2", "race::3", "race::4", "race::5", "race::9"]
+      }
+    },
+    "S3": {
+      "description": "Regressão da taxa de informalidade sobre exposição, escolaridade e mincerianos",
+      "results_clustered_occupation": {
+        "beta": [118.279, -3.9068, -2.6089, -2.0254, 0.0229, 3.8776, 2.2571, -2.464, 4.3712, 13.8051, 21.9456],
+        "se": [7.1469, 0.9565, 0.2697, 0.2148, 0.0022, 2.7795, 1.2084, 1.9165, 0.8757, 2.8795, 13.5039],
+        "p_value": [7.2253e-33, 0.0001, 9.6297e-17, 3.7121e-16, 6.211e-19, 0.1656, 0.0642, 0.201, 2.0313e-06, 4.6921e-06, 0.1067],
+        "r_squared": 0.1082,
+        "n": 227629,
+        "n_clusters": 122,
+        "names": ["(Intercept)", "exposure", "years_of_study", "age", "age_sq", "is_female", "race::2", "race::3", "race::4", "race::5", "race::9"]
+      }
+    },
+    "S4": {
+      "description": "Gradiente interagido com formalidade regional 27-UF leave-one-out",
+      "results_clustered_occupation": {
+        "beta": [2.8895, 0.0681, 0.2786, -3.1042, -0.0413, 0.0005, 0.0564, -0.4111, 0.1956, -0.3047, -0.3573, 0.1626],
+        "se": [0.7185, 0.0326, 0.0649, 0.7671, 0.0235, 0.0002, 0.3058, 0.0746, 0.1032, 0.0529, 0.1013, 0.4663],
+        "p_value": [0.0001, 0.0388, 0, 0.0001, 0.0809, 0.0263, 0.8539, 2.0488e-07, 0.0605, 6.5762e-08, 0.0006, 0.728],
+        "r_squared": 0.2499,
+        "n": 227629,
+        "n_clusters": 122,
+        "names": ["(Intercept)", "years_of_study", "years_x_formality", "formality_loo", "age", "age_sq", "is_female", "race::2", "race::3", "race::4", "race::5", "race::9"]
+      }
+    }
+  },
+  "disclaimers": [
+    "A unidade de análise é o indivíduo com controles mincerianos (idade, sexo, raça), rodado nos microdados completos.",
+    "β1 mede sorting com variância individual, controlando para fatores demográficos estruturais do mercado de trabalho brasileiro.",
+    "Erros-padrão são agrupados por ocupação.",
+    "Em S4 a formalidade regional varia entre as 27 Unidades da Federação (UFs), resolvendo a fragilidade estatística da estimação original em 5 regiões."
+  ]
+}
