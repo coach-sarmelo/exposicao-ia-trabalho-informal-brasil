@@ -1,7 +1,9 @@
 ---
 paths:
   - ".agents/agents/**/agent.md"
-  - ".agents/plugins/academic-workflow/skills/**/SKILL.md"
+  - ".agents/skills/**/SKILL.md"
+  - ".claude/agents/**/agent.md"
+  - ".claude/skills/**/SKILL.md"
 ---
 
 # Per-Agent Model Routing (Gemini 3.1 Pro / 3.7 Flash - Maximum Effort)

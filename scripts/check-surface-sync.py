@@ -165,6 +165,8 @@ def scan_tables(path: Path) -> list[tuple[int, str, int | None, str]]:
     Returns [(marker_line_number, kind, data_row_count, marker_raw)].
     `data_row_count` is None when no well-formed table follows the marker.
     """
+    if path.suffix.lower() in {".html", ".htm"}:
+        return []
     if not path.exists():
         return []
     lines = path.read_text(encoding="utf-8").splitlines()

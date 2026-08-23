@@ -1,8 +1,5 @@
-"""Bateria de robustez R1-R7 para as especificacoes S1-S4 do artigo.
+from __future__ import annotations
 
-Uso: python scripts/compute_robustness.py
-Saida: data/output/robustness.json
-"""
 import json
 import os
 import sys
@@ -10,12 +7,13 @@ import numpy as np
 import pandas as pd
 import statsmodels.api as sm
 
-base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-if base_dir not in sys.path:
-    sys.path.insert(0, base_dir)
+SCRIPTS_DIR = os.path.dirname(os.path.abspath(__file__))
+DATA_DIR = os.path.dirname(SCRIPTS_DIR)
+if SCRIPTS_DIR not in sys.path:
+    sys.path.insert(0, SCRIPTS_DIR)
 
-from scripts.compute_econometrics import _region_formality_loo, _uf_formality_loo
-from scripts.stats.regression import (
+from compute_econometrics import _region_formality_loo, _uf_formality_loo
+from stats.regression import (
     wls_regression,
     wls_regression_clustered,
     wild_cluster_bootstrap_p,
@@ -162,9 +160,9 @@ def compute_robustness(input_path, output_path, scores_path=None, econometrics_p
         df = pd.read_csv(input_path)
         
         if scores_path is None:
-            scores_path = os.path.join(base_dir, 'data/output/scores.json')
+            scores_path = os.path.join(DATA_DIR, 'output', 'scores.json')
         if econometrics_path is None:
-            econometrics_path = os.path.join(base_dir, 'data/output/econometrics.json')
+            econometrics_path = os.path.join(DATA_DIR, 'output', 'econometrics.json')
             
         with open(scores_path, 'r', encoding='utf-8') as f:
             scores = json.load(f)
@@ -380,9 +378,9 @@ def compute_robustness(input_path, output_path, scores_path=None, econometrics_p
 
 
 if __name__ == '__main__':
-    microdata_file = os.path.join(base_dir, 'data/output/individual_microdata.csv')
-    scores_file = os.path.join(base_dir, 'data/output/scores.json')
-    econometrics_file = os.path.join(base_dir, 'data/output/econometrics.json')
-    output_file = os.path.join(base_dir, 'data/output/robustness.json')
+    microdata_file = os.path.join(DATA_DIR, 'output', 'individual_microdata.csv')
+    scores_file = os.path.join(DATA_DIR, 'output', 'scores.json')
+    econometrics_file = os.path.join(DATA_DIR, 'output', 'econometrics.json')
+    output_file = os.path.join(DATA_DIR, 'output', 'robustness.json')
     compute_robustness(microdata_file, output_file, scores_file, econometrics_file)
     print(f"Created {output_file}")

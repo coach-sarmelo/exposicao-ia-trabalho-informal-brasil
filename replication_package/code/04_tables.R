@@ -104,15 +104,31 @@ coef_cell <- function(model, term, scale = 1.0, dec = 2L) {
   )
 }
 
+SHORT_OCC_NAMES <- c(
+  "522" = "Comerciantes e vendedores de lojas",
+  "911" = "Trabalhadores domésticos e assemelhados",
+  "411" = "Escriturários gerais",
+  "832" = "Condutores de automóveis e motocicletas",
+  "711" = "Trabalhadores da construção civil em obras estruturais",
+  "524" = "Outros vendedores e prestadores de serviços de comércio",
+  "611" = "Agricultores e trabalhadores da agropecuária",
+  "514" = "Cabeleireiros e especialistas em estética",
+  "833" = "Condutores de caminhões pesados e ônibus",
+  "234" = "Professores do ensino fundamental e pré-escolar"
+)
+
 #' Retrieve human-readable occupation title for a COD 3-digit code
 #'
 #' @param code Character occupation code.
 #' @return Character string of occupation title.
 get_occ_name <- function(code) {
-  if (!is.null(scores_json[[as.character(code)]]$name)) {
-    scores_json[[as.character(code)]]$name
+  code_str <- as.character(code)
+  if (code_str %in% names(SHORT_OCC_NAMES)) {
+    SHORT_OCC_NAMES[[code_str]]
+  } else if (!is.null(scores_json[[code_str]]$name)) {
+    scores_json[[code_str]]$name
   } else {
-    paste("Ocupação", code)
+    paste("Ocupação", code_str)
   }
 }
 
@@ -143,12 +159,12 @@ if (!is.null(results$top10_occ)) {
       occ_title <- get_occ_name(r$occupation)
       term_end <- if (i == nrow(top10)) "" else " \\\\"
       sprintf("%s & %s & %s & %s & %s & %s%s",
-              r$occupation,
               occ_title,
-              fmt_br(r$exposure, 2L),
+              fmt_br(r$employment, 1L),
+              fmt_br(r$exposure, 1L),
               fmt_br(r$schooling, 1L),
               fmt_br(r$informality, 1L),
-              fmt_br(r$employment, 2L),
+              fmt_br(r$income, 0L),
               term_end)
     }, character(1L))
   )
@@ -245,27 +261,29 @@ lines_s4 <- c(
 )
 write_table(lines_s4, "tab_s4.tex")
 
-# ---- 6. tab_robustez.tex (R1–R6 Battery) ------------------------------------
-r_base <- coef_cell(m1, "years_of_study", dec = 3L)
-r_ols  <- coef_cell(results$models$r1, "years_of_study", dec = 3L)
-r_log  <- coef_cell(results$models$r4, "years_of_study", dec = 3L)
-r_win  <- coef_cell(results$models$r5, "years_of_study", dec = 3L)
-r_top  <- coef_cell(results$models$r6, "years_of_study", dec = 3L)
+# ---- 6. tab_robustez.tex (R1–R5 Battery) ------------------------------------
+rob_models <- list(
+  m1,
+  results$models$r1,
+  results$models$r5,
+  results$models$r6,
+  results$models$r4
+)
+
+c_esc <- lapply(rob_models, function(m) coef_cell(m, "years_of_study", dec = 2L))
+c_cst <- lapply(rob_models, function(m) coef_cell(m, "(Intercept)", dec = 2L))
+r2_vals <- vapply(rob_models, function(m) fmt_br(get_r2(m), 2L), character(1L))
+n_vals  <- vapply(rob_models, function(m) fmt_br(get_nobs(m), 0L), character(1L))
 
 lines_rob <- c(
   "% AUTO-GERADO por scripts/R/04_tables.R — nao editar a mao",
-  sprintf("(1) Baseline WLS & %s & %s & %s & %s \\\\",
-          r_base$est, r_base$se, fmt_br(get_r2(m1), 3L), fmt_br(get_nobs(m1), 0L)),
-  sprintf("(2) OLS n\\~ao-ponderado & %s & %s & %s & %s \\\\",
-          r_ols$est, r_ols$se, fmt_br(get_r2(results$models$r1), 3L), fmt_br(get_nobs(results$models$r1), 0L)),
-  sprintf("(3) Log-transforma\\c{c}\\~ao $\\log(1+\\theta)$ & %s & %s & %s & %s \\\\",
-          r_log$est, r_log$se, fmt_br(get_r2(results$models$r4), 3L), fmt_br(get_nobs(results$models$r4), 0L)),
-  sprintf("(4) Winsoriza\\c{c}\\~ao 1\\%%/99\\%% & %s & %s & %s & %s \\\\",
-          r_win$est, r_win$se, fmt_br(get_r2(results$models$r5), 3L), fmt_br(get_nobs(results$models$r5), 0L)),
-  sprintf("(5) Exclus\\~ao top 1\\%% renda & %s & %s & %s & %s \\\\",
-          r_top$est, r_top$se, fmt_br(get_r2(results$models$r6), 3L), fmt_br(get_nobs(results$models$r6), 0L)),
-  sprintf("(6) Limite de Oster (2019) & \\multicolumn{2}{c}{$\\delta = %s$} & \\multicolumn{2}{c}{$R_{\\max} = 1{,}3 R^2$}",
-          fmt_br(results$oster$delta, 2L))
+  sprintf("Anos de escolaridade & %s \\\\", paste(vapply(c_esc, `[[`, character(1L), "est"), collapse = " & ")),
+  sprintf(" & %s \\\\[4pt]", paste(vapply(c_esc, `[[`, character(1L), "se"), collapse = " & ")),
+  sprintf("Constante & %s \\\\", paste(vapply(c_cst, `[[`, character(1L), "est"), collapse = " & ")),
+  sprintf(" & %s \\\\", paste(vapply(c_cst, `[[`, character(1L), "se"), collapse = " & ")),
+  "\\midrule",
+  sprintf("$R^2$ & %s \\\\", paste(r2_vals, collapse = " & ")),
+  sprintf("$N$ (indiv\\'iduos) & %s", paste(n_vals, collapse = " & "))
 )
 write_table(lines_rob, "tab_robustez.tex")
 

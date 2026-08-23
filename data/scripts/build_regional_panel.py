@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import json
 import os
 import sys
@@ -131,11 +133,12 @@ def build_regional_panel(uf_codes_path, subgroups_uf_path, scores_path, output_p
         json.dump(output, f, ensure_ascii=False, indent=2)
 
 if __name__ == '__main__':
-    base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    SCRIPTS_DIR = os.path.dirname(os.path.abspath(__file__))
+    DATA_DIR = os.path.dirname(SCRIPTS_DIR)
     build_regional_panel(
-        os.path.join(base_dir, 'scripts', 'reference', 'uf_codes.json'),
-        os.path.join(base_dir, 'data/output/cod_subgroups_by_uf.json'),
-        os.path.join(base_dir, 'data/output/scores.json'),
-        os.path.join(base_dir, 'data/output/regional_panel.json')
+        os.path.join(SCRIPTS_DIR, 'reference', 'uf_codes.json'),
+        os.path.join(DATA_DIR, 'output', 'cod_subgroups_by_uf.json'),
+        os.path.join(DATA_DIR, 'output', 'scores.json'),
+        os.path.join(DATA_DIR, 'output', 'regional_panel.json')
     )
     print("Created data/output/regional_panel.json")

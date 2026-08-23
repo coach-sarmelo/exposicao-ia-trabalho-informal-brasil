@@ -1,16 +1,18 @@
-"""audit_econometrics.py — Performs full econometric and numerical verification."""
+from __future__ import annotations
+
 import json
 import os
 
-ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+SCRIPTS_DIR = os.path.dirname(os.path.abspath(__file__))
+DATA_DIR = os.path.dirname(SCRIPTS_DIR)
 
-with open(os.path.join(ROOT, 'data/output/econometrics.json'), 'r', encoding='utf-8') as f:
+with open(os.path.join(DATA_DIR, 'output', 'econometrics.json'), 'r', encoding='utf-8') as f:
     econ = json.load(f)
 
-with open(os.path.join(ROOT, 'data/output/robustness.json'), 'r', encoding='utf-8') as f:
+with open(os.path.join(DATA_DIR, 'output', 'robustness.json'), 'r', encoding='utf-8') as f:
     rob = json.load(f)
 
-with open(os.path.join(ROOT, 'data/output/statistics.json'), 'r', encoding='utf-8') as f:
+with open(os.path.join(DATA_DIR, 'output', 'statistics.json'), 'r', encoding='utf-8') as f:
     stats = json.load(f)
 
 print("="*70)

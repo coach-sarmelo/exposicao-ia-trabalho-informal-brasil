@@ -3,9 +3,12 @@ paths:
   - "CHANGELOG.md"
   - "README.md"
   - "**/*.qmd"
-  - ".agents/plugins/academic-workflow/skills/*/SKILL.md"
-  - ".agents/plugins/academic-workflow/rules/*.md"
-  - ".agents/agents/*.md"
+  - ".agents/skills/*/SKILL.md"
+  - ".agents/rules/*.md"
+  - ".agents/agents/**/agent.md"
+  - ".claude/skills/*/SKILL.md"
+  - ".claude/rules/*.md"
+  - ".claude/agents/**/agent.md"
 alwaysApply: false
 ---
 

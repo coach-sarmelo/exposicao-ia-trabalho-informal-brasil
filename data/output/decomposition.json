@@ -31581,8 +31581,8 @@
   "meta": {
     "survey_year": 2026,
     "survey_quarter": 1,
-    "source": "/home/sarmelo/jobs-brasil/data/microdata/PNADC_012026.txt",
-    "generated_at": "2026-08-19T00:29:26.239285+00:00",
+    "source": "https://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Trimestral/Microdados",
+    "generated_at": "2026-08-23T20:41:53.822989+00:00",
     "method": "Decomposicao exata por composicao: C_js = (p_js - p_jBR) * (theta_j - E_BR), com soma exata em E_s - E_BR (identidade contabil; nao e estimativa causal).",
     "coverage_definition": "Ocupacoes sem correspondencia O*NET-SOC ficam com exposicao null",
     "state_estimates_include_suppressed_cells": "Estimativas por UF usam todos os registros cobertos validos, incluindo celulas ocupacao x UF suprimidas no detalhe publico (amostra nao ponderada < MIN_SAMPLE_OCUPACAO).",

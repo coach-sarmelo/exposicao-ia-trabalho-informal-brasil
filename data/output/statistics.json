@@ -562,7 +562,7 @@
       },
       "race_gap_significance": {
         "z": 1.6900025773823415,
-        "p_value": 0.0910274615558988,
+        "p_value": 0.09102746155589903,
         "significant": false
       }
     },
@@ -610,7 +610,7 @@
       },
       "race_gap_significance": {
         "z": 1.4715507792536864,
-        "p_value": 0.1411422254805108,
+        "p_value": 0.14114222548051059,
         "significant": false
       }
     },
@@ -725,7 +725,7 @@
       },
       "gender_gap_significance": {
         "z": 1.6458666090834553,
-        "p_value": 0.09979122489358616,
+        "p_value": 0.09979122489358594,
         "significant": false
       },
       "race_gap_significance": {
@@ -778,7 +778,7 @@
       },
       "race_gap_significance": {
         "z": 2.070438526607005,
-        "p_value": 0.03841129714675917,
+        "p_value": 0.03841129714675895,
         "significant": true
       }
     },
@@ -1037,7 +1037,7 @@
       },
       "race_gap_significance": {
         "z": 2.002782290731897,
-        "p_value": 0.045200661506009876,
+        "p_value": 0.0452006615060101,
         "significant": true
       }
     },
@@ -1200,7 +1200,7 @@
       },
       "race_gap_significance": {
         "z": 0.6834481627315243,
-        "p_value": 0.49432369517536423,
+        "p_value": 0.494323695175364,
         "significant": false
       }
     },
@@ -1243,7 +1243,7 @@
       },
       "gender_gap_significance": {
         "z": 1.9619570365976942,
-        "p_value": 0.04976748645151097,
+        "p_value": 0.049767486451510745,
         "significant": true
       },
       "race_gap_significance": {
@@ -1291,7 +1291,7 @@
       },
       "gender_gap_significance": {
         "z": 1.9467279919605036,
-        "p_value": 0.051567353854139686,
+        "p_value": 0.05156735385413991,
         "significant": false
       },
       "race_gap_significance": {
@@ -1315,7 +1315,7 @@
       },
       "gender_gap_significance": {
         "z": 1.342707865366024,
-        "p_value": 0.17936658686394513,
+        "p_value": 0.1793665868639449,
         "significant": false
       },
       "race_gap_significance": {
@@ -1440,7 +1440,7 @@
       },
       "race_gap_significance": {
         "z": 1.3669289047782398,
-        "p_value": 0.17164759093496373,
+        "p_value": 0.17164759093496396,
         "significant": false
       }
     },
@@ -1536,7 +1536,7 @@
       },
       "race_gap_significance": {
         "z": 1.006119493146064,
-        "p_value": 0.31435809279314864,
+        "p_value": 0.3143580927931484,
         "significant": false
       }
     },
@@ -1627,7 +1627,7 @@
       },
       "gender_gap_significance": {
         "z": 1.5434498039606948,
-        "p_value": 0.12272167765760944,
+        "p_value": 0.12272167765760966,
         "significant": false
       },
       "race_gap_significance": {
@@ -1680,7 +1680,7 @@
       },
       "race_gap_significance": {
         "z": 2.077954445173431,
-        "p_value": 0.03771355514134078,
+        "p_value": 0.037713555141341004,
         "significant": true
       }
     },
@@ -1704,7 +1704,7 @@
       },
       "race_gap_significance": {
         "z": 1.6341368829742309,
-        "p_value": 0.10223011188134357,
+        "p_value": 0.10223011188134379,
         "significant": false
       }
     },
@@ -1723,7 +1723,7 @@
       },
       "gender_gap_significance": {
         "z": 1.1805598924362883,
-        "p_value": 0.23777760455366237,
+        "p_value": 0.2377776045536626,
         "significant": false
       },
       "race_gap_significance": {
@@ -1747,7 +1747,7 @@
       },
       "gender_gap_significance": {
         "z": -0.4755574523746417,
-        "p_value": 0.6343896934991062,
+        "p_value": 0.634389693499106,
         "significant": false
       },
       "race_gap_significance": {
@@ -1872,7 +1872,7 @@
       },
       "race_gap_significance": {
         "z": 0.9067454887768406,
-        "p_value": 0.36454140222043185,
+        "p_value": 0.36454140222043163,
         "significant": false
       }
     },
@@ -1915,7 +1915,7 @@
       },
       "gender_gap_significance": {
         "z": 1.4222557079749742,
-        "p_value": 0.15495203188879958,
+        "p_value": 0.15495203188879936,
         "significant": false
       },
       "race_gap_significance": {
@@ -1939,7 +1939,7 @@
       },
       "gender_gap_significance": {
         "z": 0.3757992346949936,
-        "p_value": 0.7070661567984142,
+        "p_value": 0.7070661567984144,
         "significant": false
       },
       "race_gap_significance": {
@@ -2011,7 +2011,7 @@
       },
       "gender_gap_significance": {
         "z": 1.755578312745289,
-        "p_value": 0.07916043799409556,
+        "p_value": 0.07916043799409578,
         "significant": false
       },
       "race_gap_significance": {
@@ -2424,7 +2424,7 @@
       },
       "race_gap_significance": {
         "z": 1.9210595885463189,
-        "p_value": 0.054724195544815224,
+        "p_value": 0.054724195544815,
         "significant": false
       }
     },
@@ -2601,7 +2601,7 @@
       },
       "race_gap_significance": {
         "z": 0.5784806293303794,
-        "p_value": 0.5629396716271984,
+        "p_value": 0.5629396716271986,
         "significant": false
       }
     },
@@ -2644,7 +2644,7 @@
       },
       "race_gap_significance": {
         "z": 0.6200835294845024,
-        "p_value": 0.535202795228906,
+        "p_value": 0.5352027952289062,
         "significant": false
       }
     },
@@ -2687,7 +2687,7 @@
       },
       "gender_gap_significance": {
         "z": 0.8934340515194665,
-        "p_value": 0.37162477417025563,
+        "p_value": 0.37162477417025586,
         "significant": false
       },
       "race_gap_significance": {
@@ -2735,7 +2735,7 @@
       },
       "race_gap_significance": {
         "z": 1.369571450621182,
-        "p_value": 0.17082071663138776,
+        "p_value": 0.17082071663138754,
         "significant": false
       }
     },
@@ -2802,7 +2802,7 @@
       },
       "gender_gap_significance": {
         "z": 0.6611437218895725,
-        "p_value": 0.5085201485374491,
+        "p_value": 0.5085201485374489,
         "significant": false
       },
       "race_gap_significance": {
@@ -2826,7 +2826,7 @@
       },
       "gender_gap_significance": {
         "z": -0.7013675710276372,
-        "p_value": 0.4830736545118366,
+        "p_value": 0.4830736545118368,
         "significant": false
       },
       "race_gap_significance": {
@@ -2898,7 +2898,7 @@
       },
       "race_gap_significance": {
         "z": -0.536792706470042,
-        "p_value": 0.5914108102378157,
+        "p_value": 0.5914108102378159,
         "significant": false
       }
     },
@@ -2917,7 +2917,7 @@
       },
       "race_gap_significance": {
         "z": 1.7159568114451207,
-        "p_value": 0.08616994740377448,
+        "p_value": 0.08616994740377426,
         "significant": false
       }
     }
@@ -2954,8 +2954,8 @@
         "r": 0.0779,
         "n": 120,
         "significance": {
-          "z": 0.8448663470212692,
-          "p_value": 0.39818546581725145,
+          "z": 0.8448663470212691,
+          "p_value": 0.39818546581725167,
           "significant": false
         },
         "regression": {
@@ -2967,7 +2967,7 @@
         "r": 0.4925,
         "n": 122,
         "significance": {
-          "z": 5.883960534545042,
+          "z": 5.883960534545044,
           "p_value": 4.005634046677642e-09,
           "significant": true
         },

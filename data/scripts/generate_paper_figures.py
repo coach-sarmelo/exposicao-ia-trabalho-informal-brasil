@@ -5,11 +5,19 @@ Gera figuras de qualidade para publicação acadêmica (PDF e PNG) em paper/figu
 usando os dados reais calculados pelo pipeline em data/output/.
 Refatorado usando os princípios visuais do matlab-plot-skill (Okabe-Ito, espaçamento, legibilidade).
 """
+from __future__ import annotations
 
 import json
 import os
 import numpy as np
 import matplotlib.pyplot as plt
+
+SCRIPTS_DIR = os.path.dirname(os.path.abspath(__file__))
+DATA_DIR = os.path.dirname(SCRIPTS_DIR)
+REPO_ROOT = os.path.dirname(DATA_DIR)
+OUTPUT_DIR = os.path.join(REPO_ROOT, "paper", "figures")
+os.makedirs(OUTPUT_DIR, exist_ok=True)
+
 
 # Paleta Okabe-Ito (colorblind-safe)
 OKABE_ITO = {
@@ -45,11 +53,12 @@ plt.rcParams.update({
     'ps.fonttype': 42
 })
 
-OUTPUT_DIR = "paper/figures"
-os.makedirs(OUTPUT_DIR, exist_ok=True)
-
-
 def load_json(filepath):
+    if not os.path.isabs(filepath):
+        if filepath.startswith("data/output/"):
+            filepath = os.path.join(DATA_DIR, "output", os.path.basename(filepath))
+        elif filepath.startswith("data/"):
+            filepath = os.path.join(REPO_ROOT, filepath)
     with open(filepath, "r", encoding="utf-8") as f:
         return json.load(f)
 

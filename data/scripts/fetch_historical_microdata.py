@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import argparse
 import json
 import os
@@ -12,6 +14,9 @@ DEFAULT_FROM_YEAR = 2015
 DEFAULT_TO_YEAR = int(os.getenv("IBGE_MICRODATA_YEAR", "2026"))
 QUARTERS = ("1", "2", "3", "4")
 
+SCRIPTS_DIR = os.path.dirname(os.path.abspath(__file__))
+DATA_DIR = os.path.dirname(SCRIPTS_DIR)
+OUTPUT_TIMESERIES = os.path.join(DATA_DIR, "output", "grande_grupos_timeseries.json")
 
 
 def process_year(year, subgrupos, grupo_base_to_subgrupo, uf_codes):
@@ -35,9 +40,6 @@ def process_year(year, subgrupos, grupo_base_to_subgrupo, uf_codes):
         rows.append({"grande_grupo": grande_grupo, "ano": year, **metrics})
     rows.sort(key=lambda r: -r["total_workers"])
     return rows
-
-
-OUTPUT_TIMESERIES = os.path.join(os.path.dirname(__file__), "../data/output/grande_grupos_timeseries.json")
 
 
 def build_timeseries(rows):

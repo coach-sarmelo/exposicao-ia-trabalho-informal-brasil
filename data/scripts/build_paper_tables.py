@@ -8,6 +8,8 @@ Saidas: paper/tables/tab_descritivas.tex, tab_maiores.tex,
 Cada tabela e um tabular (booktabs) puro; o \\begin{table} e a legenda
 ficam nas secoes do artigo.
 """
+from __future__ import annotations
+
 import json
 import os
 
@@ -211,6 +213,7 @@ def main():
         r"\midrule",
         stat_row(r"$R^2$", specs, 'r_squared'),
         stat_row(r"$N$ (indiv\'iduos)", specs, 'n'),
+        stat_row(r"Grupos (ocupa\c c\~oes)", specs, 'n_clusters'),
     ]
     write_tab('tab_robustez.tex', rows)
 

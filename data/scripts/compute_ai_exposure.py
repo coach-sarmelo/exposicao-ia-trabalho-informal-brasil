@@ -15,18 +15,21 @@ dado real, nao mascarada por um fallback heuristico. O artefato inclui um
 bloco _meta com as versoes do indice de exposicao e do crosswalk CBO->SOC
 (contrato de vintage do PRODUCT.md).
 """
+from __future__ import annotations
+
 import csv
 import json
 import os
 from dataclasses import dataclass
 from datetime import datetime, timezone
 
-SCRIPTS_DIR = os.path.dirname(__file__)
-INPUT_SUBGROUPS = os.path.join(SCRIPTS_DIR, "../data/output/cod_subgroups.json")
-COD_TO_SOC_PATH = os.path.join(SCRIPTS_DIR, "reference/cod_to_soc.json")
-OCC_LEVEL_CSV = os.path.join(SCRIPTS_DIR, "../data/external/occ_level.csv")
-EMPLOYMENT_CSV = os.path.join(SCRIPTS_DIR, "../data/external/national_May2021_dl.csv")
-OUTPUT_SCORES = os.path.join(SCRIPTS_DIR, "../data/output/scores.json")
+SCRIPTS_DIR = os.path.dirname(os.path.abspath(__file__))
+DATA_DIR = os.path.dirname(SCRIPTS_DIR)
+INPUT_SUBGROUPS = os.path.join(DATA_DIR, "output", "cod_subgroups.json")
+COD_TO_SOC_PATH = os.path.join(SCRIPTS_DIR, "reference", "cod_to_soc.json")
+OCC_LEVEL_CSV = os.path.join(DATA_DIR, "external", "occ_level.csv")
+EMPLOYMENT_CSV = os.path.join(DATA_DIR, "external", "national_May2021_dl.csv")
+OUTPUT_SCORES = os.path.join(DATA_DIR, "output", "scores.json")
 
 SOURCE = "eloundou-2024-dv-beta"
 

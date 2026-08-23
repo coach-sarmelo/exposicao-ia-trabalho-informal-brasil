@@ -287,4 +287,7 @@ p5 <- ggplot(forest_dt, aes(y = spec_factor, x = beta)) +
 
 save_all_formats("fig5_robustez_forest", p5)
 
+invisible(graphics.off())
+invisible(gc())
+
 message("05_figures.R complete: all 4 figures generated in PDF, SVG, and PNG.")

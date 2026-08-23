@@ -7,17 +7,21 @@ score de exposição à IA e informalidade/gaps entre ocupações é associaçã
 observacional entre agregados, não um efeito causal estimado — ver a ressalva
 de honestidade metodológica em SPEC.md F4 e na página de metodologia (F3).
 """
+from __future__ import annotations
+
 import json
 import os
 import sys
 
-sys.path.insert(0, os.path.dirname(__file__))
+SCRIPTS_DIR = os.path.dirname(os.path.abspath(__file__))
+DATA_DIR = os.path.dirname(SCRIPTS_DIR)
+sys.path.insert(0, SCRIPTS_DIR)
 
 from stats import correlation, hypothesis, weighted  # noqa: E402
 
-INPUT_SUBGROUPS = os.path.join(os.path.dirname(__file__), "../data/output/cod_subgroups.json")
-INPUT_SCORES = os.path.join(os.path.dirname(__file__), "../data/output/scores.json")
-OUTPUT_STATISTICS = os.path.join(os.path.dirname(__file__), "../data/output/statistics.json")
+INPUT_SUBGROUPS = os.path.join(DATA_DIR, "output", "cod_subgroups.json")
+INPUT_SCORES = os.path.join(DATA_DIR, "output", "scores.json")
+OUTPUT_STATISTICS = os.path.join(DATA_DIR, "output", "statistics.json")
 
 MIN_CORRELATION_N = 4  # correlation_significance() exige n >= 4 (transformação z de Fisher)
 CORRELATION_FIELDS = {

@@ -177,8 +177,8 @@
   "meta": {
     "survey_year": 2026,
     "survey_quarter": 1,
-    "source": "/home/sarmelo/jobs-brasil/data/microdata/PNADC_012026.txt",
-    "generated_at": "2026-08-19T00:29:32.859782+00:00",
+    "source": "https://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Trimestral/Microdados",
+    "generated_at": "2026-08-23T20:42:20.343422+00:00",
     "coverage_definition": "cobertura = emprego em ocupacoes com exposicao nao-nula / emprego total agregado pela estrutura COD; exposicao null fica fora do numerador (nunca vira zero) e permanece no denominador",
     "state_estimates_include_suppressed_cells": "Estimativas por UF usam todos os registros cobertos validos, incluindo celulas ocupacao x UF suprimidas no detalhe publico (amostra nao ponderada < MIN_SAMPLE_OCUPACAO).",
     "sample_suppression_thresholds": {

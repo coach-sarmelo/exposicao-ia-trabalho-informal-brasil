@@ -1,10 +1,13 @@
+from __future__ import annotations
+
+import csv
 import json
 import os
 from datetime import datetime, timezone
 
-# Layout extraído automaticamente do dicionário SAS oficial do IBGE
-# (ver scripts/fetch_pnad_layout.py para proveniência).
-REFERENCE_DIR = os.path.join(os.path.dirname(__file__), "reference")
+SCRIPTS_DIR = os.path.dirname(os.path.abspath(__file__))
+DATA_DIR = os.path.dirname(SCRIPTS_DIR)
+REFERENCE_DIR = os.path.join(SCRIPTS_DIR, "reference")
 LAYOUT_JSON = os.path.join(REFERENCE_DIR, "pnadc_layout.json")
 
 def _make_slice(var_info):
@@ -43,11 +46,11 @@ MIN_SAMPLE_GRUPO = 15      # amostra mínima por grupo (homem/mulher, branco/pre
 # scripts/compute_ai_exposure.py).
 COVERAGE_DEFINITION = "Ocupacoes sem correspondencia O*NET-SOC ficam com exposicao null"
 
-OUTPUT_NATIONAL = os.path.join(os.path.dirname(__file__), "../data/output/cod_subgroups.json")
-OUTPUT_BY_UF = os.path.join(os.path.dirname(__file__), "../data/output/cod_subgroups_by_uf.json")
-OUTPUT_UF_TOTALS = os.path.join(os.path.dirname(__file__), "../data/output/uf_totals.json")
-OUTPUT_BY_SECTOR = os.path.join(os.path.dirname(__file__), "../data/output/cod_subgroups_by_sector.json")
-OUTPUT_SECTOR_METRICS = os.path.join(os.path.dirname(__file__), "../data/output/sector_metrics.json")
+OUTPUT_NATIONAL = os.path.join(DATA_DIR, "output", "cod_subgroups.json")
+OUTPUT_BY_UF = os.path.join(DATA_DIR, "output", "cod_subgroups_by_uf.json")
+OUTPUT_UF_TOTALS = os.path.join(DATA_DIR, "output", "uf_totals.json")
+OUTPUT_BY_SECTOR = os.path.join(DATA_DIR, "output", "cod_subgroups_by_sector.json")
+OUTPUT_SECTOR_METRICS = os.path.join(DATA_DIR, "output", "sector_metrics.json")
 
 
 def is_informal(posicao, cnpj):
@@ -239,8 +242,7 @@ def aggregate_quarter(source, subgrupos, grupo_base_to_subgrupo, uf_codes, want_
     csv_file = None
     csv_writer = None
     if write_individual_csv:
-        import csv
-        csv_path = os.path.join(os.path.dirname(__file__), "../data/output/individual_microdata.csv")
+        csv_path = os.path.join(DATA_DIR, "output", "individual_microdata.csv")
         csv_file = open(csv_path, "w", encoding="utf-8", newline="")
         csv_writer = csv.writer(csv_file)
         csv_writer.writerow(["uf", "occupation", "weight", "income", "sex", "race", "informal", "age", "years_of_study"])

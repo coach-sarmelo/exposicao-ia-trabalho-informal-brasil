@@ -4,7 +4,7 @@
     "survey_year_max": 2025,
     "aggregation": "média ponderada dos 4 trimestres de cada ano: os agregados trimestrais são fundidos por grande grupo e as métricas são calculadas sobre os totais ponderados (pesos amostrais da PNAD Contínua)",
     "source": "https://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Trimestral/Microdados",
-    "generated_at": "2026-08-19T00:29:18.343696+00:00",
+    "generated_at": "2026-08-23T21:05:53.940261+00:00",
     "notes": "O corte principal do projeto é o 1o trimestre de 2026 (IBGE_MICRODATA_YEAR/IBGE_MICRODATA_QUARTER); esta série agrega os 4 trimestres de cada ano e não deve ser comparada diretamente com um trimestre isolado."
   },
   "TRABALHADORES DOS SERVIÇOS, VENDEDORES DOS COMÉRCIOS E MERCADOS": [

@@ -16,6 +16,8 @@ resultado de primeira classe. Para cada UF e para o Brasil,
   por isso re-agregamos os microdados com pesos completos.
 """
 
+from __future__ import annotations
+
 import json
 import os
 import sys
@@ -36,7 +38,9 @@ from process_microdata import (  # noqa: E402
     load_reference,
 )
 
-OUTPUT_PATH = os.path.join(os.path.dirname(__file__), "../data/output/coverage.json")
+SCRIPTS_DIR = os.path.dirname(os.path.abspath(__file__))
+DATA_DIR = os.path.dirname(SCRIPTS_DIR)
+OUTPUT_PATH = os.path.join(DATA_DIR, "output", "coverage.json")
 
 
 def compute_coverage(by_uf_weights, scores):

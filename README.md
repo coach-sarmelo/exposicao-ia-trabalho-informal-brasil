@@ -329,6 +329,7 @@ Rules use path-scoped loading: **always-on** rules load every session (~100 line
 | `confidential-data` (v2.0) | `data/**`, `**/*.dta`, `**/restricted/**`, `**/confidential/**` | Restricted/IRB-data protocol: never commit raw data, disclosure clearance before release, restricted-data-safe multi-author git topology |
 | `did-conventions` (v2.0) | `**/*did*.R`, `**/*event*study*.R`, `**/*att_gt*`, `**/*csdid*.do`, `**/*drdid*` | DiD/event-study standards (Sant'Anna): LONG data + gname coding, doubly-robust default, control-group rule, uniform-band inference, mandatory pre-trend/HonestDiD/didFF diagnostics, replicate-and-verify-to-1e-6 |
 | `inference-robustness` (v2.0) | `scripts/**/*.R`, `**/*.do`, `**/*.py` | Multiple-testing (FWER/Romano-Wolf vs FDR/Anderson sharpened-q, pre-register the family) + specification-curve / leave-one-out / wild-cluster-bootstrap robustness |
+| `python-pipeline-conventions` | `data/scripts/**`, `data/tests/**` | Dual-engine pipeline standards: authoritative datasets in `data/output/`, single source of truth, pytest suite |
 
 ### Templates (`templates/`)
 

@@ -1,10 +1,15 @@
 ---
 paths:
-  - ".agents/plugins/academic-workflow/skills/lit-review/SKILL.md"
-  - ".agents/plugins/academic-workflow/skills/research-ideation/SKILL.md"
-  - ".agents/plugins/academic-workflow/skills/respond-to-referees/SKILL.md"
-  - ".agents/plugins/academic-workflow/skills/review-paper/SKILL.md"
-  - ".agents/plugins/academic-workflow/skills/interview-me/SKILL.md"
+  - ".agents/skills/lit-review/SKILL.md"
+  - ".agents/skills/research-ideation/SKILL.md"
+  - ".agents/skills/respond-to-referees/SKILL.md"
+  - ".agents/skills/review-paper/SKILL.md"
+  - ".agents/skills/interview-me/SKILL.md"
+  - ".claude/skills/lit-review/SKILL.md"
+  - ".claude/skills/research-ideation/SKILL.md"
+  - ".claude/skills/respond-to-referees/SKILL.md"
+  - ".claude/skills/review-paper/SKILL.md"
+  - ".claude/skills/interview-me/SKILL.md"
 alwaysApply: false
 ---
 

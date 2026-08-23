@@ -3,7 +3,7 @@
     "survey_year": 2026,
     "survey_quarter": 1,
     "source": "https://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Trimestral/Microdados",
-    "generated_at": "2026-08-20T20:19:36.703540+00:00",
+    "generated_at": "2026-08-23T20:30:01.449555+00:00",
     "coverage_definition": "Ocupacoes sem correspondencia O*NET-SOC ficam com exposicao null",
     "sample_suppression_thresholds": {
       "min_sample_ocupacao": 20,

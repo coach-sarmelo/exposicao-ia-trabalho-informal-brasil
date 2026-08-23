@@ -602,7 +602,7 @@ Rules are markdown files in `.claude/rules/` that Claude loads automatically. Th
 ├── replication-protocol.md      # paths: ["scripts/**/*.R"] — replicate first
 ├── exploration-folder-protocol.md  # paths: ["explorations/**"] — sandbox rules
 ├── orchestrator-research.md     # paths: ["scripts/**/*.R", "explorations/**"] — simple loop
-└── ...27 path-scoped rules total
+└── ...28 path-scoped rules total
 ```
 
 The always-on rules are deliberately compact — together they fit well within the budget Claude reads reliably each session. `meta-governance` is a reference document for the template's dual nature (working project vs. public template) and loads passively. Path-scoped rules add rich, domain-specific guidance exactly when Claude needs it.
@@ -1053,7 +1053,7 @@ Use it for:
 
 #### Two-tier memory architecture (`MEMORY.md` vs `personal-memory.md`)
 
-The template splits memory into two tiers (see [`meta-governance.md`](.claude/rules/meta-governance.md)):
+The template splits memory into two tiers (see [`meta-governance.md`](../.claude/rules/meta-governance.md)):
 
 - **`MEMORY.md`** (committed, ≤ 200 lines) — generic learnings that help all forkers: workflow patterns, design principles, documentation standards, quality thresholds that transfer across domains.
 - **`.claude/state/personal-memory.md`** (gitignored, no size cap) — machine-specific and user-specific learnings: TeX install quirks, file paths, personal effort preferences, tool-version workarounds.
@@ -1072,7 +1072,7 @@ The two-tier split poses one question: *who decides which `[LEARN]` entries grad
 4. **Evidence** — does it cite the originating incident / file / why?
 5. **Format** — does it follow `[LEARN:category] wrong → right`?
 
-Majority (3+ of 5 YES) recommends promotion; the user approves the final move. Critics run in *isolated forked contexts* — they cannot see each other's votes — so dimensions are reviewed independently, no groupthink. Critics use Haiku (per [model-routing.md](.claude/rules/model-routing.md)) since the review is mechanical-ish.
+Majority (3+ of 5 YES) recommends promotion; the user approves the final move. Critics run in *isolated forked contexts* — they cannot see each other's votes — so dimensions are reviewed independently, no groupthink. Critics use Haiku (per [model-routing.md](../.claude/rules/model-routing.md)) since the review is mechanical-ish.
 
 When to run: monthly as memory-maintenance, before sharing a fork, after a paper or course cycle ships, or wired as a `/loop` task.
 
@@ -1464,7 +1464,7 @@ Phase 4: Only then extend
 In one course, we discovered that a widely-used R package silently produced **incorrect estimates** due to a subtle specification issue. This bug was caught 3 times in different scripts. Without the replication-first protocol, these wrong numbers would have been taught to PhD students.
 :::
 
-**Source-language coverage:** The pattern is language-agnostic. The template ships [`/data-analysis`](#all-skills) for R-first projects and [`/stata-replication`](#all-skills) (v1.9.0) for Stata-first projects (mirrors `/data-analysis` exactly; same numbered-pipeline shape, different language; executes via the `stata-mcp` MCP server). Python-first projects follow the same convention with the path `scripts/python/_outputs/`. For Stata users, [`stata-code-conventions.md`](.claude/rules/stata-code-conventions.md) (v1.9.0) codifies the header (`version 18`, `clear all`, `set seed`/`set sortseed`), numbered pipeline (00–99), `esttab` for `\input{}` tables, clustering discipline (`reghdfe`), balance via `iebaltab`, and AEA Data Editor compliance.
+**Source-language coverage:** The pattern is language-agnostic. The template ships [`/data-analysis`](#all-skills) for R-first projects and [`/stata-replication`](#all-skills) (v1.9.0) for Stata-first projects (mirrors `/data-analysis` exactly; same numbered-pipeline shape, different language; executes via the `stata-mcp` MCP server). Python-first projects follow the same convention with the path `scripts/python/_outputs/`. For Stata users, [`stata-code-conventions.md`](../.claude/rules/stata-code-conventions.md) (v1.9.0) codifies the header (`version 18`, `clear all`, `set seed`/`set sortseed`), numbered pipeline (00–99), `esttab` for `\input{}` tables, clustering discipline (`reghdfe`), balance via `iebaltab`, and AEA Data Editor compliance.
 
 ::: {.callout-note}
 ## Claims provenance via `passport.yaml` (v1.9.0)
@@ -1473,7 +1473,7 @@ Replication-first verifies the *current* state. A separate question: how do we k
 
 The answer is a per-paper `quality_reports/passports/<paper-slug>.yaml` that records, for each numeric claim in the manuscript, the script + line + output that produced it. Schema includes `tolerance`, `last_verified_on`, `status` (PASS / FAIL / STALE / UNVERIFIED). [`/audit-reproducibility`](#all-skills) reads and rewrites the passport in place; [`/commit`](#all-skills) reads it to block commits when a load-bearing claim is FAIL or STALE.
 
-Starter file: [`templates/passport-template.yaml`](templates/passport-template.yaml). Copy once per paper. Pattern attributed to [Imbad0202/academic-research-skills](https://github.com/Imbad0202/academic-research-skills) "Material Passport" concept (scope-reduced for this template: numeric claims only).
+Starter file: [`templates/passport-template.yaml`](../templates/passport-template.yaml). Copy once per paper. Pattern attributed to [Imbad0202/academic-research-skills](https://github.com/Imbad0202/academic-research-skills) "Material Passport" concept (scope-reduced for this template: numeric claims only).
 :::
 
 ## Pattern 6: Multi-Agent Review {#pattern-6-multi-agent-review}
@@ -2285,7 +2285,7 @@ A mature MCP server that lets Claude Code execute Stata `.do` files via a comman
 
 **Why it matters for this template:** v1.9.0 added [`/stata-replication`](#sec-appendix) for Stata-first projects, which depends on this MCP server. R-first projects (the original template focus) continue to use [`/data-analysis`](#sec-appendix); the two skills are parallel — same pipeline shape, different source language. AEA submissions where the original replication package is in Stata are the canonical use case.
 
-For end-to-end Stata workflows, see [`.claude/rules/stata-code-conventions.md`](.claude/rules/stata-code-conventions.md) (header scaffold, numbered pipeline, esttab tables, clustering discipline, AEA Data Editor compliance).
+For end-to-end Stata workflows, see [`../.claude/rules/stata-code-conventions.md`](../.claude/rules/stata-code-conventions.md) (header scaffold, numbered pipeline, esttab tables, clustering discipline, AEA Data Editor compliance).
 
 ## ClaudeCodeTools: The Editor Persona
 
@@ -2621,7 +2621,7 @@ This is the `/learn` lifecycle in action: discover a repeating workflow → extr
 5. **Verify everything.** The verification rule exists for a reason. Never skip compilation or rendering checks.
 6. **Session logs matter.** Document design decisions, not just what changed. Future-you will thank present-you.
 7. **Devil's Advocate early.** Challenge slide structure before you've built 50 slides on a shaky foundation.
-8. **Progressive disclosure.** Start with CLAUDE.md + 2--3 rules. Add more as your workflow matures. Newcomers should not face all 32 rules on day one.
+8. **Progressive disclosure.** Start with CLAUDE.md + 2--3 rules. Add more as your workflow matures. Newcomers should not face all 33 rules on day one.
 9. **Use `CLAUDE.local.md` for personal overrides.** This file is automatically gitignored and loaded alongside `CLAUDE.md`. Put machine-specific paths, personal preferences, and local tool versions here --- they won't pollute the shared repo.
 
 ::: {.callout-note collapse="true"}
@@ -2640,6 +2640,7 @@ Claude Code supports **plugins** --- bundled collections of skills, agents, hook
 
 ## All Agents
 
+<!-- surface-sync-table: agents -->
 | Agent | File | Purpose |
 |-------|------|---------|
 | Proofreader | `.claude/agents/proofreader.md` | Grammar, typos, consistency |
@@ -2663,58 +2664,61 @@ Claude Code supports **plugins** --- bundled collections of skills, agents, hook
 
 ## All Skills
 
+<!-- surface-sync-table: skills -->
 | Skill | Directory | Purpose |
 |-------|-----------|---------|
-| `/compile-latex` | `.claude/skills/compile-latex/` | XeLaTeX 3-pass compilation |
-| `/deploy` | `.claude/skills/deploy/` | Quarto render + GitHub Pages sync |
-| `/extract-tikz` | `.claude/skills/extract-tikz/` | TikZ to SVG conversion |
-| `/new-diagram` | `.claude/skills/new-diagram/` | Scaffold a TikZ diagram from the gallery |
-| `/proofread` | `.claude/skills/proofread/` | Run proofreading agent |
-| `/visual-audit` | `.claude/skills/visual-audit/` | Run layout audit agent |
-| `/pedagogy-review` | `.claude/skills/pedagogy-review/` | Run pedagogy review agent |
-| `/review-r` | `.claude/skills/review-r/` | Run R code review agent |
-| `/qa-quarto` | `.claude/skills/qa-quarto/` | Critic-fixer adversarial loop |
-| `/slide-excellence` | `.claude/skills/slide-excellence/` | Combined multi-agent review |
-| `/translate-to-quarto` | `.claude/skills/translate-to-quarto/` | Beamer to Quarto translation |
-| `/validate-bib` | `.claude/skills/validate-bib/` | Bibliography validation |
-| `/devils-advocate` | `.claude/skills/devils-advocate/` | Design challenge questions |
-| `/create-lecture` | `.claude/skills/create-lecture/` | Full lecture creation |
-| `/commit` | `.claude/skills/commit/` | Stage, commit, PR, and merge |
-| `/lit-review` | `.claude/skills/lit-review/` | Literature search and synthesis |
-| `/research-ideation` | `.claude/skills/research-ideation/` | Research questions and strategies |
-| `/interview-me` | `.claude/skills/interview-me/` | Interactive research interview |
-| `/review-paper` | `.claude/skills/review-paper/` | Manuscript review |
-| `/respond-to-referees` | `.claude/skills/respond-to-referees/` | R&R cross-reference and response draft |
-| `/data-analysis` | `.claude/skills/data-analysis/` | End-to-end R analysis |
 | `/audit-reproducibility` | `.claude/skills/audit-reproducibility/` | Enforce replication tolerance thresholds on paper ↔ code |
-| `/learn` | `.claude/skills/learn/` | Extract discoveries into persistent skills |
-| `/context-status` | `.claude/skills/context-status/` | Show session health and context usage |
-| `/deep-audit` | `.claude/skills/deep-audit/` | Repository-wide consistency audit |
-| `/seven-pass-review` | `.claude/skills/seven-pass-review/` | Seven-pass adversarial manuscript review (parallel forked subagents) |
-| `/permission-check` | `.claude/skills/permission-check/` | Diagnose permission layers (6-tier stack) |
-| `/verify-claims` | `.claude/skills/verify-claims/` | Chain-of-Verification fact-check on any draft (v1.7.0) |
+| `/capture-environment` | `.claude/skills/capture-environment/` | Snapshot the computational environment (renv.lock / sessionInfo / requirements.txt / uv.lock + optional Dockerfile + seeds) (v2.0) |
 | `/checkpoint` | `.claude/skills/checkpoint/` | Structured session-handoff snapshot — companion to narrative session logs (v1.8.0) |
-| `/preregister` | `.claude/skills/preregister/` | Generate a preregistration document (OSF / AsPredicted / AEA RCT Registry) from a research spec (v1.8.0) |
+| `/coauthor-brief` | `.claude/skills/coauthor-brief/` | Generate a collaborator handoff brief: git delta, per-artifact state, open questions, reproduce-locally + restricted-data steps (v2.0) |
+| `/commit` | `.claude/skills/commit/` | Stage, commit, PR, and merge |
+| `/compile-latex` | `.claude/skills/compile-latex/` | XeLaTeX 3-pass compilation |
+| `/compress-session` | `.claude/skills/compress-session/` | Distil the current session into a structured note before auto-compaction (v1.9.0) |
+| `/context-status` | `.claude/skills/context-status/` | Show session health and context usage |
+| `/create-lecture` | `.claude/skills/create-lecture/` | Full lecture creation |
+| `/data-analysis` | `.claude/skills/data-analysis/` | End-to-end R analysis |
+| `/data-management-plan` | `.claude/skills/data-management-plan/` | Draft a funder-compliant Data Management Plan (NSF/NIH 2023/ERC/Horizon) (v2.0) |
+| `/deep-audit` | `.claude/skills/deep-audit/` | Repository-wide consistency audit |
+| `/deploy` | `.claude/skills/deploy/` | Quarto render + GitHub Pages sync |
+| `/devils-advocate` | `.claude/skills/devils-advocate/` | Design challenge questions |
+| `/diagnose` | `.claude/skills/diagnose/` | Root-cause failing or wrong empirical results with a disciplined reproduce → minimise → hypothesise → instrument → fix loop (v2.0) |
+| `/did-event-study` | `.claude/skills/did-event-study/` | Staggered DiD / event-study wrapper over canonical packages (Callaway–Sant'Anna `did`, `fixest::sunab`, HonestDiD; Stata `csdid`/`eventstudyinteract`/`honestdid`) (v2.0) |
+| `/disclosure-check` | `.claude/skills/disclosure-check/` | Pre-screen restricted-data outputs for SDL violations (small cells, dominance, PII); gates on any CRITICAL (v2.0) |
+| `/extract-tikz` | `.claude/skills/extract-tikz/` | TikZ to SVG conversion |
+| `/grant-proposal` | `.claude/skills/grant-proposal/` | Scaffold a grant proposal (NSF/NIH/ERC/foundation) from an `/interview-me` spec; delegates DMP + facilities; aims↔methods↔budget coherence pass (v2.0) |
 | `/humanize` | `.claude/skills/humanize/` | Detect AI-voice tells in academic prose (read-only audit; no rewrite) (v1.9.0) |
-| `/compress-session` | `.claude/skills/compress-session/` | Distil the current session into a structured note (decisions, files, open questions, next actions, discarded-as-noise) before auto-compaction (v1.9.0) |
+| `/interview-me` | `.claude/skills/interview-me/` | Interactive research interview |
+| `/learn` | `.claude/skills/learn/` | Extract discoveries into persistent skills |
+| `/lit-review` | `.claude/skills/lit-review/` | Literature search and synthesis |
+| `/new-diagram` | `.claude/skills/new-diagram/` | Scaffold a TikZ diagram from the gallery |
+| `/new-skill` | `.claude/skills/new-skill/` | Scaffold a convention-compliant skill (interview → write `SKILL.md` with gate-passing frontmatter) (v2.0) |
+| `/pedagogy-review` | `.claude/skills/pedagogy-review/` | Run pedagogy review agent |
+| `/permission-check` | `.claude/skills/permission-check/` | Diagnose permission layers (6-tier stack) |
+| `/power-analysis` | `.claude/skills/power-analysis/` | Power / required-N / MDE for study design (RCT, clustered/ICC, multi-arm, or simulation-based) + a methods paragraph for `/preregister` (v2.0) |
+| `/preregister` | `.claude/skills/preregister/` | Generate a preregistration document (OSF / AsPredicted / AEA RCT Registry) from a research spec (v1.8.0) |
 | `/promote-memory` | `.claude/skills/promote-memory/` | Five-critic council that votes on whether candidate `[LEARN]` entries should be promoted from personal-memory.md to MEMORY.md (v1.9.0) |
-| `/stata-replication` | `.claude/skills/stata-replication/` | End-to-end Stata pipeline scaffold + execution via the `stata-mcp` MCP server (mirrors `/data-analysis` for R-first projects; v1.9.0) |
-| `/simulation-study` | `.claude/skills/simulation-study/` | Reproducible Monte Carlo study — DGP, estimator grid, seeded reps, bias/RMSE/coverage/size/power with Monte Carlo SEs (v1.10.0) |
+| `/proofread` | `.claude/skills/proofread/` | Run proofreading agent |
+| `/qa-quarto` | `.claude/skills/qa-quarto/` | Critic-fixer adversarial loop |
 | `/r-package-check` | `.claude/skills/r-package-check/` | R package release gate — `devtools::document()` + tests + `R CMD check --as-cran` + CRAN-policy triage (v1.10.0) |
 | `/replication-package` | `.claude/skills/replication-package/` | Assemble a submission-ready DCAS / openICPSR replication package; calls `/audit-reproducibility` and blocks on FAIL (v2.0) |
-| `/capture-environment` | `.claude/skills/capture-environment/` | Snapshot the computational environment (renv.lock / sessionInfo / requirements.txt / uv.lock + optional Dockerfile + seeds) (v2.0) |
-| `/did-event-study` | `.claude/skills/did-event-study/` | Staggered DiD / event-study wrapper over canonical packages (Callaway–Sant'Anna `did`, `fixest::sunab`, HonestDiD; Stata `csdid`/`eventstudyinteract`/`honestdid`) (v2.0) |
-| `/power-analysis` | `.claude/skills/power-analysis/` | Power / required-N / MDE for study design (RCT, clustered/ICC, multi-arm, or simulation-based) + a methods paragraph for `/preregister` (v2.0) |
-| `/disclosure-check` | `.claude/skills/disclosure-check/` | Pre-screen restricted-data outputs for SDL violations (small cells, dominance, PII); gates on any CRITICAL (v2.0) |
-| `/grant-proposal` | `.claude/skills/grant-proposal/` | Scaffold a grant proposal (NSF/NIH/ERC/foundation) from an `/interview-me` spec; delegates DMP + facilities; aims↔methods↔budget coherence pass (v2.0) |
-| `/data-management-plan` | `.claude/skills/data-management-plan/` | Draft a funder-compliant Data Management Plan (NSF/NIH 2023/ERC/Horizon) (v2.0) |
-| `/coauthor-brief` | `.claude/skills/coauthor-brief/` | Generate a collaborator handoff brief: git delta, per-artifact state, open questions, reproduce-locally + restricted-data steps (v2.0) |
-| `/triage-inbox` | `.claude/skills/triage-inbox/` | Triage academic email + calendar (Gmail/Calendar MCP) into a prioritized digest + referee-obligations tracker; human-gated actions only (v2.0) |
+| `/research-ideation` | `.claude/skills/research-ideation/` | Research questions and strategies |
+| `/respond-to-eval` | `.claude/skills/respond-to-eval/` | Turn student course evaluations into a classified teaching-improvement plan (Keep/Change/Investigate/Out-of-scope) (v2.0) |
+| `/respond-to-referees` | `.claude/skills/respond-to-referees/` | R&R cross-reference and response draft |
+| `/review-paper` | `.claude/skills/review-paper/` | Manuscript review |
+| `/review-r` | `.claude/skills/review-r/` | Run R code review agent |
+| `/scaffold-exercises` | `.claude/skills/scaffold-exercises/` | Scaffold a graded problem set (analytical/empirical/coding) with worked solutions; clean student set + separate solution key (v2.0) |
+| `/seven-pass-review` | `.claude/skills/seven-pass-review/` | Seven-pass adversarial manuscript review (parallel forked subagents) |
+| `/simulation-study` | `.claude/skills/simulation-study/` | Reproducible Monte Carlo study — DGP, estimator grid, seeded reps, bias/RMSE/coverage/size/power with Monte Carlo SEs (v1.10.0) |
+| `/slide-excellence` | `.claude/skills/slide-excellence/` | Combined multi-agent review |
+| `/stata-replication` | `.claude/skills/stata-replication/` | End-to-end Stata pipeline scaffold + execution via the `stata-mcp` MCP server (mirrors `/data-analysis` for R-first projects; v1.9.0) |
+| `/submission-disclosures` | `.claude/skills/submission-disclosures/` | Generate submission-time disclosure block (AI-use disclosure, CRediT author roles, COI, data availability) (v2.1.0) |
 | `/syllabus` | `.claude/skills/syllabus/` | Build a course syllabus from a topic/reading list (schedule, objectives, assessment + rubric, per-week `/create-lecture` work-list) (v2.0) |
 | `/teach-from-paper` | `.claude/skills/teach-from-paper/` | Turn a paper into a lecture outline, teachable results, slide skeleton (→ `/create-lecture`), discussion questions, exercise brief (v2.0) |
-| `/respond-to-eval` | `.claude/skills/respond-to-eval/` | Turn student course evaluations into a classified teaching-improvement plan (Keep/Change/Investigate/Out-of-scope) (v2.0) |
-| `/scaffold-exercises` | `.claude/skills/scaffold-exercises/` | Scaffold a graded problem set (analytical/empirical/coding) with worked solutions; clean student set + separate solution key (v2.0) |
-| `/new-skill` | `.claude/skills/new-skill/` | Scaffold a convention-compliant skill (interview → write `SKILL.md` with gate-passing frontmatter) (v2.0) |
+| `/translate-to-quarto` | `.claude/skills/translate-to-quarto/` | Beamer to Quarto translation |
+| `/triage-inbox` | `.claude/skills/triage-inbox/` | Triage academic email + calendar (Gmail/Calendar MCP) into a prioritized digest + referee-obligations tracker; human-gated actions only (v2.0) |
+| `/validate-bib` | `.claude/skills/validate-bib/` | Bibliography validation |
+| `/verify-claims` | `.claude/skills/verify-claims/` | Chain-of-Verification fact-check on any draft (v1.7.0) |
+| `/visual-audit` | `.claude/skills/visual-audit/` | Run layout audit agent |
 
 ## All Rules
 
@@ -2732,34 +2736,38 @@ Claude Code supports **plugins** --- bundled collections of skills, agents, hook
 
 | Rule | File | Triggers On |
 |------|------|------------|
-| Verification Protocol | `verification-protocol.md` | `.tex`, `.qmd`, `docs/` |
-| Single Source of Truth | `single-source-of-truth.md` | `Figures/`, `.tex`, `.qmd` |
-| Quality Gates | `quality-gates.md` | `.tex`, `.qmd`, `*.R` |
-| R Code Conventions | `r-code-conventions.md` | `Figures/**`, `scripts/**`, `explorations/**` (analysis scripts) |
-| TikZ Quality | `tikz-visual-quality.md` | `.tex` |
-| TikZ Prevention | `tikz-prevention.md` | `Slides/**`, `Figures/**`, `Preambles/**` |
-| TikZ Measurement | `tikz-measurement.md` | `Slides/**`, `Figures/**`, `Preambles/**`, `scripts/**` |
 | Beamer-Quarto Sync | `beamer-quarto-sync.md` | `.tex`, `.qmd` |
-| PDF Processing | `pdf-processing.md` | `master_supporting_docs/` |
-| Proofreading Protocol | `proofreading-protocol.md` | `.tex`, `.qmd`, `quality_reports/` |
-| No Pause | `no-pause-beamer.md` | `.tex` |
-| Replication Protocol | `replication-protocol.md` | `*.R` |
-| Knowledge Base | `knowledge-base-template.md` | `.tex`, `.qmd`, `*.R` |
-| Orchestrator Research | `orchestrator-research.md` | `*.R`, `explorations/` |
-| Exploration Folder | `exploration-folder-protocol.md` | `explorations/` |
-| Exploration Fast-Track | `exploration-fast-track.md` | `explorations/` |
+| Confidential Data | `confidential-data.md` | restricted/confidential data paths — no raw confidential data in git, disclosure-avoidance discipline, used by `/disclosure-check` / `/replication-package` / `/data-management-plan` (v2.0) |
 | Content Invariants | `content-invariants.md` | `.tex`, `.qmd`, `Preambles/`, `scripts/R/**` |
 | Cross-Artifact Review | `cross-artifact-review.md` | `master_supporting_docs/`, `.tex`, `.qmd` |
-| Summary–Body Parity | `summary-parity.md` | `CHANGELOG.md`, `README.md`, `.qmd`, skill/rule/agent `.md` |
-| Post-Flight Verification | `post-flight-verification.md` | skills that generate factual claims (`/lit-review`, `/research-ideation`, `/respond-to-referees`, `/review-paper`, `/interview-me`) |
+| DiD Conventions | `did-conventions.md` | `scripts/**`, `explorations/**` — Staggered DiD / event-study conventions (Callaway–Sant'Anna, HonestDiD, DR estimators) (v2.0) |
+| Exploration Fast-Track | `exploration-fast-track.md` | `explorations/` |
+| Exploration Folder | `exploration-folder-protocol.md` | `explorations/` |
+| Inference Robustness | `inference-robustness.md` | `scripts/**`, `explorations/**` — Standard error clustering, wild bootstrap, and spatial inference standards (v2.0) |
+| Knowledge Base | `knowledge-base-template.md` | `.tex`, `.qmd`, `*.R` |
 | Model Routing | `model-routing.md` | `.claude/agents/**/*.md`, `.claude/skills/**/SKILL.md` — 70/20/10 architect/editor split, per-agent `model:` field guidance (v1.9.0) |
-| Stata Code Conventions | `stata-code-conventions.md` | `**/*.do`, `scripts/stata/**` — header scaffold, numbered pipeline, esttab tables, clustering discipline, AEA compliance (v1.9.0) |
-| Simulation Conventions | `simulation-conventions.md` | `**/*simulation*.R`, `**/*_sim.R`, `explorations/**` — Monte Carlo discipline: DGP/estimand, L'Ecuyer seeding, Monte Carlo SE, coverage-vs-truth, raw-result storage (v1.10.0) |
+| No Pause | `no-pause-beamer.md` | `.tex` |
+| Orchestrator Research | `orchestrator-research.md` | `*.R`, `explorations/` |
+| PDF Processing | `pdf-processing.md` | `master_supporting_docs/` |
+| Post-Flight Verification | `post-flight-verification.md` | skills that generate factual claims (`/lit-review`, `/research-ideation`, `/respond-to-referees`, `/review-paper`, `/interview-me`) |
+| Proofreading Protocol | `proofreading-protocol.md` | `.tex`, `.qmd`, `quality_reports/` |
+| Python Pipeline Conventions | `python-pipeline-conventions.md` | `data/scripts/**`, `data/tests/**` — Conventions for Python dual-engine pipeline, authoritative outputs in `data/output/`, and pytest suites |
+| Quality Gates | `quality-gates.md` | `.tex`, `.qmd`, `*.R` |
+| R Code Conventions | `r-code-conventions.md` | `Figures/**`, `scripts/**`, `explorations/**` (analysis scripts) |
 | R Package Conventions | `r-package-conventions.md` | `R/**`, `tests/**`, `DESCRIPTION`, `NAMESPACE`, `man/**` — package-source standards: no `library()` in `R/`, roxygen NAMESPACE, Imports/Suggests, testthat 3e, CRAN policy (v1.10.0) |
-| Confidential Data | `confidential-data.md` | restricted/confidential data paths — no raw confidential data in git, disclosure-avoidance discipline, used by `/disclosure-check` / `/replication-package` / `/data-management-plan` (v2.0) |
+| Replication Protocol | `replication-protocol.md` | `*.R` |
+| Simulation Conventions | `simulation-conventions.md` | `**/*simulation*.R`, `**/*_sim.R`, `explorations/**` — Monte Carlo discipline: DGP/estimand, L'Ecuyer seeding, Monte Carlo SE, coverage-vs-truth, raw-result storage (v1.10.0) |
+| Single Source of Truth | `single-source-of-truth.md` | `Figures/`, `.tex`, `.qmd` |
+| Stata Code Conventions | `stata-code-conventions.md` | `**/*.do`, `scripts/stata/**` — header scaffold, numbered pipeline, esttab tables, clustering discipline, AEA compliance (v1.9.0) |
+| Summary–Body Parity | `summary-parity.md` | `CHANGELOG.md`, `README.md`, `.qmd`, skill/rule/agent `.md` |
+| TikZ Measurement | `tikz-measurement.md` | `Slides/**`, `Figures/**`, `Preambles/**`, `scripts/**` |
+| TikZ Prevention | `tikz-prevention.md` | `Slides/**`, `Figures/**`, `Preambles/**` |
+| TikZ Quality | `tikz-visual-quality.md` | `.tex` |
+| Verification Protocol | `verification-protocol.md` | `.tex`, `.qmd`, `docs/` |
 
 ## Hooks
 
+<!-- surface-sync-table: hooks -->
 | Hook | Type | Configuration |
 |------|------|--------------|
 | Session log auto-writer | Stop (command) | `.claude/hooks/log-reminder.py` — auto-writes the session log on every meaningful change-set (no longer merely a reminder) |

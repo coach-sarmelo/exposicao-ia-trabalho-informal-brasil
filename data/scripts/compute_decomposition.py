@@ -23,6 +23,8 @@ Isto e uma decomposicao contabil. Nao e instrumento Bartik, desenho causal,
 previsao ou estimativa de adocao de IA.
 """
 
+from __future__ import annotations
+
 import json
 import os
 import sys
@@ -42,9 +44,11 @@ from stats.weighted import weighted_mean  # noqa: E402
 # Tolerancia relativa da identidade contabil sum_j C_js = E_s - E_BR.
 TOLERANCE = 1e-9
 
-OUTPUT_PATH = os.path.join(os.path.dirname(__file__), "../data/output/decomposition.json")
-SCORES_PATH = os.path.join(os.path.dirname(__file__), "../data/output/scores.json")
-UF_TOTALS_PATH = os.path.join(os.path.dirname(__file__), "../data/output/uf_totals.json")
+SCRIPTS_DIR = os.path.dirname(os.path.abspath(__file__))
+DATA_DIR = os.path.dirname(SCRIPTS_DIR)
+OUTPUT_PATH = os.path.join(DATA_DIR, "output", "decomposition.json")
+SCORES_PATH = os.path.join(DATA_DIR, "output", "scores.json")
+UF_TOTALS_PATH = os.path.join(DATA_DIR, "output", "uf_totals.json")
 
 
 def load_scores(path=SCORES_PATH):
@@ -225,7 +229,7 @@ def _resolve_source():
     year = fim.YEAR
     quarter = fim.QUARTER
     local = os.path.join(
-        os.path.dirname(__file__), "../data/microdata",
+        DATA_DIR, "microdata",
         f"PNADC_{quarter.zfill(2)}{year}.txt",
     )
     if os.path.exists(local):

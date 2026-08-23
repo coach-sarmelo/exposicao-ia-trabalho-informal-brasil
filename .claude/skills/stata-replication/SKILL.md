@@ -5,7 +5,7 @@ author: Claude Code Academic Workflow
 version: 1.0.0
 argument-hint: "[paper-or-data-pointer] [--from-r] [--no-execute]"
 disable-model-invocation: true
-allowed-tools: ["Read", "Write", "Edit", "Glob", "Grep", "Bash", "Task"]
+allowed-tools: ["Read", "Write", "Edit", "Glob", "Grep", "Bash", "Task", "Monitor"]
 ---
 
 # `/stata-replication` — Stata pipeline scaffold + execution

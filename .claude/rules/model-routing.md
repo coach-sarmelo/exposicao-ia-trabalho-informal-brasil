@@ -1,6 +1,8 @@
 ---
 paths:
-  - ".claude/agents/**/*.md"
+  - ".agents/agents/**/agent.md"
+  - ".agents/skills/**/SKILL.md"
+  - ".claude/agents/**/agent.md"
   - ".claude/skills/**/SKILL.md"
 ---
 

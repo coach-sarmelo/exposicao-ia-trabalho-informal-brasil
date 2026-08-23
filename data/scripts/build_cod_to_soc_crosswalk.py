@@ -23,12 +23,16 @@ cobertura no crosswalk ISCO->SOC2010 afetam apenas 4 subgrupos (41, 51, 516,
 equivalente direto no ISCO-08/SOC padrao) recebem override manual
 documentado (ja em SOC 2018).
 """
+from __future__ import annotations
+
 import csv
 import json
 import os
 
-REFERENCE_DIR = os.path.join(os.path.dirname(__file__), "reference")
-EXTERNAL_DIR = os.path.join(os.path.dirname(__file__), "../data/external")
+SCRIPTS_DIR = os.path.dirname(os.path.abspath(__file__))
+DATA_DIR = os.path.dirname(SCRIPTS_DIR)
+REFERENCE_DIR = os.path.join(SCRIPTS_DIR, "reference")
+EXTERNAL_DIR = os.path.join(DATA_DIR, "external")
 COD_ESTRUTURA_PATH = os.path.join(REFERENCE_DIR, "cod_estrutura.json")
 ISCO_SOC2010_CSV_PATH = os.path.join(EXTERNAL_DIR, "isco08_to_soc2010.csv")
 SOC2010_SOC2018_CSV_PATH = os.path.join(EXTERNAL_DIR, "soc2010_to_soc2018.csv")

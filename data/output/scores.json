@@ -2,7 +2,7 @@
   "11": {
     "code": "11",
     "exposure": null,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Oficiais das forças armadas",
     "onet_soc_codes": [],
@@ -22,7 +22,7 @@
   "111": {
     "code": "111",
     "exposure": 4.9,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Membros superiores do poder executivo e legislativo",
     "onet_soc_codes": [
@@ -80,7 +80,7 @@
   "112": {
     "code": "112",
     "exposure": 4.8,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Diretores gerais e gerentes gerais",
     "onet_soc_codes": [
@@ -102,7 +102,7 @@
   "121": {
     "code": "121",
     "exposure": 5.0,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Dirigentes de administração e de serviços",
     "onet_soc_codes": [
@@ -179,7 +179,7 @@
   "122": {
     "code": "122",
     "exposure": 4.8,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Dirigentes de vendas, comercialização e desenvolvimento",
     "onet_soc_codes": [
@@ -220,7 +220,7 @@
   "131": {
     "code": "131",
     "exposure": 3.7,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Dirigentes de produção agropecuária, silvicultura, aquicultura e pesca",
     "onet_soc_codes": [
@@ -237,7 +237,7 @@
   "132": {
     "code": "132",
     "exposure": 5.0,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Dirigentes de indústria de transformação, mineração, construção e distribuição",
     "onet_soc_codes": [
@@ -296,7 +296,7 @@
   "133": {
     "code": "133",
     "exposure": 5.3,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Dirigentes de serviços de tecnologia da informação e comunicações",
     "onet_soc_codes": [
@@ -313,7 +313,7 @@
   "134": {
     "code": "134",
     "exposure": 4.8,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Dirigentes e gerentes de serviços profissionais",
     "onet_soc_codes": [
@@ -377,7 +377,7 @@
   "141": {
     "code": "141",
     "exposure": 4.2,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Gerentes de hotéis e restaurantes",
     "onet_soc_codes": [
@@ -397,7 +397,7 @@
   "142": {
     "code": "142",
     "exposure": 4.8,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Gerentes de comércios atacadistas e varejistas",
     "onet_soc_codes": [
@@ -414,7 +414,7 @@
   "143": {
     "code": "143",
     "exposure": 5.2,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Outros gerentes de serviços",
     "onet_soc_codes": [
@@ -455,7 +455,7 @@
   "21": {
     "code": "21",
     "exposure": null,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Graduados e praças das forças armadas",
     "onet_soc_codes": [],
@@ -470,7 +470,7 @@
   "211": {
     "code": "211",
     "exposure": 4.7,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Físicos, químicos e afins",
     "onet_soc_codes": [
@@ -505,7 +505,7 @@
   "213": {
     "code": "213",
     "exposure": 4.9,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Profissionais em ciências biológicas",
     "onet_soc_codes": [
@@ -575,7 +575,7 @@
   "214": {
     "code": "214",
     "exposure": 5.2,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Engenheiros (exclusive eletrotecnólogos)",
     "onet_soc_codes": [
@@ -667,7 +667,7 @@
   "215": {
     "code": "215",
     "exposure": 6.1,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Engenheiros eletrotécnicos",
     "onet_soc_codes": [
@@ -692,7 +692,7 @@
   "216": {
     "code": "216",
     "exposure": 4.9,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Arquitetos, urbanistas, agrimensores e desenhistas",
     "onet_soc_codes": [
@@ -736,7 +736,7 @@
   "221": {
     "code": "221",
     "exposure": 4.2,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Médicos",
     "onet_soc_codes": [
@@ -809,7 +809,7 @@
   "222": {
     "code": "222",
     "exposure": 3.8,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Profissionais de enfermagem e partos",
     "onet_soc_codes": [
@@ -843,7 +843,7 @@
   "225": {
     "code": "225",
     "exposure": 2.7,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Veterinários",
     "onet_soc_codes": [
@@ -860,7 +860,7 @@
   "226": {
     "code": "226",
     "exposure": 3.6,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Outros profissionais da saúde",
     "onet_soc_codes": [
@@ -944,7 +944,7 @@
   "231": {
     "code": "231",
     "exposure": 4.8,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Professores de universidades e do ensino superior",
     "onet_soc_codes": [
@@ -1065,7 +1065,7 @@
   "232": {
     "code": "232",
     "exposure": 4.1,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Professores de formação profissional",
     "onet_soc_codes": [
@@ -1088,7 +1088,7 @@
   "233": {
     "code": "233",
     "exposure": 3.3,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Professores do ensino médio",
     "onet_soc_codes": [
@@ -1105,7 +1105,7 @@
   "234": {
     "code": "234",
     "exposure": 3.0,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Professores do ensino fundamental e pré-escolar",
     "onet_soc_codes": [
@@ -1131,7 +1131,7 @@
   "235": {
     "code": "235",
     "exposure": 3.7,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Outros profissionais do ensino",
     "onet_soc_codes": [
@@ -1186,7 +1186,7 @@
   "241": {
     "code": "241",
     "exposure": 5.4,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Especialistas em finanças",
     "onet_soc_codes": [
@@ -1224,7 +1224,7 @@
   "242": {
     "code": "242",
     "exposure": 5.3,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Especialistas em organização de administração",
     "onet_soc_codes": [
@@ -1275,7 +1275,7 @@
   "243": {
     "code": "243",
     "exposure": 5.4,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Profissionais de vendas, comercialização e relações públicas",
     "onet_soc_codes": [
@@ -1313,7 +1313,7 @@
   "251": {
     "code": "251",
     "exposure": 7.5,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Desenvolvedores e analistas de programas e aplicativos (software) e multimídia",
     "onet_soc_codes": [
@@ -1379,7 +1379,7 @@
   "252": {
     "code": "252",
     "exposure": 6.8,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Especialistas em base de dados e em redes de computadores",
     "onet_soc_codes": [
@@ -1442,7 +1442,7 @@
   "261": {
     "code": "261",
     "exposure": 4.3,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Profissionais em direito",
     "onet_soc_codes": [
@@ -1468,7 +1468,7 @@
   "262": {
     "code": "262",
     "exposure": 5.3,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Arquivologistas, curadores de museus, bibliotecários e afins",
     "onet_soc_codes": [
@@ -1491,7 +1491,7 @@
   "263": {
     "code": "263",
     "exposure": 3.9,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Especialistas em ciências sociais e teologia",
     "onet_soc_codes": [
@@ -1575,7 +1575,7 @@
   "264": {
     "code": "264",
     "exposure": 7.2,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Escritores, jornalistas e linguistas",
     "onet_soc_codes": [
@@ -1609,7 +1609,7 @@
   "265": {
     "code": "265",
     "exposure": 4.8,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Artistas criativos e interpretativos",
     "onet_soc_codes": [
@@ -1670,7 +1670,7 @@
   "311": {
     "code": "311",
     "exposure": 4.3,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Técnicos em ciências físicas e da engenharia",
     "onet_soc_codes": [
@@ -1774,7 +1774,7 @@
   "312": {
     "code": "312",
     "exposure": 4.1,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Supervisores em engenharia de minas, de indústrias de transformação e da construção",
     "onet_soc_codes": [
@@ -1796,7 +1796,7 @@
   "313": {
     "code": "313",
     "exposure": 3.4,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Técnicos em controle de processos",
     "onet_soc_codes": [
@@ -1853,7 +1853,7 @@
   "314": {
     "code": "314",
     "exposure": 4.0,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Técnicos e profissionais de nível médio em ciências biológicas e afins",
     "onet_soc_codes": [
@@ -1884,7 +1884,7 @@
   "315": {
     "code": "315",
     "exposure": 3.0,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Técnicos e controladores da navegação marítima e aeronáutica",
     "onet_soc_codes": [
@@ -1923,7 +1923,7 @@
   "321": {
     "code": "321",
     "exposure": 2.6,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Técnicos médicos e farmacêuticos",
     "onet_soc_codes": [
@@ -1981,7 +1981,7 @@
   "322": {
     "code": "322",
     "exposure": 2.7,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Profissionais de nível médio de enfermagem e partos",
     "onet_soc_codes": [
@@ -2007,7 +2007,7 @@
   "323": {
     "code": "323",
     "exposure": 4.3,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Profissionais de nível médio de medicina tradicional e alternativa",
     "onet_soc_codes": [
@@ -2030,7 +2030,7 @@
   "324": {
     "code": "324",
     "exposure": 1.9,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Técnicos e assistentes veterinários",
     "onet_soc_codes": [
@@ -2050,7 +2050,7 @@
   "325": {
     "code": "325",
     "exposure": 3.1,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Outros profissionais de nível médio da saúde",
     "onet_soc_codes": [
@@ -2167,7 +2167,7 @@
   "331": {
     "code": "331",
     "exposure": 6.4,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Profissionais de nível médio em finanças e matemática",
     "onet_soc_codes": [
@@ -2224,7 +2224,7 @@
   "332": {
     "code": "332",
     "exposure": 5.5,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Agentes e corretores comerciais",
     "onet_soc_codes": [
@@ -2275,7 +2275,7 @@
   "333": {
     "code": "333",
     "exposure": 5.5,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Agentes de serviços comerciais",
     "onet_soc_codes": [
@@ -2351,7 +2351,7 @@
   "334": {
     "code": "334",
     "exposure": 5.8,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Secretários administrativos e especializados",
     "onet_soc_codes": [
@@ -2383,7 +2383,7 @@
   "335": {
     "code": "335",
     "exposure": 4.6,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Agentes da administração pública para aplicação da lei e afins",
     "onet_soc_codes": [
@@ -2439,7 +2439,7 @@
   "341": {
     "code": "341",
     "exposure": 4.5,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Profissionais de nível médio de serviços jurídicos, sociais e religiosos",
     "onet_soc_codes": [
@@ -2476,7 +2476,7 @@
   "342": {
     "code": "342",
     "exposure": 2.6,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Trabalhadores do esporte e condicionamento físico",
     "onet_soc_codes": [
@@ -2517,7 +2517,7 @@
   "343": {
     "code": "343",
     "exposure": 4.6,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Profissionais de nível médio em atividades culturais, artísticas e culinárias",
     "onet_soc_codes": [
@@ -2572,7 +2572,7 @@
   "351": {
     "code": "351",
     "exposure": 6.9,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Técnicos em operações de tecnologia da informação e das comunicações e assistência ao usuário",
     "onet_soc_codes": [
@@ -2622,7 +2622,7 @@
   "352": {
     "code": "352",
     "exposure": 4.3,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Técnicos em telecomunicações e radiodifusão",
     "onet_soc_codes": [
@@ -2656,7 +2656,7 @@
   "41": {
     "code": "41",
     "exposure": 3.5,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": "Policiais militares brasileiros exercem policiamento ostensivo civil (patrulha, ordem publica) apesar do enquadramento institucional 'militar' -- sem equivalente direto no ISCO-08/SOC padrao (que reserva o grupo 0/55-xxxx a forcas armadas propriamente ditas). Mapeado para SOC 33-3051 (Police and Sheriff's Patrol Officers) pelo conteudo real da ocupacao.",
     "name": "Policiais militares",
     "onet_soc_codes": [
@@ -2675,7 +2675,7 @@
   "411": {
     "code": "411",
     "exposure": 5.8,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Escriturários gerais",
     "onet_soc_codes": [
@@ -2695,7 +2695,7 @@
   "412": {
     "code": "412",
     "exposure": 6.4,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Secretários (geral)",
     "onet_soc_codes": [
@@ -2712,7 +2712,7 @@
   "413": {
     "code": "413",
     "exposure": 8.6,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Operadores de máquinas de escritório",
     "onet_soc_codes": [
@@ -2732,7 +2732,7 @@
   "421": {
     "code": "421",
     "exposure": 5.2,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Caixas de banco, cobradores, pagadores e afins",
     "onet_soc_codes": [
@@ -2773,7 +2773,7 @@
   "422": {
     "code": "422",
     "exposure": 5.6,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Trabalhadores de serviços de informação ao cliente",
     "onet_soc_codes": [
@@ -2825,7 +2825,7 @@
   "431": {
     "code": "431",
     "exposure": 7.8,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Auxiliares contábeis e financeiros",
     "onet_soc_codes": [
@@ -2864,7 +2864,7 @@
   "432": {
     "code": "432",
     "exposure": 3.1,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Trabalhadores encarregados de registros de materiais e de transportes",
     "onet_soc_codes": [
@@ -2893,7 +2893,7 @@
   "441": {
     "code": "441",
     "exposure": 4.7,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Outros trabalhadores de apoio administrativo",
     "onet_soc_codes": [
@@ -2960,7 +2960,7 @@
   "51": {
     "code": "51",
     "exposure": 1.4,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": "Bombeiros militares brasileiros exercem combate a incendio e resgate civil apesar do enquadramento institucional 'militar' -- mesma logica de 41. Mapeado para SOC 33-2011 (Firefighters).",
     "name": "Bombeiros militares",
     "onet_soc_codes": [
@@ -2977,7 +2977,7 @@
   "511": {
     "code": "511",
     "exposure": 3.1,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Trabalhadores do serviço direto aos passageiros",
     "onet_soc_codes": [
@@ -3016,7 +3016,7 @@
   "512": {
     "code": "512",
     "exposure": 2.5,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Cozinheiros",
     "onet_soc_codes": [
@@ -3046,7 +3046,7 @@
   "513": {
     "code": "513",
     "exposure": 1.8,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Garçons e atendentes de bar",
     "onet_soc_codes": [
@@ -3069,7 +3069,7 @@
   "514": {
     "code": "514",
     "exposure": 2.3,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Cabeleireiros, especialistas em tratamento de beleza e afins",
     "onet_soc_codes": [
@@ -3110,7 +3110,7 @@
   "515": {
     "code": "515",
     "exposure": 0.2,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Supervisores de manutenção e limpeza de edifícios",
     "onet_soc_codes": [
@@ -3134,7 +3134,7 @@
   "516": {
     "code": "516",
     "exposure": 2.4,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Outros trabalhadores de serviços pessoais",
     "onet_soc_codes": [
@@ -3198,7 +3198,7 @@
   "521": {
     "code": "521",
     "exposure": 1.3,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Vendedores de rua e postos de mercado",
     "onet_soc_codes": [
@@ -3218,7 +3218,7 @@
   "522": {
     "code": "522",
     "exposure": 4.1,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Comerciantes e vendedores de lojas",
     "onet_soc_codes": [
@@ -3244,7 +3244,7 @@
   "523": {
     "code": "523",
     "exposure": 2.1,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Caixas e expedidores de bilhetes",
     "onet_soc_codes": [
@@ -3264,7 +3264,7 @@
   "524": {
     "code": "524",
     "exposure": 2.8,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Outros vendedores",
     "onet_soc_codes": [
@@ -3312,7 +3312,7 @@
   "531": {
     "code": "531",
     "exposure": 3.1,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Cuidadores de crianças e ajudantes de professores",
     "onet_soc_codes": [
@@ -3347,7 +3347,7 @@
   "532": {
     "code": "532",
     "exposure": 2.2,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Trabalhadores de cuidados pessoais nos serviços de saúde",
     "onet_soc_codes": [
@@ -3408,7 +3408,7 @@
   "541": {
     "code": "541",
     "exposure": 2.5,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Trabalhadores dos serviços de proteção e segurança",
     "onet_soc_codes": [
@@ -3482,7 +3482,7 @@
   "611": {
     "code": "611",
     "exposure": 1.4,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Agricultores e trabalhadores qualificados em atividades da agricultura",
     "onet_soc_codes": [
@@ -3502,7 +3502,7 @@
   "612": {
     "code": "612",
     "exposure": 2.8,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Criadores e trabalhadores qualificados da pecuária",
     "onet_soc_codes": [
@@ -3522,7 +3522,7 @@
   "613": {
     "code": "613",
     "exposure": 1.4,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Produtores e trabalhadores qualificados de exploração agropecuária mista",
     "onet_soc_codes": [
@@ -3545,7 +3545,7 @@
   "621": {
     "code": "621",
     "exposure": 2.0,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Trabalhadores florestais qualificados e afins",
     "onet_soc_codes": [
@@ -3575,7 +3575,7 @@
   "622": {
     "code": "622",
     "exposure": 1.6,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Pescadores e caçadores",
     "onet_soc_codes": [
@@ -3598,7 +3598,7 @@
   "711": {
     "code": "711",
     "exposure": 0.9,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Trabalhadores da construção civil em obras estruturais",
     "onet_soc_codes": [
@@ -3651,7 +3651,7 @@
   "712": {
     "code": "712",
     "exposure": 1.7,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Trabalhadores qualificados da construção (acabamento)",
     "onet_soc_codes": [
@@ -3712,7 +3712,7 @@
   "713": {
     "code": "713",
     "exposure": 0.5,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Pintores, limpadores de fachadas e afins",
     "onet_soc_codes": [
@@ -3736,7 +3736,7 @@
   "721": {
     "code": "721",
     "exposure": 0.7,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Moldadores, soldadores, chapistas, caldeireiros, montadores de estruturas metálicas e afins",
     "onet_soc_codes": [
@@ -3783,7 +3783,7 @@
   "722": {
     "code": "722",
     "exposure": 1.6,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Ferreiros, ferramenteiros e afins",
     "onet_soc_codes": [
@@ -3855,7 +3855,7 @@
   "723": {
     "code": "723",
     "exposure": 1.7,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Mecânicos e reparadores de máquinas",
     "onet_soc_codes": [
@@ -3929,7 +3929,7 @@
   "731": {
     "code": "731",
     "exposure": 3.5,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Artesãos",
     "onet_soc_codes": [
@@ -3992,7 +3992,7 @@
   "732": {
     "code": "732",
     "exposure": 2.8,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Trabalhadores qualificados e operários das artes gráficas",
     "onet_soc_codes": [
@@ -4018,7 +4018,7 @@
   "741": {
     "code": "741",
     "exposure": 2.3,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Instaladores e reparadores de equipamentos elétricos",
     "onet_soc_codes": [
@@ -4080,7 +4080,7 @@
   "742": {
     "code": "742",
     "exposure": 3.3,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Instaladores e reparadores de equipamentos eletrônicos e de telecomunicações",
     "onet_soc_codes": [
@@ -4127,7 +4127,7 @@
   "751": {
     "code": "751",
     "exposure": 1.2,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Trabalhadores qualificados do processamento de alimentos e afins",
     "onet_soc_codes": [
@@ -4184,7 +4184,7 @@
   "752": {
     "code": "752",
     "exposure": 0.9,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Trabalhadores qualificados do tratamento da madeira, marceneiros e afins",
     "onet_soc_codes": [
@@ -4219,7 +4219,7 @@
   "753": {
     "code": "753",
     "exposure": 1.8,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Trabalhadores qualificados e operários da confecção de roupas, calçados e acessórios",
     "onet_soc_codes": [
@@ -4261,7 +4261,7 @@
   "754": {
     "code": "754",
     "exposure": 3.6,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Outros trabalhadores qualificados e operários da indústria e do artesanato",
     "onet_soc_codes": [
@@ -4299,7 +4299,7 @@
   "811": {
     "code": "811",
     "exposure": 0.7,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Operadores de instalações mineradoras e de extração e processamento de minerais",
     "onet_soc_codes": [
@@ -4367,7 +4367,7 @@
   "812": {
     "code": "812",
     "exposure": 0.7,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Operadores de instalações de processamento e recobridoras de metais",
     "onet_soc_codes": [
@@ -4405,7 +4405,7 @@
   "813": {
     "code": "813",
     "exposure": 1.4,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Operadores de instalações e máquinas de produtos químicos e fotográficos",
     "onet_soc_codes": [
@@ -4437,7 +4437,7 @@
   "814": {
     "code": "814",
     "exposure": 0.6,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Operadores de máquinas para fabricar produtos de borracha, de papel e de material plástico",
     "onet_soc_codes": [
@@ -4515,7 +4515,7 @@
   "815": {
     "code": "815",
     "exposure": 0.7,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Operadores de máquinas para fabricar produtos de têxteis e artigos de couro e pele",
     "onet_soc_codes": [
@@ -4548,7 +4548,7 @@
   "816": {
     "code": "816",
     "exposure": 1.0,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Operadores de máquinas para elaborar alimentos e produtos afins",
     "onet_soc_codes": [
@@ -4578,7 +4578,7 @@
   "817": {
     "code": "817",
     "exposure": 0.3,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Operadores de instalações para a preparação de papel e de processamento de madeira",
     "onet_soc_codes": [
@@ -4601,7 +4601,7 @@
   "818": {
     "code": "818",
     "exposure": 0.6,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Outros operadores de instalações fixas e máquinas",
     "onet_soc_codes": [
@@ -4657,7 +4657,7 @@
   "821": {
     "code": "821",
     "exposure": 1.1,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Montadores",
     "onet_soc_codes": [
@@ -4696,7 +4696,7 @@
   "831": {
     "code": "831",
     "exposure": 2.5,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Maquinistas de locomotivas e afins",
     "onet_soc_codes": [
@@ -4736,7 +4736,7 @@
   "832": {
     "code": "832",
     "exposure": 2.9,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Condutores de automóveis, caminhonetes e motocicletas",
     "onet_soc_codes": [
@@ -4776,7 +4776,7 @@
   "833": {
     "code": "833",
     "exposure": 3.1,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Condutores de caminhões pesados e ônibus",
     "onet_soc_codes": [
@@ -4812,7 +4812,7 @@
   "834": {
     "code": "834",
     "exposure": 1.2,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Operadores de equipamentos móveis pesados",
     "onet_soc_codes": [
@@ -4870,7 +4870,7 @@
   "835": {
     "code": "835",
     "exposure": 0.4,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Marinheiros de coberta e afins",
     "onet_soc_codes": [
@@ -4890,7 +4890,7 @@
   "911": {
     "code": "911",
     "exposure": 0.1,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Trabalhadores domésticos e outros trabalhadores de limpeza de interior de edifícios",
     "onet_soc_codes": [
@@ -4913,7 +4913,7 @@
   "912": {
     "code": "912",
     "exposure": 0.1,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Lavadores de veículos, janelas, roupas e outras limpezas  manuais",
     "onet_soc_codes": [
@@ -4940,7 +4940,7 @@
   "921": {
     "code": "921",
     "exposure": 0.6,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Trabalhadores elementares da agropecuária, da pesca e florestais",
     "onet_soc_codes": [
@@ -4972,7 +4972,7 @@
   "931": {
     "code": "931",
     "exposure": 0.4,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Trabalhadores elementares da mineração e da construção",
     "onet_soc_codes": [
@@ -5018,7 +5018,7 @@
   "932": {
     "code": "932",
     "exposure": 0.7,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Trabalhadores elementares da indústria de transformação",
     "onet_soc_codes": [
@@ -5053,7 +5053,7 @@
   "933": {
     "code": "933",
     "exposure": 1.9,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Trabalhadores elementares do transporte e armazenamento",
     "onet_soc_codes": [
@@ -5094,7 +5094,7 @@
   "941": {
     "code": "941",
     "exposure": 0.1,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Ajudantes de preparação de alimentos",
     "onet_soc_codes": [
@@ -5124,7 +5124,7 @@
   "951": {
     "code": "951",
     "exposure": 0.4,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Trabalhadores ambulantes dos serviços e afins",
     "onet_soc_codes": [
@@ -5142,7 +5142,7 @@
   "952": {
     "code": "952",
     "exposure": 2.6,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Vendedores ambulantes (exclusive de serviços de alimentação)",
     "onet_soc_codes": [
@@ -5159,7 +5159,7 @@
   "961": {
     "code": "961",
     "exposure": 2.9,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Coletores de lixo",
     "onet_soc_codes": [
@@ -5184,7 +5184,7 @@
   "962": {
     "code": "962",
     "exposure": 0.9,
-    "generated_at": "2026-08-19T00:29:18.466769+00:00",
+    "generated_at": "2026-08-23T20:38:07.557527+00:00",
     "mapping_note": null,
     "name": "Outras ocupações elementares",
     "onet_soc_codes": [
@@ -5241,6 +5241,6 @@
     "coverage_definition": "Ocupacoes sem correspondencia O*NET-SOC ficam com exposicao null",
     "crosswalk_version": "isco08-soc2010-soc2018-bls-crosswalk",
     "exposure_index_version": "eloundou-2024-dv-beta",
-    "generated_at": "2026-08-19T00:29:18.466769+00:00"
+    "generated_at": "2026-08-23T20:38:07.557527+00:00"
   }
 }

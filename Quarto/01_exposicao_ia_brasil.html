@@ -136,7 +136,7 @@ window.Quarto = {
 <section id="motivação-a-dualidade-do-mercado-de-trabalho-brasileiro" class="level2">
 <h2 class="anchored" data-anchor-id="motivação-a-dualidade-do-mercado-de-trabalho-brasileiro">Motivação: A Dualidade do Mercado de Trabalho Brasileiro</h2>
 <div class="columns">
-<div class="column" style="width:58%;">
+<div class="column" style="width:56%;">
 <p><strong>O debate global sobre IA:</strong></p>
 <ul>
 <li>Foco em economias avançadas com alta formalidade e predomínio de serviços corporativos <span class="citation" data-cites="eloundou2024gpts">(<a href="#ref-eloundou2024gpts" role="doc-biblioref">Eloundou et al. 2024</a>)</span>.</li>
@@ -148,15 +148,13 @@ window.Quarto = {
 <li><span class="emorygold"><strong>35,7 milhões de trabalhadores (35,0%)</strong></span> em ocupações de baixíssima exposição à IA (<span class="math inline">\(\theta_j \le 2\)</span>).</li>
 <li>Forte heterogeneidade regional: formalidade varia de 40% (MA/PA) a 65% (SP/SC).</li>
 </ul>
-</div><div class="column" style="width:42%;">
+</div><div class="column" style="width:38%;">
 <div class="keybox">
 <p><strong>Questão Central</strong></p>
 <p>Como a coexistência entre <span class="emorygold"><strong>informalidade</strong></span> e <span class="emorygold"><strong>capital humano</strong></span> molda a exposição à IA em uma economia em desenvolvimento?</p>
 </div>
-<div class="methodbox">
-<p><strong>Mecanismo Proposto</strong></p>
-<p>A IA é complementar ao capital humano formal, mas a informalidade atua como barreira de absorção tecnológica.</p>
-</div>
+<p><strong>Mecanismo Proposto:</strong><br>
+A IA é complementar ao capital humano formal, mas a informalidade atua como barreira de absorção tecnológica.</p>
 </div>
 </div>
 </section>
@@ -166,7 +164,7 @@ window.Quarto = {
 <li><strong>Gradiente Educacional:</strong>
 <ul>
 <li>Trabalhadores mais escolarizados selecionam-se em postos de trabalho mais expostos à IA?</li>
-<li>Esse gradiente resiste ao controle de rendimento e covariadas mincerianas?</li>
+<li>Esse gradiente resiste ao controle de rendimento e covariáveis mincerianas?</li>
 </ul></li>
 <li><strong>O Canal da Informalidade (Mediação):</strong>
 <ul>
@@ -183,17 +181,17 @@ window.Quarto = {
 <section id="modelo-de-designação-ocupacional-assignment-model" class="level2">
 <h2 class="anchored" data-anchor-id="modelo-de-designação-ocupacional-assignment-model">Modelo de Designação Ocupacional (Assignment Model)</h2>
 <div class="columns">
-<div class="column" style="width:50%;">
+<div class="column" style="width:48%;">
 <p><strong>Trabalhadores e Ocupações:</strong></p>
 <ul>
 <li>Escolaridade contínua: <span class="math inline">\(e \in [e_{\min}, e_{\max}]\)</span>.</li>
-<li>Ocupações com exposição tecnológica: <span class="math inline">\(\theta_j \in [0, 10]\)</span>.</li>
+<li>Ocupações com exposição à IA: <span class="math inline">\(\theta_j \in [0, 10]\)</span>.</li>
 <li>Regimes contratuais: <span class="math inline">\(s \in \{F, I\}\)</span> (Formal vs.&nbsp;Informal).</li>
 </ul>
 <p><strong>Função de Produção Primitiva:</strong></p>
 <p><span class="math display">\[y_{js}(e) = g(e)\big(1 + \kappa_s \theta_j\big)\]</span></p>
-<p>com <span class="math inline">\(g'(e) &gt; 0, g''(e) \le 0\)</span> e <span class="math inline">\(\Delta\kappa \equiv \kappa_{\text{org}} - \kappa_{\text{ind}} &gt; 0\)</span>.</p>
-</div><div class="column" style="width:50%;">
+<p>com <span class="math inline">\(g'(e) &gt; 0, g''(e) \le 0\)</span> e <span class="math inline">\(\Delta\kappa \equiv \kappa_F - \kappa_I &gt; 0\)</span> (<span class="math inline">\(\kappa_F \equiv \kappa_{\text{org}} &gt; \kappa_I \equiv \kappa_{\text{ind}}\)</span>).</p>
+</div><div class="column" style="width:48%;">
 <div class="methodbox">
 <p><strong>Supermodularidade Estrita</strong></p>
 <p><span class="math display">\[\frac{\partial^2 y}{\partial e \partial \theta} = g'(e)\,\kappa_s &gt; 0\]</span></p>
@@ -210,9 +208,10 @@ window.Quarto = {
 <section id="arbitragem-formal-informal-e-previsões-teóricas" class="level2">
 <h2 class="anchored" data-anchor-id="arbitragem-formal-informal-e-previsões-teóricas">Arbitragem Formal-Informal e Previsões Teóricas</h2>
 <div class="columns">
-<div class="column" style="width:50%;">
+<div class="column" style="width:48%;">
 <p><strong>Limiar de Formalização Ocupacional:</strong></p>
 <p><span class="math display">\[w_{jF}(e) \ge w_{jI}(e) \iff g(e)\,\Delta\kappa\,\theta_j \ge c\]</span></p>
+<p>. . .</p>
 <p><span class="math display">\[
 \boxed{e^*_j = g^{-1}\left(\frac{c}{\Delta\kappa\,\theta_j}\right)}
 \quad \implies \frac{\partial e^*_j}{\partial \theta_j} &lt; 0
@@ -220,15 +219,13 @@ window.Quarto = {
 <ul>
 <li>Ocupações com maior <span class="math inline">\(\theta_j\)</span> reduzem a exigência educacional mínima para viabilizar a formalidade corporativa.</li>
 </ul>
-</div><div class="column" style="width:50%;">
+</div><div class="column" style="width:48%;">
 <div class="keybox">
 <p><strong>Proposição 1 (Gradiente Positivo)</strong></p>
-<p>Por supermodularidade estrita (Topkis, 1998), a alocação de equilíbrio <span class="math inline">\(\theta^*(e)\)</span> é monotonicamente crescente em <span class="math inline">\(e\)</span>: <span class="math inline">\(\beta_1 &gt; 0\)</span>.</p>
+<p>Por supermodularidade estrita <span class="citation" data-cites="topkis1998supermodularity">(<a href="#ref-topkis1998supermodularity" role="doc-biblioref">Topkis 1998</a>)</span>, a alocação de equilíbrio <span class="math inline">\(\theta^*(e)\)</span> é monotonicamente crescente em <span class="math inline">\(e\)</span>: <span class="math inline">\(\beta_1 &gt; 0\)</span>.</p>
 </div>
-<div class="resultbox">
-<p><strong>Corolário 1 (Mediação Parcial)</strong></p>
-<p>A associação bruta exposição–formalidade atenua-se ao condicionar na escolaridade, mas retém coeficiente direto significante (<span class="math inline">\(\Delta\kappa &gt; 0\)</span>).</p>
-</div>
+<p><strong>Corolário 1 (Mediação Parcial):</strong><br>
+A associação bruta exposição–formalidade atenua-se ao condicionar na escolaridade, mas retém coeficiente direto significativo (<span class="math inline">\(\Delta\kappa &gt; 0\)</span>).</p>
 </div>
 </div>
 </section>
@@ -238,7 +235,7 @@ window.Quarto = {
 <section id="microdados-da-pnad-contínua-e-construção-do-escore-theta_j" class="level2">
 <h2 class="anchored" data-anchor-id="microdados-da-pnad-contínua-e-construção-do-escore-theta_j">Microdados da PNAD Contínua e Construção do Escore <span class="math inline">\(\theta_j\)</span></h2>
 <div class="columns">
-<div class="column" style="width:54%;">
+<div class="column" style="width:52%;">
 <p><strong>Base Amostral:</strong></p>
 <ul>
 <li><strong>IBGE PNAD Contínua 2026Q1</strong>: <span class="math inline">\(N = 227.629\)</span> indivíduos ocupados, representativos de 102,1 milhões de trabalhadores.</li>
@@ -250,34 +247,36 @@ window.Quarto = {
 <li>Crosswalk: <span class="math inline">\(\text{O*NET} \to \text{ISCO-08} \to \text{COD (IBGE)}\)</span>.</li>
 <li><span class="math inline">\(G = 122\)</span> grupos ocupacionais a 4 dígitos.</li>
 </ul>
-</div><div class="column" style="width:46%;">
+</div><div class="column" style="width:44%;">
 <div class="methodbox">
 <p><strong>Correção de Moulton (1986)</strong></p>
-<p>Erros-padrão agrupados por <span class="emorygold"><strong>122 clusters ocupacionais</strong></span> (Cameron, Gelbach e Miller, 2008).</p>
+<p>Erros-padrão agrupados por <span class="emorygold"><strong>122 clusters ocupacionais</strong></span> <span class="citation" data-cites="cameron2008bootstrap">(<a href="#ref-cameron2008bootstrap" role="doc-biblioref">Cameron et al. 2008</a>)</span>.</p>
 </div>
-<div class="highlightbox">
-<p><strong>Controles Mincerianos</strong></p>
+<p><strong>Estratégia de Controle Minceriano:</strong></p>
 <p>Idade, idade<span class="math inline">\(^2\)</span>, dummy de gênero feminino e vetor de dummies de cor/raça (IBGE).</p>
-</div>
 </div>
 </div>
 </section>
 <section id="especificações-econométricas-estimadas" class="level2">
 <h2 class="anchored" data-anchor-id="especificações-econométricas-estimadas">Especificações Econométricas Estimadas</h2>
+<div class="columns">
+<div class="column" style="width:48%;">
+<p><strong>Modelos no Nível Individual:</strong></p>
 <ul>
 <li><p><strong>S1 (Gradiente Baseline):</strong> <span class="math display">\[\theta_{j(i)} = \alpha + \beta_1 \, e_i + \mathbf{X}_i'\boldsymbol{\gamma} + \varepsilon_i\]</span></p></li>
-<li><p><strong>S2 (Controle de Rendimento Habitual):</strong> <span class="math display">\[\theta_{j(i)} = \alpha + \beta_1 \, e_i + \beta_2 \, w_i + \mathbf{X}_i'\boldsymbol{\gamma} + \varepsilon_i\]</span></p></li>
-<li><p><strong>S3a &amp; S3 (Mediação da Informalidade):</strong> <span class="math display">\[\begin{aligned}
-  \text{S3a:} \quad \text{informal}_i &amp;= \alpha + \delta_1 \, \theta_{j(i)} \\
-  &amp;\quad + \mathbf{X}_i'\boldsymbol{\gamma} + \varepsilon_i \\
-  \text{S3:} \quad \text{informal}_i &amp;= \alpha + \delta_1 \, \theta_{j(i)} + \delta_2 \, e_i \\
-  &amp;\quad + \mathbf{X}_i'\boldsymbol{\gamma} + \varepsilon_i
-\end{aligned}\]</span></p></li>
-<li><p><strong>S4 (Interação Regional Leave-One-Out):</strong> <span class="math display">\[\begin{aligned}
-  \theta_{j(i)} = \alpha + \beta_1 \, e_i &amp;+ \beta_2 \big(e_i \times \text{formal}_{-i, u}^{\text{LOO}}\big) \\
+<li><p><strong>S2 (Controle de Rendimento):</strong> <span class="math display">\[\theta_{j(i)} = \alpha + \beta_1 \, e_i + \beta_{\text{sal}} \, w_i + \mathbf{X}_i'\boldsymbol{\gamma} + \varepsilon_i\]</span></p></li>
+</ul>
+</div><div class="column" style="width:48%;">
+<p><strong>Mecanismos e Espaço:</strong></p>
+<ul>
+<li><p><strong>S3 (Mediação da Informalidade):</strong> <span class="math display">\[\text{informal}_i = \alpha + \delta_1 \, \theta_{j(i)} + \delta_2 \, e_i + \mathbf{X}_i'\boldsymbol{\gamma} + \varepsilon_i\]</span></p></li>
+<li><p><strong>S4 (Interação Regional LOO):</strong> <span class="math display">\[\begin{aligned}
+  \theta_{j(i)} = \alpha &amp;+ \beta_1 \, e_i + \beta_2 \big(e_i \times \text{formal}_{-i, u}^{\text{LOO}}\big) \\
   &amp;+ \beta_3 \, \text{formal}_{-i, u}^{\text{LOO}} + \mathbf{X}_i'\boldsymbol{\gamma} + \varepsilon_i
 \end{aligned}\]</span></p></li>
 </ul>
+</div>
+</div>
 </section>
 </section>
 <section id="resultados-empíricos-e-mecanismos" class="level1">
@@ -285,22 +284,18 @@ window.Quarto = {
 <section id="resultado-1-gradiente-escolaridadeexposição-hatbeta_1-023" class="level2">
 <h2 class="anchored" data-anchor-id="resultado-1-gradiente-escolaridadeexposição-hatbeta_1-023">Resultado 1: Gradiente Escolaridade–Exposição (<span class="math inline">\(\hat{\beta}_1 = 0{,}23\)</span>)</h2>
 <div class="columns">
-<div class="column" style="width:52%;">
+<div class="column" style="width:50%;">
 <p><strong>Estimação no Nível Individual (<span class="math inline">\(N = 227.629\)</span>):</strong></p>
 <ul>
 <li><strong>S1 Baseline:</strong> <span class="math inline">\(\hat{\beta}_1 = \mathbf{0{,}2288} \approx \mathbf{0{,}23}\)</span> (EP <span class="math inline">\(0{,}028; p &lt; 0{,}001; R^2 = 0{,}246\)</span>).</li>
 <li>Cada 4 anos de estudo elevam a exposição em <span class="math inline">\(\sim 1\)</span> ponto no escore 0–10.</li>
-</ul>
-<p><strong>S2 com Controle Salarial:</strong></p>
-<ul>
-<li>Escolaridade: <span class="math inline">\(\hat{\beta}_1 = \mathbf{0{,}2097} \approx \mathbf{0{,}21}\)</span> (EP <span class="math inline">\(0{,}026\)</span>).</li>
-<li>Rendimento: <span class="math inline">\(\hat{\beta}_2 = \mathbf{0{,}043}\)</span> por R$ 1.000 (<span class="math inline">\(p &lt; 0{,}001\)</span>).</li>
+<li><strong>S2 com Salário:</strong> <span class="math inline">\(\hat{\beta}_1 = \mathbf{0{,}21}\)</span> (EP <span class="math inline">\(0{,}026\)</span>); Rendimento: <span class="math inline">\(\hat{\beta}_{\text{sal}} = \mathbf{0{,}043}\)</span> (<span class="math inline">\(p &lt; 0{,}001\)</span>).</li>
 </ul>
 <div class="keybox">
 <p><strong>Limites de Oster (2019)</strong></p>
-<p><span class="math inline">\(\delta = \mathbf{1{,}64} &gt; 1\)</span> sob <span class="math inline">\(R_{\max} = 1{,}3 R^2\)</span>: seleção em não-observáveis precisaria ser 64% superior a todos os controles observáveis para anular <span class="math inline">\(\hat{\beta}_1\)</span>.</p>
+<p><span class="math inline">\(\delta = \mathbf{1{,}64} &gt; 1\)</span> sob <span class="math inline">\(R_{\max} = 1{,}3 R^2\)</span>: seleção em não observáveis precisaria ser 64% superior aos controles para anular <span class="math inline">\(\hat{\beta}_1\)</span>.</p>
 </div>
-</div><div class="column" style="width:48%;">
+</div><div class="column" style="width:46%;">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../Figures/fig1_gradiente.svg" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
@@ -312,20 +307,21 @@ window.Quarto = {
 <section id="resultado-2-mediação-parcial-da-informalidade-corolário-1" class="level2">
 <h2 class="anchored" data-anchor-id="resultado-2-mediação-parcial-da-informalidade-corolário-1">Resultado 2: Mediação Parcial da Informalidade (Corolário 1)</h2>
 <div class="columns">
-<div class="column" style="width:52%;">
+<div class="column" style="width:50%;">
 <p><strong>Decomposição Linear Exata:</strong></p>
 <ul>
 <li><strong>S3a (Bruta):</strong> <span class="math inline">\(\hat{\delta}_1 = \mathbf{-6{,}23}\)</span> p.p. por ponto de <span class="math inline">\(\theta_j\)</span> (EP <span class="math inline">\(0{,}99; p &lt; 0{,}001\)</span>).</li>
 <li><strong>S3 (Condicional):</strong> <span class="math inline">\(\hat{\delta}_1 = \mathbf{-3{,}91}\)</span> p.p. (EP <span class="math inline">\(0{,}96\)</span>) e <span class="math inline">\(\hat{\delta}_2 = \mathbf{-2{,}61}\)</span> p.p. por ano de estudo.</li>
 </ul>
+<p>. . .</p>
 <div class="resultbox">
-<p><strong>Decomposição de Canais</strong></p>
+<p><strong>Decomposição de Canais: <span class="math inline">\(\frac{-3{,}91}{-6{,}23} = \mathbf{62{,}8\%}\)</span></strong></p>
 <ul>
-<li><span class="emorygold"><strong>37,2% Atenuação</strong></span>: Explicada pela seleção educacional em tarefas cognitivas.</li>
-<li><span class="emorygold"><strong>62,8% Efeito Direto</strong></span>: Atribuível a governança, escala de dados e capital organizacional (<span class="math inline">\(\Delta\kappa &gt; 0\)</span>).</li>
+<li><span class="emorygold"><strong>37,2% Atenuação</strong></span>: Seleção educacional em tarefas cognitivas.</li>
+<li><span class="emorygold"><strong>62,8% Efeito Direto</strong></span>: Governança, escala de dados e capital organizacional (<span class="math inline">\(\Delta\kappa &gt; 0\)</span>).</li>
 </ul>
 </div>
-</div><div class="column" style="width:48%;">
+</div><div class="column" style="width:46%;">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../Figures/fig2_mediacao.svg" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
@@ -337,14 +333,14 @@ window.Quarto = {
 <section id="resultado-3-polarização-espacial-e-formalidade-regional-s4" class="level2">
 <h2 class="anchored" data-anchor-id="resultado-3-polarização-espacial-e-formalidade-regional-s4">Resultado 3: Polarização Espacial e Formalidade Regional (S4)</h2>
 <div class="columns">
-<div class="column" style="width:52%;">
+<div class="column" style="width:50%;">
 <p><strong>Estimativas da Interação Regional (S4):</strong></p>
 <ul>
 <li>Interação <span class="math inline">\(\text{Esc} \times \text{Formal}\)</span>: <span class="math inline">\(\hat{\beta}_2 = \mathbf{+0{,}28}\)</span> (EP <span class="math inline">\(0{,}06; p &lt; 0{,}001\)</span>).</li>
 <li>Efeito Principal Formalidade: <span class="math inline">\(\hat{\beta}_3 = \mathbf{-3{,}10}\)</span> (EP <span class="math inline">\(0{,}77; p &lt; 0{,}001\)</span>).</li>
 </ul>
-<p><strong>Derivada Marginal Total:</strong></p>
-<p><span class="math display">\[\frac{\partial \theta}{\partial \text{formal}_u} = -3{,}10 + 0{,}28 \, e_i\]</span></p>
+<p><strong>Derivada Marginal Total:</strong> <span class="math inline">\(\frac{\partial \theta}{\partial \text{formal}_u} = -3{,}10 + 0{,}28 \, e_i\)</span></p>
+<p>. . .</p>
 <div class="keybox">
 <p><strong>Limiar Crítico de Polarização: <span class="math inline">\(e^* = 11{,}14\)</span> anos</strong></p>
 <ul>
@@ -352,7 +348,7 @@ window.Quarto = {
 <li><span class="math inline">\(e_i = 16\)</span> anos (Sup.): <span class="math inline">\(\frac{\partial \theta}{\partial \text{formal}_u} = \mathbf{+1{,}38}\)</span> ponto.</li>
 </ul>
 </div>
-</div><div class="column" style="width:48%;">
+</div><div class="column" style="width:46%;">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../Figures/fig3_regional_slopes.svg" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
@@ -364,7 +360,7 @@ window.Quarto = {
 <section id="bateria-de-robustez-econométrica-r1r7" class="level2">
 <h2 class="anchored" data-anchor-id="bateria-de-robustez-econométrica-r1r7">Bateria de Robustez Econométrica (R1–R7)</h2>
 <div class="columns">
-<div class="column" style="width:52%;">
+<div class="column" style="width:50%;">
 <p><strong>Testes de Sensibilidade:</strong></p>
 <ul>
 <li><strong>OLS Não-Ponderado (R1):</strong> <span class="math inline">\(\hat{\beta}_1 = 0{,}21\)</span> (EP <span class="math inline">\(0{,}03\)</span>).</li>
@@ -377,7 +373,7 @@ window.Quarto = {
 <p><strong>Wild Cluster Bootstrap (27 UFs)</strong></p>
 <p><span class="math inline">\(p &lt; 0{,}001\)</span> com 1.000 replicações para a interação regional.</p>
 </div>
-</div><div class="column" style="width:48%;">
+</div><div class="column" style="width:46%;">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../Figures/fig5_robustez_forest.svg" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
@@ -389,19 +385,19 @@ window.Quarto = {
 <section id="conclusões-e-implicações-de-política-pública" class="level2">
 <h2 class="anchored" data-anchor-id="conclusões-e-implicações-de-política-pública">Conclusões e Implicações de Política Pública</h2>
 <div class="columns">
-<div class="column" style="width:50%;">
+<div class="column" style="width:48%;">
 <p><strong>Principais Achados:</strong></p>
 <ol type="1">
 <li><strong>Gradiente Positivo:</strong> A IA complementa postos de trabalho de alta qualificação no Brasil (<span class="math inline">\(\hat{\beta}_1 = 0{,}23\)</span>).</li>
 <li><strong>Canal Organizacional:</strong> A informalidade atua como barreira de absorção tecnológica (62,8% do diferencial retido).</li>
 <li><strong>Polarização Geográfica:</strong> A formalização regional aprofunda o hiato de exposição (<span class="math inline">\(e^* \approx 11\)</span> anos).</li>
 </ol>
-</div><div class="column" style="width:50%;">
+</div><div class="column" style="width:48%;">
 <div class="highlightbox">
 <p><strong>Recomendações de Política</strong></p>
 <ul>
 <li><strong>Qualificação Digital na Base:</strong> Evitar a exclusão permanente dos 35,7 milhões de trabalhadores em ocupações informais de baixa exposição.</li>
-<li><strong>Incentivos à Formalização Tecnológica:</strong> Políticas de transição formal com ênfase em adoção de infraestrutura corporativa digital (PMEs).</li>
+<li><strong>Incentivos à Formalização Tecnológica:</strong> Políticas de transição formal com ênfase em infraestrutura corporativa digital (PMEs).</li>
 </ul>
 </div>
 </div>
@@ -410,8 +406,14 @@ window.Quarto = {
 <section id="referências-selecionadas" class="level2">
 <h2 class="anchored" data-anchor-id="referências-selecionadas">Referências Selecionadas</h2>
 <div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-cameron2008bootstrap" class="csl-entry" role="listitem">
+Cameron, A. Colin, Jonah B. Gelbach, and Douglas L. Miller. 2008. <span>“Bootstrap-Based Improvements for Inference with Clustered Errors.”</span> <em>Review of Economics and Statistics</em> 90 (3): 414–27. <a href="https://doi.org/10.1162/rest.90.3.414">https://doi.org/10.1162/rest.90.3.414</a>.
+</div>
 <div id="ref-eloundou2024gpts" class="csl-entry" role="listitem">
 Eloundou, Tyna, Sam Manning, Peter Mishkin, and Daniel Rock. 2024. <span>“<span class="nocase">GPTs are GPTs</span>: An Early Look at the Labor Market Impact Potential of Large Language Models.”</span> <em>Science</em> 384 (6702): 1306–8. <a href="https://doi.org/10.1126/science.adj0998">https://doi.org/10.1126/science.adj0998</a>.
+</div>
+<div id="ref-topkis1998supermodularity" class="csl-entry" role="listitem">
+Topkis, Donald M. 1998. <em>Supermodularity and Complementarity</em>. Princeton University Press.
 </div>
 <div id="ref-ulyssea2018firms" class="csl-entry" role="listitem">
 Ulyssea, Gabriel. 2018. <span>“Firms, Informality, and Development: Theory and Evidence from <span>Brazil</span>.”</span> <em>American Economic Review</em> 108 (8): 2015–47. <a href="https://doi.org/10.1257/aer.20141745">https://doi.org/10.1257/aer.20141745</a>.

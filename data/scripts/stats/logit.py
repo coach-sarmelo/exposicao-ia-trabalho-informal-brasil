@@ -1,10 +1,9 @@
+from __future__ import annotations
+
 import os
 import json
 import numpy as np
 
-# `make refresh` executa este arquivo diretamente (python scripts/stats/logit.py),
-# quando o import relativo falha (__package__=None); como modulo
-# (python -m scripts.stats.logit) o relativo e o correto.
 try:
     from . import hypothesis
 except ImportError:
@@ -99,9 +98,11 @@ def wls_logit(X, y, w=None, max_iter=100, tol=1e-8):
     }
 
 def main():
-    base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-    panel_file = os.path.join(base_dir, 'data/output/regional_panel.json')
-    output_file = os.path.join(base_dir, 'data/output/logit_results.json')
+    STATS_DIR = os.path.dirname(os.path.abspath(__file__))
+    SCRIPTS_DIR = os.path.dirname(STATS_DIR)
+    DATA_DIR = os.path.dirname(SCRIPTS_DIR)
+    panel_file = os.path.join(DATA_DIR, 'output', 'regional_panel.json')
+    output_file = os.path.join(DATA_DIR, 'output', 'logit_results.json')
     
     with open(panel_file, 'r', encoding='utf-8') as f:
         panel_data = json.load(f)

@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import json
 import os
 import sys
@@ -5,12 +7,12 @@ import numpy as np
 import pandas as pd
 import statsmodels.api as sm
 
-# Adjust PYTHONPATH so we can import from scripts
-base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-if base_dir not in sys.path:
-    sys.path.insert(0, base_dir)
+SCRIPTS_DIR = os.path.dirname(os.path.abspath(__file__))
+DATA_DIR = os.path.dirname(SCRIPTS_DIR)
+if SCRIPTS_DIR not in sys.path:
+    sys.path.insert(0, SCRIPTS_DIR)
 
-from scripts.stats.regression import wls_regression, wls_regression_clustered
+from stats.regression import wls_regression, wls_regression_clustered
 
 
 def _region_formality_loo(valid_rows):
@@ -66,7 +68,7 @@ def compute_econometrics(input_path, output_path, scores_path=None):
         df = pd.read_csv(input_path)
         
         if scores_path is None:
-            scores_path = os.path.join(base_dir, 'data/output/scores.json')
+            scores_path = os.path.join(DATA_DIR, 'output', 'scores.json')
             
         with open(scores_path, 'r', encoding='utf-8') as f:
             scores = json.load(f)
@@ -263,8 +265,8 @@ def compute_econometrics(input_path, output_path, scores_path=None):
 
 
 if __name__ == '__main__':
-    microdata_file = os.path.join(base_dir, 'data/output/individual_microdata.csv')
-    scores_file = os.path.join(base_dir, 'data/output/scores.json')
-    output_file = os.path.join(base_dir, 'data/output/econometrics.json')
+    microdata_file = os.path.join(DATA_DIR, 'output', 'individual_microdata.csv')
+    scores_file = os.path.join(DATA_DIR, 'output', 'scores.json')
+    output_file = os.path.join(DATA_DIR, 'output', 'econometrics.json')
     compute_econometrics(microdata_file, output_file, scores_file)
     print(f"Created {output_file}")

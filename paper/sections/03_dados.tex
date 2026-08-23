@@ -3,7 +3,7 @@
 
 \subsection{Fontes}
 
-Uso três fontes de dados. Primeira: os microdados trimestrais da Pesquisa Nacional por Amostra de Domicílios Contínua (PNAD Contínua) do IBGE \citep{ibgepnad}, referentes ao 1º trimestre de 2026 (2026Q1), totalizando mais de 228 mil indivíduos ocupados com pesos amostrais oficiais ($V1028$). Extraio ocupação (COD a 3 dígitos), condição de formalidade/informalidade, rendimento habitual do trabalho principal, anos de escolaridade, idade, sexo, cor/raça e unidade federativa (27 UFs). Segunda: o índice de exposição ocupacional à IA de \citet{eloundou2024gpts}, construído a partir das tarefas detalhadas da taxonomia americana O*NET-SOC. Terceira: os cruzamentos ocupacionais oficiais ISCO-08$\leftrightarrow$SOC publicados pelo Bureau of Labor Statistics \citep{blscrosswalk}, que conectam a COD (compatível com a ISCO-08) ao sistema O*NET-SOC.
+Uso três fontes de dados. Primeira: os microdados trimestrais da Pesquisa Nacional por Amostra de Domicílios Contínua (PNAD Contínua) do IBGE \citep{ibgepnad}, referentes ao 1º trimestre de 2026 (2026Q1), totalizando mais de 228 mil indivíduos ocupados com pesos amostrais oficiais (\texttt{V1028}). Extraio ocupação (COD a 3 dígitos), condição de formalidade/informalidade, rendimento habitual do trabalho principal, anos de escolaridade, idade, sexo, cor/raça e unidade federativa (27 UFs). Segunda: o índice de exposição ocupacional à IA de \citet{eloundou2024gpts}, construído a partir das tarefas detalhadas da taxonomia americana O*NET-SOC. Terceira: os cruzamentos ocupacionais oficiais ISCO-08$\leftrightarrow$SOC publicados pelo Bureau of Labor Statistics \citep{blscrosswalk}, que conectam a COD (compatível com a ISCO-08) ao sistema O*NET-SOC.
 
 \subsection{Construção do cruzamento e do índice}
 
@@ -22,7 +22,7 @@ A amostra econométrica final é composta por $227.629$ indivíduos ocupados em 
 
 \subsection{Estatísticas descritivas}
 
-A Tabela~\ref{tab:descritivas} resume as características descritivas da amostra de indivíduos ocupados em 2026Q1, ponderadas pelos pesos amostrais da PNAD Contínua. A exposição média é de 2{,}86 (escala 0--10) e 35{,}2\% da força de trabalho ocupada (35{,}7 milhões de trabalhadores) situa-se em ocupações com $\theta \le 2$. A escolaridade média alcança 11{,}6 anos e a taxa de informalidade 40{,}5\%.
+A amostra de indivíduos ocupados em 2026Q1 apresenta exposição média de 2{,}86 (escala 0--10), com 35{,}2\% da força de trabalho ocupada (35{,}7 milhões de trabalhadores) situada em ocupações com $\theta \le 2$ (Tabela~\ref{tab:descritivas}). A escolaridade média alcança 11{,}6 anos e a taxa de informalidade média ponderada é de 40{,}5\% (38{,}8\% sem ponderação).
 
 \begin{table}[htbp]
 \centering
@@ -37,7 +37,7 @@ Variável & N & Média & DP & Mín & Máx \\
 \end{tabular}
 \end{table}
 
-A Tabela~\ref{tab:maiores} detalha as dez maiores ocupações do país, evidenciando o contraste estrutural: enquanto serviços domésticos combinam exposição quase nula ($0{,}1$) e informalidade de 54{,}3\%, ocupações de apoio administrativo registram exposição elevada ($5{,}8$) e baixa informalidade ($18{,}6\%$).
+O contraste estrutural da economia brasileira é visível nas dez maiores ocupações do país (Tabela~\ref{tab:maiores}): enquanto serviços domésticos combinam exposição quase nula ($0{,}1$) e informalidade de 54{,}3\%, ocupações de apoio administrativo registram exposição elevada ($5{,}8$) e baixa informalidade ($18{,}6\%$).
 
 \begin{table}[htbp]
 \centering
@@ -57,4 +57,4 @@ Ocupação & Empregos & Exposição & Anos est. & Informal. & Renda \\
 
 \subsection{Limitações metodológicas e intensidade de capital}
 
-Três limitações merecem explicitação transparente no corpo do texto. Primeira: a exposição é mensurada no nível ocupacional, não refletindo a heterogeneidade intra-ocupacional de tarefas entre trabalhadores com a mesma COD, nem a clivagem urbano-rural na execução dessas rotinas (embora a variação regional ampla seja absorvida nas estimativas por UF). Segunda: o índice de \citet{eloundou2024gpts} reflete a estrutura tecnológica da economia americana. Em países em desenvolvimento como o Brasil, onde a relação capital-trabalho é substancialmente menor, ocupações formais homônimas podem incorporar mais rotinas manuais ou analógicas de suporte (\emph{task downgrading}), fazendo com que o escore O*NET represente um teto superior para a verdadeira exposição efetiva brasileira. Terceira: os dados capturam equilíbrios transversais de alocação (\emph{sorting}), não identificando impactos causais da difusão tecnológica sobre salários ou transições ocupacionais.
+Três limitações merecem explicitação transparente no corpo do texto. Primeira: a exposição é mensurada no nível ocupacional, não refletindo a heterogeneidade intra-ocupacional de tarefas entre trabalhadores com a mesma COD, nem a clivagem urbano-rural na execução dessas rotinas (embora a variação regional ampla seja absorvida nas estimativas por UF). Segunda: o índice de \citet{eloundou2024gpts} reflete a estrutura tecnológica da economia americana. Em países em desenvolvimento como o Brasil, onde a relação capital-trabalho é substancialmente menor, ocupações formais homônimas podem incorporar mais rotinas manuais ou analógicas de suporte (\emph{task downgrading}; ver \citealt{dicarlo2016task}), fazendo com que o escore O*NET represente um teto superior para a verdadeira exposição efetiva brasileira. Terceira: os dados capturam equilíbrios transversais de alocação (\emph{sorting}), não identificando impactos causais da difusão tecnológica sobre salários ou transições ocupacionais.
