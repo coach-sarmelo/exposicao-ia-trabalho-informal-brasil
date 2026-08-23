@@ -1,0 +1,16 @@
+cff-version: 1.2.0
+message: "If you use this research or replication code, please cite it as below."
+authors:
+  - family-names: "Freire"
+    given-names: "Marcelo Moura"
+title: "Exposição à Inteligência Artificial em um Mercado de Trabalho Informal: Teoria e Evidências para o Brasil"
+date-released: 2026-08-23
+url: "https://github.com/coach-sarmelo/exposicao-ia-trabalho-informal-brasil"
+license: "BSD-3-Clause"
+keywords:
+  - "artificial intelligence"
+  - "informal labor market"
+  - "assignment model"
+  - "brazil"
+  - "pnadc"
+  - "econometrics"

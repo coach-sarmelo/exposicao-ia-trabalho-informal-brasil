@@ -1,0 +1,25 @@
+# LaTeX auxiliary files
+*.aux
+*.log
+*.nav
+*.snm
+*.toc
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.out
+*.bbl
+*.blg
+
+# R temporary files
+.Rhistory
+.RData
+.Rproj.user/
+
+# Python / cache
+__pycache__/
+*.pyc
+
+# OS files
+.DS_Store
+Thumbs.db
