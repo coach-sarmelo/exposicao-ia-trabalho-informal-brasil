@@ -15,8 +15,20 @@ suppressPackageStartupMessages({
 
 root_dir <- if (requireNamespace("here", quietly = TRUE)) here::here() else getwd()
 out_dir  <- if (exists("OUT_DIR", inherits = FALSE)) OUT_DIR else file.path(root_dir, "scripts", "R", "_outputs")
-out_tables <- file.path(root_dir, "paper", "tables")
-if (!dir.exists(out_tables)) dir.create(out_tables, showWarnings = FALSE, recursive = TRUE)
+
+out_tables_list <- unique(c(
+  if (dir.exists(file.path(root_dir, "replication_package", "output", "tables"))) file.path(root_dir, "replication_package", "output", "tables") else NULL,
+  if (dir.exists(file.path(root_dir, "output", "tables"))) file.path(root_dir, "output", "tables") else NULL,
+  if (dir.exists(file.path(root_dir, "paper", "tables"))) file.path(root_dir, "paper", "tables") else NULL,
+  file.path(out_dir, "tables")
+))
+for (d in out_tables_list) dir.create(d, showWarnings = FALSE, recursive = TRUE)
+
+write_table <- function(lines, filename) {
+  for (d in out_tables_list) {
+    writeLines(lines, file.path(d, filename))
+  }
+}
 
 results_path <- file.path(out_dir, "results.rds")
 if (!file.exists(results_path)) {
@@ -24,7 +36,13 @@ if (!file.exists(results_path)) {
 }
 results <- readRDS(results_path)
 
-scores_path <- file.path(root_dir, "data", "output", "scores.json")
+scores_path <- if (file.exists(file.path(root_dir, "replication_package", "data", "analysis", "scores.json"))) {
+  file.path(root_dir, "replication_package", "data", "analysis", "scores.json")
+} else if (file.exists(file.path(root_dir, "data", "analysis", "scores.json"))) {
+  file.path(root_dir, "data", "analysis", "scores.json")
+} else {
+  file.path(root_dir, "data", "output", "scores.json")
+}
 scores_json <- if (file.exists(scores_path)) jsonlite::fromJSON(scores_path) else list()
 
 # ---- Formatting Helpers (pt-BR / Academic Standard) -------------------------
@@ -112,7 +130,7 @@ if (!is.null(results$desc_stats)) {
     sprintf("Rendimento habitual (R\\$) & 227.629 & %s & %s & 0 & 150.000",
             fmt_br(st$inc_m, 0L), fmt_br(st$inc_sd, 0L))
   )
-  writeLines(lines_desc, file.path(out_tables, "tab_descritivas.tex"))
+  write_table(lines_desc, "tab_descritivas.tex")
 }
 
 # ---- 2. tab_maiores.tex -----------------------------------------------------
@@ -134,7 +152,7 @@ if (!is.null(results$top10_occ)) {
               term_end)
     }, character(1L))
   )
-  writeLines(lines_maiores, file.path(out_tables, "tab_maiores.tex"))
+  write_table(lines_maiores, "tab_maiores.tex")
 }
 
 # ---- 3. tab_gradiente.tex (S1 & S2) -----------------------------------------
@@ -170,7 +188,7 @@ lines_grad <- c(
   sprintf("$R^2$ & %s & %s \\\\", fmt_br(get_r2(m1), 3L), fmt_br(get_r2(m2), 3L)),
   sprintf("Clusters (ocupa\\c{c}\\~ao) & %d & %d", results$n_clusters, results$n_clusters)
 )
-writeLines(lines_grad, file.path(out_tables, "tab_gradiente.tex"))
+write_table(lines_grad, "tab_gradiente.tex")
 
 # ---- 4. tab_s3.tex (S3a & S3 Mediation) -------------------------------------
 m3a <- results$models$s3a
@@ -201,7 +219,7 @@ lines_s3 <- c(
   sprintf("$R^2$ & %s & %s \\\\", fmt_br(get_r2(m3a), 3L), fmt_br(get_r2(m3), 3L)),
   sprintf("Clusters (ocupa\\c{c}\\~ao) & %d & %d", results$n_clusters, results$n_clusters)
 )
-writeLines(lines_s3, file.path(out_tables, "tab_s3.tex"))
+write_table(lines_s3, "tab_s3.tex")
 
 # ---- 5. tab_s4.tex (Regional Interaction S4) --------------------------------
 m4 <- results$models$s4
@@ -225,7 +243,7 @@ lines_s4 <- c(
   sprintf("$R^2$ & %s \\\\", fmt_br(get_r2(m4), 3L)),
   sprintf("Clusters (ocupa\\c{c}\\~ao) & %d", results$n_clusters)
 )
-writeLines(lines_s4, file.path(out_tables, "tab_s4.tex"))
+write_table(lines_s4, "tab_s4.tex")
 
 # ---- 6. tab_robustez.tex (R1–R6 Battery) ------------------------------------
 r_base <- coef_cell(m1, "years_of_study", dec = 3L)
@@ -249,7 +267,7 @@ lines_rob <- c(
   sprintf("(6) Limite de Oster (2019) & \\multicolumn{2}{c}{$\\delta = %s$} & \\multicolumn{2}{c}{$R_{\\max} = 1{,}3 R^2$}",
           fmt_br(results$oster$delta, 2L))
 )
-writeLines(lines_rob, file.path(out_tables, "tab_robustez.tex"))
+write_table(lines_rob, "tab_robustez.tex")
 
 # ---- 7. tab_robustez_grupos.tex (COD 1–9 Exclusions) ------------------------
 group_names <- c(
@@ -288,6 +306,6 @@ for (i in seq_along(group_names)) {
     lines_grupos <- c(lines_grupos, line)
   }
 }
-writeLines(lines_grupos, file.path(out_tables, "tab_robustez_grupos.tex"))
+write_table(lines_grupos, "tab_robustez_grupos.tex")
 
-message("04_tables.R complete: all 7 LaTeX tables written to ", out_tables)
+message("04_tables.R complete: all 7 LaTeX tables written.")

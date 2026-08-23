@@ -14,7 +14,14 @@ suppressPackageStartupMessages({
 })
 
 root_dir <- if (requireNamespace("here", quietly = TRUE)) here::here() else getwd()
-results_path <- file.path(root_dir, "scripts", "R", "_outputs", "results.rds")
+
+results_path <- if (file.exists(file.path(root_dir, "replication_package", "output", "results.rds"))) {
+  file.path(root_dir, "replication_package", "output", "results.rds")
+} else if (file.exists(file.path(root_dir, "output", "results.rds"))) {
+  file.path(root_dir, "output", "results.rds")
+} else {
+  file.path(root_dir, "scripts", "R", "_outputs", "results.rds")
+}
 
 test_that("results.rds exists and loads correctly", {
   expect_true(file.exists(results_path))
@@ -71,6 +78,13 @@ test_that("Oster (2019) bounding parameter delta is robust", {
 })
 
 test_that("All 7 LaTeX tables are generated and non-empty", {
+  tables_dir <- if (dir.exists(file.path(root_dir, "replication_package", "output", "tables"))) {
+    file.path(root_dir, "replication_package", "output", "tables")
+  } else if (dir.exists(file.path(root_dir, "output", "tables"))) {
+    file.path(root_dir, "output", "tables")
+  } else {
+    file.path(root_dir, "paper", "tables")
+  }
   table_files <- c(
     "tab_descritivas.tex",
     "tab_maiores.tex",
@@ -81,27 +95,26 @@ test_that("All 7 LaTeX tables are generated and non-empty", {
     "tab_robustez_grupos.tex"
   )
   for (f in table_files) {
-    p <- file.path(root_dir, "paper", "tables", f)
-    expect_true(file.exists(p), label = paste("Missing table:", f))
-    expect_gt(file.size(p), 50L, label = paste("Empty table:", f))
+    p <- file.path(tables_dir, f)
+    expect_true(file.exists(p), label = paste("Table missing:", f))
+    expect_gt(file.size(p), 100L, label = paste("Table empty or truncated:", f))
   }
 })
 
-test_that("All 4 figures are generated in PDF, SVG, and PNG formats", {
-  figure_bases <- c(
-    "fig1_gradiente",
-    "fig2_mediacao",
-    "fig3_regional_slopes",
-    "fig5_robustez_forest"
-  )
-  for (base in figure_bases) {
+test_that("All 4 figures exist in PDF, SVG, and PNG with positive file sizes", {
+  figs_dir <- if (dir.exists(file.path(root_dir, "replication_package", "output", "figures"))) {
+    file.path(root_dir, "replication_package", "output", "figures")
+  } else if (dir.exists(file.path(root_dir, "output", "figures"))) {
+    file.path(root_dir, "output", "figures")
+  } else {
+    file.path(root_dir, "paper", "figures")
+  }
+  figures <- c("fig1_gradiente", "fig2_mediacao", "fig3_regional_slopes", "fig5_robustez_forest")
+  for (fig in figures) {
     for (ext in c(".pdf", ".svg", ".png")) {
-      p1 <- file.path(root_dir, "paper", "figures", paste0(base, ext))
-      p2 <- file.path(root_dir, "Figures", paste0(base, ext))
-      expect_true(file.exists(p1), label = paste("Missing paper figure:", base, ext))
-      expect_true(file.exists(p2), label = paste("Missing deck figure:", base, ext))
-      expect_gt(file.size(p1), 1000L, label = paste("Small paper figure:", base, ext))
-      expect_gt(file.size(p2), 1000L, label = paste("Small deck figure:", base, ext))
+      fpath <- file.path(figs_dir, paste0(fig, ext))
+      expect_true(file.exists(fpath), label = paste("Missing:", fpath))
+      expect_gt(file.size(fpath), 1000L, label = paste("Figure empty:", fpath))
     }
   }
 })

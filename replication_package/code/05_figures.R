@@ -78,7 +78,12 @@ theme_academic <- function(base_size = 11.0) {
 #' @param width Numeric width in inches.
 #' @param height Numeric height in inches.
 save_all_formats <- function(base_name, plot_obj, width = 6.5, height = 4.2) {
-  dest_dirs <- c(paper_fig_dir, deck_fig_dir, out_dir)
+  dest_dirs <- unique(c(
+    if (dir.exists(file.path(root_dir, "replication_package", "output", "figures"))) file.path(root_dir, "replication_package", "output", "figures") else NULL,
+    if (dir.exists(file.path(root_dir, "paper", "figures"))) file.path(root_dir, "paper", "figures") else NULL,
+    if (dir.exists(file.path(root_dir, "Figures"))) file.path(root_dir, "Figures") else NULL,
+    out_dir
+  ))
   for (d in dest_dirs) {
     if (!dir.exists(d)) dir.create(d, showWarnings = FALSE, recursive = TRUE)
     ggsave(file.path(d, paste0(base_name, ".pdf")), plot_obj, width = width, height = height, bg = "transparent", device = grDevices::pdf)

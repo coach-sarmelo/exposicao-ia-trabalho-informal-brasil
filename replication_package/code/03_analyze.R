@@ -287,10 +287,19 @@ econometrics_out <- list(
   )
 )
 
+econ_json_path <- if (file.exists(file.path(root_dir, "replication_package", "data", "analysis", "econometrics.json"))) {
+  file.path(root_dir, "replication_package", "data", "analysis", "econometrics.json")
+} else if (file.exists(file.path(root_dir, "data", "analysis", "econometrics.json"))) {
+  file.path(root_dir, "data", "analysis", "econometrics.json")
+} else {
+  file.path(root_dir, "data", "output", "econometrics.json")
+}
+dir.create(dirname(econ_json_path), showWarnings = FALSE, recursive = TRUE)
+
 jsonlite::write_json(
   econometrics_out,
-  path = file.path(root_dir, "data", "output", "econometrics.json"),
+  path = econ_json_path,
   auto_unbox = TRUE,
   pretty = TRUE
 )
-message("Updated data/output/econometrics.json")
+message("Updated ", econ_json_path)
