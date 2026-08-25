@@ -180,3 +180,6 @@ The key insight: each pattern enforces independence differently. Critic-fixer us
 
 [LEARN:r] **In R microdata workflows (e.g. `fixest` / `feols`), `saveRDS()` serializes the entire lexical environment captured by formula attributes (`attr(fml, ".Environment")`).** Setting `environment(m$fml) <- baseenv()` and packing summary statistics shrinks model artifacts by $>99.9\%$ (from 400 MB to $<6$ KB) while maintaining 100% coefficient extraction fidelity and preventing GitHub 100MB push blocks.
 
+[LEARN:latex] **Title `\thanks` asterisk vs author block affiliation:** In LaTeX `article` class, `\thanks` inside `\title{}` generates a title-anchored footnote asterisk (`*`). To keep titles clean without asterisks while preserving institutional notes and grant/data acknowledgments, attach `\thanks` directly to the `\author{}` block or format affiliation in a dedicated author subtitle (`\\[0.3em] \small Institution`).
+
+[LEARN:writing] **Acronym first-mention expansion across independent modular sections:** In multi-part academic manuscripts with standalone executive summaries (Abstract/Resumo), formal statistical surveys (e.g. PNAD Contínua/IBGE) should be expanded by full official title on first mention in each standalone section (Resumo, Introdução, Dados) before transitioning to acronyms.
