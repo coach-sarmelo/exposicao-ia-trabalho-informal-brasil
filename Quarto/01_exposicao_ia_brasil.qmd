@@ -3,7 +3,7 @@ title: "Exposição à Inteligência Artificial em um Mercado de Trabalho Inform
 subtitle: "Teoria e Evidências Microeconômicas para o Brasil"
 author: "Marcelo Moura Freire"
 date: "2026"
-bibliography: ../Bibliography_base.bib
+bibliography: ../paper/references.bib
 format:
   revealjs:
     theme: [default, theme-template.scss]
@@ -19,7 +19,7 @@ format:
 ## Motivação: A Dualidade do Mercado de Trabalho Brasileiro
 
 :::: {.columns}
-::: {.column width="58%"}
+::: {.column width="56%"}
 **O debate global sobre IA:**
 
 - Foco em economias avançadas com alta formalidade e predomínio de serviços corporativos [@eloundou2024gpts].
@@ -32,18 +32,15 @@ format:
 - Forte heterogeneidade regional: formalidade varia de 40% (MA/PA) a 65% (SP/SC).
 :::
 
-::: {.column width="42%"}
+::: {.column width="38%"}
 ::: {.keybox}
 **Questão Central**
 
 Como a coexistência entre [**informalidade**]{.emorygold} e [**capital humano**]{.emorygold} molda a exposição à IA em uma economia em desenvolvimento?
 :::
 
-::: {.methodbox}
-**Mecanismo Proposto**
-
+**Mecanismo Proposto:**  
 A IA é complementar ao capital humano formal, mas a informalidade atua como barreira de absorção tecnológica.
-:::
 :::
 ::::
 
@@ -51,7 +48,7 @@ A IA é complementar ao capital humano formal, mas a informalidade atua como bar
 
 1. **Gradiente Educacional:**
    - Trabalhadores mais escolarizados selecionam-se em postos de trabalho mais expostos à IA?
-   - Esse gradiente resiste ao controle de rendimento e covariadas mincerianas?
+   - Esse gradiente resiste ao controle de rendimento e covariáveis mincerianas?
 
 2. **O Canal da Informalidade (Mediação):**
    - A baixa exposição informal é apenas reflexo de menor escolaridade, ou existe um efeito direto do [**capital organizacional formal**]{.emorygold}?
@@ -64,21 +61,21 @@ A IA é complementar ao capital humano formal, mas a informalidade atua como bar
 ## Modelo de Designação Ocupacional (Assignment Model)
 
 :::: {.columns}
-::: {.column width="50%"}
+::: {.column width="48%"}
 **Trabalhadores e Ocupações:**
 
 - Escolaridade contínua: $e \in [e_{\min}, e_{\max}]$.
-- Ocupações com exposição tecnológica: $\theta_j \in [0, 10]$.
+- Ocupações com exposição à IA: $\theta_j \in [0, 10]$.
 - Regimes contratuais: $s \in \{F, I\}$ (Formal vs. Informal).
 
 **Função de Produção Primitiva:**
 
 $$y_{js}(e) = g(e)\big(1 + \kappa_s \theta_j\big)$$
 
-com $g'(e) > 0, g''(e) \le 0$ e $\Delta\kappa \equiv \kappa_{\text{org}} - \kappa_{\text{ind}} > 0$.
+com $g'(e) > 0, g''(e) \le 0$ e $\Delta\kappa \equiv \kappa_F - \kappa_I > 0$ ($\kappa_F \equiv \kappa_{\text{org}} > \kappa_I \equiv \kappa_{\text{ind}}$).
 :::
 
-::: {.column width="50%"}
+::: {.column width="48%"}
 ::: {.methodbox}
 **Supermodularidade Estrita**
 
@@ -97,10 +94,12 @@ A IA complementa o capital humano do trabalhador.
 ## Arbitragem Formal-Informal e Previsões Teóricas
 
 :::: {.columns}
-::: {.column width="50%"}
+::: {.column width="48%"}
 **Limiar de Formalização Ocupacional:**
 
 $$w_{jF}(e) \ge w_{jI}(e) \iff g(e)\,\Delta\kappa\,\theta_j \ge c$$
+
+. . .
 
 $$
 \boxed{e^*_j = g^{-1}\left(\frac{c}{\Delta\kappa\,\theta_j}\right)}
@@ -110,18 +109,15 @@ $$
 - Ocupações com maior $\theta_j$ reduzem a exigência educacional mínima para viabilizar a formalidade corporativa.
 :::
 
-::: {.column width="50%"}
+::: {.column width="48%"}
 ::: {.keybox}
 **Proposição 1 (Gradiente Positivo)**
 
-Por supermodularidade estrita (Topkis, 1998), a alocação de equilíbrio $\theta^*(e)$ é monotonicamente crescente em $e$: $\beta_1 > 0$.
+Por supermodularidade estrita [@topkis1998supermodularity], a alocação de equilíbrio $\theta^*(e)$ é monotonicamente crescente em $e$: $\beta_1 > 0$.
 :::
 
-::: {.resultbox}
-**Corolário 1 (Mediação Parcial)**
-
-A associação bruta exposição--formalidade atenua-se ao condicionar na escolaridade, mas retém coeficiente direto significante ($\Delta\kappa > 0$).
-:::
+**Corolário 1 (Mediação Parcial):**  
+A associação bruta exposição--formalidade atenua-se ao condicionar na escolaridade, mas retém coeficiente direto significativo ($\Delta\kappa > 0$).
 :::
 ::::
 
@@ -130,7 +126,7 @@ A associação bruta exposição--formalidade atenua-se ao condicionar na escola
 ## Microdados da PNAD Contínua e Construção do Escore $\theta_j$
 
 :::: {.columns}
-::: {.column width="54%"}
+::: {.column width="52%"}
 **Base Amostral:**
 
 - **IBGE PNAD Contínua 2026Q1**: $N = 227.629$ indivíduos ocupados, representativos de 102,1 milhões de trabalhadores.
@@ -143,67 +139,66 @@ A associação bruta exposição--formalidade atenua-se ao condicionar na escola
 - $G = 122$ grupos ocupacionais a 4 dígitos.
 :::
 
-::: {.column width="46%"}
+::: {.column width="44%"}
 ::: {.methodbox}
 **Correção de Moulton (1986)**
 
-Erros-padrão agrupados por [**122 clusters ocupacionais**]{.emorygold} (Cameron, Gelbach e Miller, 2008).
+Erros-padrão agrupados por [**122 clusters ocupacionais**]{.emorygold} [@cameron2008bootstrap].
 :::
 
-::: {.highlightbox}
-**Controles Mincerianos**
+**Estratégia de Controle Minceriano:**
 
 Idade, idade$^2$, dummy de gênero feminino e vetor de dummies de cor/raça (IBGE).
-:::
 :::
 ::::
 
 ## Especificações Econométricas Estimadas
 
+:::: {.columns}
+::: {.column width="48%"}
+**Modelos no Nível Individual:**
+
 - **S1 (Gradiente Baseline):**
   $$\theta_{j(i)} = \alpha + \beta_1 \, e_i + \mathbf{X}_i'\boldsymbol{\gamma} + \varepsilon_i$$
 
-- **S2 (Controle de Rendimento Habitual):**
-  $$\theta_{j(i)} = \alpha + \beta_1 \, e_i + \beta_2 \, w_i + \mathbf{X}_i'\boldsymbol{\gamma} + \varepsilon_i$$
+- **S2 (Controle de Rendimento):**
+  $$\theta_{j(i)} = \alpha + \beta_1 \, e_i + \beta_{\text{sal}} \, w_i + \mathbf{X}_i'\boldsymbol{\gamma} + \varepsilon_i$$
+:::
 
-- **S3a & S3 (Mediação da Informalidade):**
-  $$\begin{aligned}
-    \text{S3a:} \quad \text{informal}_i &= \alpha + \delta_1 \, \theta_{j(i)} \\
-    &\quad + \mathbf{X}_i'\boldsymbol{\gamma} + \varepsilon_i \\
-    \text{S3:} \quad \text{informal}_i &= \alpha + \delta_1 \, \theta_{j(i)} + \delta_2 \, e_i \\
-    &\quad + \mathbf{X}_i'\boldsymbol{\gamma} + \varepsilon_i
-  \end{aligned}$$
+::: {.column width="48%"}
+**Mecanismos e Espaço:**
 
-- **S4 (Interação Regional Leave-One-Out):**
+- **S3 (Mediação da Informalidade):**
+  $$\text{informal}_i = \alpha + \delta_1 \, \theta_{j(i)} + \delta_2 \, e_i + \mathbf{X}_i'\boldsymbol{\gamma} + \varepsilon_i$$
+
+- **S4 (Interação Regional LOO):**
   $$\begin{aligned}
-    \theta_{j(i)} = \alpha + \beta_1 \, e_i &+ \beta_2 \big(e_i \times \text{formal}_{-i, u}^{\text{LOO}}\big) \\
+    \theta_{j(i)} = \alpha &+ \beta_1 \, e_i + \beta_2 \big(e_i \times \text{formal}_{-i, u}^{\text{LOO}}\big) \\
     &+ \beta_3 \, \text{formal}_{-i, u}^{\text{LOO}} + \mathbf{X}_i'\boldsymbol{\gamma} + \varepsilon_i
   \end{aligned}$$
+:::
+::::
 
 # Resultados Empíricos e Mecanismos
 
 ## Resultado 1: Gradiente Escolaridade--Exposição ($\hat{\beta}_1 = 0{,}23$)
 
 :::: {.columns}
-::: {.column width="52%"}
+::: {.column width="50%"}
 **Estimação no Nível Individual ($N = 227.629$):**
 
 - **S1 Baseline:** $\hat{\beta}_1 = \mathbf{0{,}2288} \approx \mathbf{0{,}23}$ (EP $0{,}028; p < 0{,}001; R^2 = 0{,}246$).
 - Cada 4 anos de estudo elevam a exposição em $\sim 1$ ponto no escore 0--10.
-
-**S2 com Controle Salarial:**
-
-- Escolaridade: $\hat{\beta}_1 = \mathbf{0{,}2097} \approx \mathbf{0{,}21}$ (EP $0{,}026$).
-- Rendimento: $\hat{\beta}_2 = \mathbf{0{,}043}$ por R\$ 1.000 ($p < 0{,}001$).
+- **S2 com Salário:** $\hat{\beta}_1 = \mathbf{0{,}21}$ (EP $0{,}026$); Rendimento: $\hat{\beta}_{\text{sal}} = \mathbf{0{,}043}$ ($p < 0{,}001$).
 
 ::: {.keybox}
 **Limites de Oster (2019)**
 
-$\delta = \mathbf{1{,}64} > 1$ sob $R_{\max} = 1{,}3 R^2$: seleção em não-observáveis precisaria ser 64% superior a todos os controles observáveis para anular $\hat{\beta}_1$.
+$\delta = \mathbf{1{,}64} > 1$ sob $R_{\max} = 1{,}3 R^2$: seleção em não observáveis precisaria ser 64% superior aos controles para anular $\hat{\beta}_1$.
 :::
 :::
 
-::: {.column width="48%"}
+::: {.column width="46%"}
 ![](../Figures/fig1_gradiente.svg){fig-align="center" width="100%"}
 :::
 ::::
@@ -211,21 +206,23 @@ $\delta = \mathbf{1{,}64} > 1$ sob $R_{\max} = 1{,}3 R^2$: seleção em não-obs
 ## Resultado 2: Mediação Parcial da Informalidade (Corolário 1)
 
 :::: {.columns}
-::: {.column width="52%"}
+::: {.column width="50%"}
 **Decomposição Linear Exata:**
 
 - **S3a (Bruta):** $\hat{\delta}_1 = \mathbf{-6{,}23}$ p.p. por ponto de $\theta_j$ (EP $0{,}99; p < 0{,}001$).
 - **S3 (Condicional):** $\hat{\delta}_1 = \mathbf{-3{,}91}$ p.p. (EP $0{,}96$) e $\hat{\delta}_2 = \mathbf{-2{,}61}$ p.p. por ano de estudo.
 
+. . .
+
 ::: {.resultbox}
-**Decomposição de Canais**
+**Decomposição de Canais: $\frac{-3{,}91}{-6{,}23} = \mathbf{62{,}8\%}$**
 
-- [**37,2% Atenuação**]{.emorygold}: Explicada pela seleção educacional em tarefas cognitivas.
-- [**62,8% Efeito Direto**]{.emorygold}: Atribuível a governança, escala de dados e capital organizacional ($\Delta\kappa > 0$).
+- [**37,2% Atenuação**]{.emorygold}: Seleção educacional em tarefas cognitivas.
+- [**62,8% Efeito Direto**]{.emorygold}: Governança, escala de dados e capital organizacional ($\Delta\kappa > 0$).
 :::
 :::
 
-::: {.column width="48%"}
+::: {.column width="46%"}
 ![](../Figures/fig2_mediacao.svg){fig-align="center" width="100%"}
 :::
 ::::
@@ -233,15 +230,15 @@ $\delta = \mathbf{1{,}64} > 1$ sob $R_{\max} = 1{,}3 R^2$: seleção em não-obs
 ## Resultado 3: Polarização Espacial e Formalidade Regional (S4)
 
 :::: {.columns}
-::: {.column width="52%"}
+::: {.column width="50%"}
 **Estimativas da Interação Regional (S4):**
 
 - Interação $\text{Esc} \times \text{Formal}$: $\hat{\beta}_2 = \mathbf{+0{,}28}$ (EP $0{,}06; p < 0{,}001$).
 - Efeito Principal Formalidade: $\hat{\beta}_3 = \mathbf{-3{,}10}$ (EP $0{,}77; p < 0{,}001$).
 
-**Derivada Marginal Total:**
+**Derivada Marginal Total:** $\frac{\partial \theta}{\partial \text{formal}_u} = -3{,}10 + 0{,}28 \, e_i$
 
-$$\frac{\partial \theta}{\partial \text{formal}_u} = -3{,}10 + 0{,}28 \, e_i$$
+. . .
 
 ::: {.keybox}
 **Limiar Crítico de Polarização: $e^* = 11{,}14$ anos**
@@ -251,7 +248,7 @@ $$\frac{\partial \theta}{\partial \text{formal}_u} = -3{,}10 + 0{,}28 \, e_i$$
 :::
 :::
 
-::: {.column width="48%"}
+::: {.column width="46%"}
 ![](../Figures/fig3_regional_slopes.svg){fig-align="center" width="100%"}
 :::
 ::::
@@ -259,7 +256,7 @@ $$\frac{\partial \theta}{\partial \text{formal}_u} = -3{,}10 + 0{,}28 \, e_i$$
 ## Bateria de Robustez Econométrica (R1--R7)
 
 :::: {.columns}
-::: {.column width="52%"}
+::: {.column width="50%"}
 **Testes de Sensibilidade:**
 
 - **OLS Não-Ponderado (R1):** $\hat{\beta}_1 = 0{,}21$ (EP $0{,}03$).
@@ -275,7 +272,7 @@ $p < 0{,}001$ com 1.000 replicações para a interação regional.
 :::
 :::
 
-::: {.column width="48%"}
+::: {.column width="46%"}
 ![](../Figures/fig5_robustez_forest.svg){fig-align="center" width="100%"}
 :::
 ::::
@@ -283,7 +280,7 @@ $p < 0{,}001$ com 1.000 replicações para a interação regional.
 ## Conclusões e Implicações de Política Pública
 
 :::: {.columns}
-::: {.column width="50%"}
+::: {.column width="48%"}
 **Principais Achados:**
 
 1. **Gradiente Positivo:** A IA complementa postos de trabalho de alta qualificação no Brasil ($\hat{\beta}_1 = 0{,}23$).
@@ -291,12 +288,12 @@ $p < 0{,}001$ com 1.000 replicações para a interação regional.
 3. **Polarização Geográfica:** A formalização regional aprofunda o hiato de exposição ($e^* \approx 11$ anos).
 :::
 
-::: {.column width="50%"}
+::: {.column width="48%"}
 ::: {.highlightbox}
 **Recomendações de Política**
 
 - **Qualificação Digital na Base:** Evitar a exclusão permanente dos 35,7 milhões de trabalhadores em ocupações informais de baixa exposição.
-- **Incentivos à Formalização Tecnológica:** Políticas de transição formal com ênfase em adoção de infraestrutura corporativa digital (PMEs).
+- **Incentivos à Formalização Tecnológica:** Políticas de transição formal com ênfase em infraestrutura corporativa digital (PMEs).
 :::
 :::
 ::::

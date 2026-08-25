@@ -84,7 +84,3 @@ outputs <- list.files(OUT_DIR, full.names = FALSE)
 message("")
 message("Pipeline complete. Total time: ", sprintf("%.2fs", sum(timings)))
 message(paste(c("Outputs in _outputs:", paste0("  - ", outputs)), collapse = "\n"))
-
-if (!interactive()) {
-  quit(status = 0L, save = "no")
-}

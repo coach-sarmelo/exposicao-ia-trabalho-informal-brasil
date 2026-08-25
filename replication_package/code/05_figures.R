@@ -82,7 +82,8 @@ save_all_formats <- function(base_name, plot_obj, width = 6.5, height = 4.2) {
     if (dir.exists(file.path(root_dir, "replication_package", "output", "figures"))) file.path(root_dir, "replication_package", "output", "figures") else NULL,
     if (dir.exists(file.path(root_dir, "paper", "figures"))) file.path(root_dir, "paper", "figures") else NULL,
     if (dir.exists(file.path(root_dir, "Figures"))) file.path(root_dir, "Figures") else NULL,
-    out_dir
+    if (dir.exists(file.path(out_dir, "figures"))) file.path(out_dir, "figures") else NULL,
+    if (basename(out_dir) == "_outputs") out_dir else NULL
   ))
   for (d in dest_dirs) {
     if (!dir.exists(d)) dir.create(d, showWarnings = FALSE, recursive = TRUE)
@@ -286,5 +287,8 @@ p5 <- ggplot(forest_dt, aes(y = spec_factor, x = beta)) +
   theme_academic()
 
 save_all_formats("fig5_robustez_forest", p5)
+
+invisible(graphics.off())
+invisible(gc())
 
 message("05_figures.R complete: all 4 figures generated in PDF, SVG, and PNG.")

@@ -1,14 +1,14 @@
 \section{Estratégia empírica}
 \label{sec:estrategia}
 
-Estimo quatro especificações econométricas no nível do indivíduo ($N = 227.629$), utilizando Mínimos Quadrados Ponderados (WLS) pelos pesos amostrais da PNAD Contínua. Como o índice de exposição $\theta_{j(i)}$ varia no nível da ocupação $j \in \{1, \dots, 122\}$, todos os erros-padrão são agrupados por ocupação (122 \emph{clusters}), corrigindo para correlação intra-grupo e refletindo a identificação do sorting entre ocupações ponderado pelo emprego. Todas as especificações incorporam um vetor $\mathbf{X}_i$ de controles mincerianos (idade, idade ao quadrado, gênero e dummies de raça).
+Estimo quatro especificações econométricas no nível do indivíduo ($N = 227.629$), utilizando Mínimos Quadrados Ponderados (WLS) pelos pesos amostrais da PNAD Contínua. Como o índice de exposição $\theta_{j(i)}$ varia no nível da ocupação $j \in \{1, \dots, 122\}$, todos os erros-padrão são agrupados por ocupação (122 \emph{clusters}) para corrigir o viés de correlação intragrupo em regressores agregados \citep{moulton1986random}, refletindo a identificação do sorting entre ocupações ponderado pelo emprego. Todas as especificações incorporam um vetor $\mathbf{X}_i$ de controles mincerianos (idade, idade ao quadrado, gênero e variáveis indicadoras de raça).
 
 \paragraph{S1 --- Gradiente escolaridade--exposição (Proposição~\ref{prop:gradiente}).}
 \begin{equation}
     \theta_{j(i)} = \alpha + \beta_1 \, e_i + \mathbf{X}_i' \boldsymbol{\gamma} + \varepsilon_i,
     \label{eq:s1}
 \end{equation}
-onde $e_i$ são os anos de estudo do trabalhador $i$. A previsão teórica é $\beta_1 > 0$. A fonte de variação advém do pareamento seletivo de equilíbrio entre qualificação e conteúdo de tarefas; $\beta_1$ quantifica o gradiente educacional após expurgar a composição demográfica.
+em que $e_i$ denota os anos de estudo do trabalhador $i$. A previsão teórica é $\beta_1 > 0$. A fonte de variação advém do pareamento seletivo de equilíbrio entre qualificação e conteúdo de tarefas; $\beta_1$ quantifica o gradiente educacional após expurgar a composição demográfica.
 
 \paragraph{S2 --- Controle de rendimento.}
 Acrescento o rendimento habitual $w_i$ a \eqref{eq:s1}:
@@ -32,4 +32,4 @@ Estimo a relação incondicional (S3a, sem $e_i$; previsão $\delta_1 < 0$) e a 
     + \beta_3 \, \text{formal}_{u(i)}^{\text{LOO}} + \mathbf{X}_i' \boldsymbol{\gamma} + \varepsilon_i,
     \label{eq:s4}
 \end{equation}
-onde $\text{formal}_{u(i)}^{\text{LOO}} \in [0, 1]$ é a taxa de formalidade da Unidade da Federação $u$ calculada via \emph{leave-one-out} (excluindo a observação $i$). Previsão: $\beta_2 > 0$, refletindo maior inclinação do gradiente onde o setor formal é mais maduro.
+em que $\text{formal}_{u(i)}^{\text{LOO}} \in [0, 1]$ representa a taxa de formalidade média da Unidade da Federação $u$ calculada via \emph{leave-one-out} ($\text{formal}_{u(i)}^{\text{LOO}} = \frac{\sum_{k \in \mathcal{I}_u \setminus \{i\}} \omega_k \text{formal}_k}{\sum_{k \in \mathcal{I}_u \setminus \{i\}} \omega_k}$, ponderada pelos pesos amostrais $\omega_k$), excluindo a observação do próprio trabalhador $i$ para evitar circularidade mecânica. Previsão: $\beta_2 > 0$, refletindo maior inclinação do gradiente onde o setor formal é mais maduro.

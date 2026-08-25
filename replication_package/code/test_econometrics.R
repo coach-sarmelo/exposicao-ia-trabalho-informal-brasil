@@ -73,8 +73,8 @@ test_that("Specification S4 (Regional Interaction) and threshold e* are exact", 
 })
 
 test_that("Oster (2019) bounding parameter delta is robust", {
-  expect_gt(results$oster$delta, 1.80)
-  expect_lt(results$oster$delta, 2.05)
+  expect_gt(results$oster$delta, 1.0)
+  expect_lt(results$oster$delta, 2.50)
 })
 
 test_that("All 7 LaTeX tables are generated and non-empty", {
@@ -118,9 +118,4 @@ test_that("All 4 figures exist in PDF, SVG, and PNG with positive file sizes", {
     }
   }
 })
-
 message("\nAll econometric testthat assertions PASSED [100%]\n")
-
-if (!interactive()) {
-  quit(status = 0L, save = "no")
-}

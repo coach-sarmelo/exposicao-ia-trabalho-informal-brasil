@@ -174,13 +174,13 @@ r2_s2 <- as.numeric(r2(fit_s2, "r2"))
 r_max <- 1.3 * r2_s2
 
 # Oster (2019, JBES): adjustment distance measures remaining variation relative to controlled model
-delta_denom <- (b_s1 - b_s2) * (r_max - r2_s2)
+delta_denom <- (b_s1 - b_s2) * (r_max - r2_s1)
 r2_diff     <- r2_s2 - r2_s1
 eps <- 1e-12
 
 if (abs(delta_denom) > eps && abs(r2_diff) > eps) {
   delta_oster <- unname((b_s2 * r2_diff) / delta_denom)
-  bstar_oster <- unname(b_s2 - (b_s1 - b_s2) * (r_max - r2_s2) / r2_diff)
+  bstar_oster <- unname(b_s2 - (b_s1 - b_s2) * (r_max - r2_s1) / r2_diff)
 } else {
   delta_oster <- NA_real_
   bstar_oster <- NA_real_
@@ -216,9 +216,10 @@ occ_summary <- df[, .(
   exposure    = mean(exposure, na.rm = TRUE),
   schooling   = weighted.mean(years_of_study, weight, na.rm = TRUE),
   employment  = sum(weight, na.rm = TRUE) / 1e6,
-  informality = weighted.mean(informal, weight, na.rm = TRUE) * 100.0
+  informality = weighted.mean(informal, weight, na.rm = TRUE) * 100.0,
+  income      = weighted.mean(income, weight, na.rm = TRUE)
 ), by = occupation]
-setorder(occ_summary, -exposure)
+setorder(occ_summary, -employment)
 top10_occ    <- head(occ_summary, 10L)
 bottom10_occ <- tail(occ_summary, 10L)
 
