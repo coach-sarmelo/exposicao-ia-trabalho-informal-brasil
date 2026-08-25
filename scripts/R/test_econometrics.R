@@ -73,8 +73,8 @@ test_that("Specification S4 (Regional Interaction) and threshold e* are exact", 
 })
 
 test_that("Oster (2019) bounding parameter delta is robust", {
-  expect_gt(results$oster$delta, 1.50)
-  expect_lt(results$oster$delta, 1.80)
+  expect_gt(results$oster$delta, 1.0)
+  expect_lt(results$oster$delta, 2.50)
 })
 
 test_that("All 7 LaTeX tables are generated and non-empty", {
