@@ -1,0 +1,52 @@
+{
+  "git-guardrails": {
+    "enabled": true,
+    "PreToolUse": [
+      {
+        "matcher": "run_command|write_to_file|replace_file_content|multi_replace_file_content",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python hooks/git-guardrails.py",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  },
+  "claim-reconcile": {
+    "enabled": true,
+    "PostToolUse": [
+      {
+        "matcher": "write_to_file|replace_file_content|multi_replace_file_content",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python hooks/claim-reconcile.py",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  },
+  "status-context": {
+    "enabled": true,
+    "PreInvocation": [
+      {
+        "type": "command",
+        "command": "python hooks/statusline.py",
+        "timeout": 5
+      }
+    ]
+  },
+  "session-log": {
+    "enabled": true,
+    "Stop": [
+      {
+        "type": "command",
+        "command": "python hooks/log-reminder.py",
+        "timeout": 10
+      }
+    ]
+  }
+}

@@ -37,7 +37,7 @@
             \begin{itemize}
                 \item \key{39,2\% de informalidade} na força ocupada.
                 \item \key{35,7 milhões de pessoas (35,0\%)} em ocupações
-                de baixíssima exposição à IA ($\theta_j \le 2$).
+                de baixíssima exposição à IA (quintil inferior).
                 \item Forte heterogeneidade regional: formalidade varia
                 de 40\% (MA/PA) a 65\% (SP/SC).
             \end{itemize}
@@ -148,8 +148,8 @@
             com $\frac{\partial e^*_j}{\partial \theta_j} < 0$.
 
             \begin{itemize}
-                \item Ocupações com maior $\theta_j$ reduzem a exigência
-                educacional para a formalidade corporativa.
+                \item Maior $\theta_j$ reduz a escolaridade mínima: ganhos
+                produtivos ($\Delta\kappa\,\theta_j$) amortizam o custo fixo $c$.
             \end{itemize}
         \end{column}
 
@@ -157,7 +157,7 @@
             \begin{block}{Proposição 1 (Gradiente Positivo)}
                 Por supermodularidade estrita
                 \citep{topkis1998supermodularity}, a alocação de
-                equilíbrio $\theta^*(e)$ é crescente em $e$: $\beta_1 > 0$.
+                equilíbrio $\theta^*(e)$ é crescente em $e$ ($\theta^{*\prime}(e) > 0$).
             \end{block}
 
             \vspace{0.3em}
@@ -343,9 +343,9 @@
             \begin{block}{Limiar Crítico de Polarização: $e^* = 11{,}14$ anos}
                 \begin{itemize}
                     \item $e_i = 8$ anos (Fund.):
-                    $\frac{\partial \theta}{\partial \text{formal}_u} = \mathbf{-0{,}86}$ pt.
+                    $\frac{\partial \theta}{\partial \text{formal}_u} = \mathbf{-0{,}86}$ pt. (segregação manual).
                     \item $e_i = 16$ anos (Sup.):
-                    $\frac{\partial \theta}{\partial \text{formal}_u} = \mathbf{+1{,}38}$ pt.
+                    $\frac{\partial \theta}{\partial \text{formal}_u} = \mathbf{+1{,}38}$ pt. (complementaridade).
                 \end{itemize}
             \end{block}
         \end{column}
@@ -363,13 +363,11 @@
 \begin{frame}{Bateria de Robustez Econométrica (R1--R7)}
     \begin{columns}[T]
         \begin{column}{0.50\textwidth}
-            \textbf{Testes de Sensibilidade:}
+            \textbf{Sensibilidade e Especificação:}
             \begin{itemize}
-                \item \textbf{OLS Não-Ponderado (R1):} $\hat{\beta}_1 = 0{,}21$ (EP $0{,}03$).
-                \item \textbf{Winsorização 1\%/99\% (R5):} $\hat{\beta}_1 = 0{,}23$ (EP $0{,}03$).
-                \item \textbf{Exclusão p99 ($N = 225.478$):} $\hat{\beta}_1 = 0{,}22$ (EP $0{,}03$).
-                \item \textbf{Transformação $\log(1+\theta)$ (R4):} $\hat{\beta}_1 = 0{,}07$ ($p < 0{,}001$).
-                \item \textbf{Exclusão dos 9 Grupos COD}: $\hat{\beta}_1 \in [0{,}19; 0{,}26]$.
+                \item \textbf{Amostra e Outliers:} Winsorização 1\%/99\% ($\hat{\beta}_1 = 0{,}23$); Exclusão p99 ($\hat{\beta}_1 = 0{,}22$); Exclusão dos 9 grupos COD ($\hat{\beta}_1 \in [0{,}19; 0{,}26]$).
+                \item \textbf{Forma Funcional (R4):} $\log(1+\theta)$ ($\hat{\beta}_1 = 0{,}07; p < 0{,}001$).
+                \item \textbf{Pesos Amostrais (R1):} OLS não-ponderado ($\hat{\beta}_1 = 0{,}21$).
             \end{itemize}
 
             \vspace{0.2em}
