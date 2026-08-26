@@ -3,7 +3,7 @@ title: "Exposição à Inteligência Artificial em um Mercado de Trabalho Inform
 subtitle: "Teoria e Evidências Microeconômicas para o Brasil"
 author: "Marcelo Moura Freire"
 date: "2026"
-bibliography: ../Bibliography_base.bib
+bibliography: ../paper/references.bib
 format:
   revealjs:
     theme: [default, theme-template.scss]
