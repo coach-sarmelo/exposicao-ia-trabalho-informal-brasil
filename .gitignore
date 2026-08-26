@@ -1,4 +1,26 @@
-# LaTeX auxiliary files
+# Agent & IDE harness (local only)
+.agents/
+.claude/
+.gemini/
+quality_reports/
+
+# Python & Pytest cache
+.pytest_cache/
+.cache/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+data/
+
+# Quarto & web render cache
+.quarto/
+*_files/
+*_cache/
+guide/
+scripts/
+
+# LaTeX auxiliary build files
 *.aux
 *.log
 *.nav
@@ -15,11 +37,9 @@
 .Rhistory
 .RData
 .Rproj.user/
+.Renviron
 
-# Python / cache
-__pycache__/
-*.pyc
-
-# OS files
+# OS-specific files
 .DS_Store
 Thumbs.db
+desktop.ini
