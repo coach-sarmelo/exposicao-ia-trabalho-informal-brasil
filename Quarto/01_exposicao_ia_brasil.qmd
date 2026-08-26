@@ -28,7 +28,7 @@ format:
 **A realidade estrutural do Brasil (PNAD Contínua 2026Q1):**
 
 - [**39,2% de informalidade**]{.emorygold} na força de trabalho ocupada.
-- [**35,7 milhões de trabalhadores (35,0%)**]{.emorygold} em ocupações de baixíssima exposição à IA ($\theta_j \le 2$).
+- [**35,7 milhões de trabalhadores (35,0%)**]{.emorygold} em ocupações de baixíssima exposição à IA (quintil inferior).
 - Forte heterogeneidade regional: formalidade varia de 40% (MA/PA) a 65% (SP/SC).
 :::
 
@@ -106,14 +106,14 @@ $$
 \quad \implies \frac{\partial e^*_j}{\partial \theta_j} < 0
 $$
 
-- Ocupações com maior $\theta_j$ reduzem a exigência educacional mínima para viabilizar a formalidade corporativa.
+- Maior $\theta_j$ reduz a escolaridade mínima: ganhos produtivos ($\Delta\kappa \theta_j$) amortizam o custo fixo $c$.
 :::
 
 ::: {.column width="48%"}
 ::: {.keybox}
 **Proposição 1 (Gradiente Positivo)**
 
-Por supermodularidade estrita [@topkis1998supermodularity], a alocação de equilíbrio $\theta^*(e)$ é monotonicamente crescente em $e$: $\beta_1 > 0$.
+Por supermodularidade estrita [@topkis1998supermodularity], a alocação de equilíbrio $\theta^*(e)$ é crescente em $e$ ($\theta^{*\prime}(e) > 0$).
 :::
 
 **Corolário 1 (Mediação Parcial):**  
@@ -162,14 +162,17 @@ Idade, idade$^2$, dummy de gênero feminino e vetor de dummies de cor/raça (IBG
   $$\theta_{j(i)} = \alpha + \beta_1 \, e_i + \mathbf{X}_i'\boldsymbol{\gamma} + \varepsilon_i$$
 
 - **S2 (Controle de Rendimento):**
-  $$\theta_{j(i)} = \alpha + \beta_1 \, e_i + \beta_{\text{sal}} \, w_i + \mathbf{X}_i'\boldsymbol{\gamma} + \varepsilon_i$$
+  $$\theta_{j(i)} = \alpha + \beta_1 \, e_i + \beta_w \, w_i + \mathbf{X}_i'\boldsymbol{\gamma} + \varepsilon_i$$
 :::
 
 ::: {.column width="48%"}
 **Mecanismos e Espaço:**
 
-- **S3 (Mediação da Informalidade):**
-  $$\text{informal}_i = \alpha + \delta_1 \, \theta_{j(i)} + \delta_2 \, e_i + \mathbf{X}_i'\boldsymbol{\gamma} + \varepsilon_i$$
+- **S3 (Mediação / Seleção na Informalidade):**
+  $$\begin{aligned}
+    \text{informal}_i &= \alpha + \delta_1 \, \theta_{j(i)} \\
+    &+ \delta_2 \, e_i + \mathbf{X}_i'\boldsymbol{\gamma} + \varepsilon_i
+  \end{aligned}$$
 
 - **S4 (Interação Regional LOO):**
   $$\begin{aligned}
@@ -189,7 +192,7 @@ Idade, idade$^2$, dummy de gênero feminino e vetor de dummies de cor/raça (IBG
 
 - **S1 Baseline:** $\hat{\beta}_1 = \mathbf{0{,}2288} \approx \mathbf{0{,}23}$ (EP $0{,}028; p < 0{,}001; R^2 = 0{,}246$).
 - Cada 4 anos de estudo elevam a exposição em $\sim 1$ ponto no escore 0--10.
-- **S2 com Salário:** $\hat{\beta}_1 = \mathbf{0{,}21}$ (EP $0{,}026$); Rendimento: $\hat{\beta}_{\text{sal}} = \mathbf{0{,}043}$ ($p < 0{,}001$).
+- **S2 Salário:** $\hat{\beta}_1 = \mathbf{0{,}21}$ (EP $0{,}026$); Rendimento: $\hat{\beta}_w = \mathbf{0{,}043}$ ($p < 0{,}001$).
 
 ::: {.keybox}
 **Limites de Oster (2019)**
@@ -243,8 +246,8 @@ $\delta = \mathbf{1{,}64} > 1$ sob $R_{\max} = 1{,}3 R^2$: seleção em não obs
 ::: {.keybox}
 **Limiar Crítico de Polarização: $e^* = 11{,}14$ anos**
 
-- $e_i = 8$ anos (Fund.): $\frac{\partial \theta}{\partial \text{formal}_u} = \mathbf{-0{,}86}$ ponto.
-- $e_i = 16$ anos (Sup.): $\frac{\partial \theta}{\partial \text{formal}_u} = \mathbf{+1{,}38}$ ponto.
+- $e_i = 8$ anos (Fund.): $\frac{\partial \theta}{\partial \text{formal}_u} = \mathbf{-0{,}86}$ ponto (segregação manual).
+- $e_i = 16$ anos (Sup.): $\frac{\partial \theta}{\partial \text{formal}_u} = \mathbf{+1{,}38}$ ponto (complementaridade).
 :::
 :::
 
@@ -257,13 +260,11 @@ $\delta = \mathbf{1{,}64} > 1$ sob $R_{\max} = 1{,}3 R^2$: seleção em não obs
 
 :::: {.columns}
 ::: {.column width="50%"}
-**Testes de Sensibilidade:**
+**Sensibilidade e Especificação:**
 
-- **OLS Não-Ponderado (R1):** $\hat{\beta}_1 = 0{,}21$ (EP $0{,}03$).
-- **Winsorização 1%/99% (R5):** $\hat{\beta}_1 = 0{,}23$ (EP $0{,}03$).
-- **Exclusão p99 ($N = 225.478$):** $\hat{\beta}_1 = 0{,}22$ (EP $0{,}03$).
-- **Transformação $\log(1+\theta)$ (R4):** $\hat{\beta}_1 = 0{,}07$ ($p < 0{,}001$).
-- **Exclusão dos 9 Grupos COD**: $\hat{\beta}_1 \in [0{,}19; 0{,}26]$.
+- **Amostra e Outliers:** Winsorização 1%/99% ($\hat{\beta}_1 = 0{,}23$); Exclusão p99 ($\hat{\beta}_1 = 0{,}22$); Exclusão dos 9 grupos COD ($\hat{\beta}_1 \in [0{,}19; 0{,}26]$).
+- **Forma Funcional (R4):** $\log(1+\theta)$ ($\hat{\beta}_1 = 0{,}07; p < 0{,}001$).
+- **Pesos Amostrais (R1):** OLS não-ponderado ($\hat{\beta}_1 = 0{,}21$).
 
 ::: {.methodbox}
 **Wild Cluster Bootstrap (27 UFs)**

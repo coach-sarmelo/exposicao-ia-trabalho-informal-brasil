@@ -145,7 +145,7 @@ window.Quarto = {
 <p><strong>A realidade estrutural do Brasil (PNAD Contínua 2026Q1):</strong></p>
 <ul>
 <li><span class="emorygold"><strong>39,2% de informalidade</strong></span> na força de trabalho ocupada.</li>
-<li><span class="emorygold"><strong>35,7 milhões de trabalhadores (35,0%)</strong></span> em ocupações de baixíssima exposição à IA (<span class="math inline">\(\theta_j \le 2\)</span>).</li>
+<li><span class="emorygold"><strong>35,7 milhões de trabalhadores (35,0%)</strong></span> em ocupações de baixíssima exposição à IA (quintil inferior).</li>
 <li>Forte heterogeneidade regional: formalidade varia de 40% (MA/PA) a 65% (SP/SC).</li>
 </ul>
 </div><div class="column" style="width:38%;">
@@ -217,12 +217,12 @@ A IA é complementar ao capital humano formal, mas a informalidade atua como bar
 \quad \implies \frac{\partial e^*_j}{\partial \theta_j} &lt; 0
 \]</span></p>
 <ul>
-<li>Ocupações com maior <span class="math inline">\(\theta_j\)</span> reduzem a exigência educacional mínima para viabilizar a formalidade corporativa.</li>
+<li>Maior <span class="math inline">\(\theta_j\)</span> reduz a escolaridade mínima: ganhos produtivos (<span class="math inline">\(\Delta\kappa \theta_j\)</span>) amortizam o custo fixo <span class="math inline">\(c\)</span>.</li>
 </ul>
 </div><div class="column" style="width:48%;">
 <div class="keybox">
 <p><strong>Proposição 1 (Gradiente Positivo)</strong></p>
-<p>Por supermodularidade estrita <span class="citation" data-cites="topkis1998supermodularity">(<a href="#ref-topkis1998supermodularity" role="doc-biblioref">Topkis 1998</a>)</span>, a alocação de equilíbrio <span class="math inline">\(\theta^*(e)\)</span> é monotonicamente crescente em <span class="math inline">\(e\)</span>: <span class="math inline">\(\beta_1 &gt; 0\)</span>.</p>
+<p>Por supermodularidade estrita <span class="citation" data-cites="topkis1998supermodularity">(<a href="#ref-topkis1998supermodularity" role="doc-biblioref">Topkis 1998</a>)</span>, a alocação de equilíbrio <span class="math inline">\(\theta^*(e)\)</span> é crescente em <span class="math inline">\(e\)</span> (<span class="math inline">\(\theta^{*\prime}(e) &gt; 0\)</span>).</p>
 </div>
 <p><strong>Corolário 1 (Mediação Parcial):</strong><br>
 A associação bruta exposição–formalidade atenua-se ao condicionar na escolaridade, mas retém coeficiente direto significativo (<span class="math inline">\(\Delta\kappa &gt; 0\)</span>).</p>
@@ -264,12 +264,15 @@ A associação bruta exposição–formalidade atenua-se ao condicionar na escol
 <p><strong>Modelos no Nível Individual:</strong></p>
 <ul>
 <li><p><strong>S1 (Gradiente Baseline):</strong> <span class="math display">\[\theta_{j(i)} = \alpha + \beta_1 \, e_i + \mathbf{X}_i'\boldsymbol{\gamma} + \varepsilon_i\]</span></p></li>
-<li><p><strong>S2 (Controle de Rendimento):</strong> <span class="math display">\[\theta_{j(i)} = \alpha + \beta_1 \, e_i + \beta_{\text{sal}} \, w_i + \mathbf{X}_i'\boldsymbol{\gamma} + \varepsilon_i\]</span></p></li>
+<li><p><strong>S2 (Controle de Rendimento):</strong> <span class="math display">\[\theta_{j(i)} = \alpha + \beta_1 \, e_i + \beta_w \, w_i + \mathbf{X}_i'\boldsymbol{\gamma} + \varepsilon_i\]</span></p></li>
 </ul>
 </div><div class="column" style="width:48%;">
 <p><strong>Mecanismos e Espaço:</strong></p>
 <ul>
-<li><p><strong>S3 (Mediação da Informalidade):</strong> <span class="math display">\[\text{informal}_i = \alpha + \delta_1 \, \theta_{j(i)} + \delta_2 \, e_i + \mathbf{X}_i'\boldsymbol{\gamma} + \varepsilon_i\]</span></p></li>
+<li><p><strong>S3 (Mediação / Seleção na Informalidade):</strong> <span class="math display">\[\begin{aligned}
+  \text{informal}_i &amp;= \alpha + \delta_1 \, \theta_{j(i)} \\
+  &amp;+ \delta_2 \, e_i + \mathbf{X}_i'\boldsymbol{\gamma} + \varepsilon_i
+\end{aligned}\]</span></p></li>
 <li><p><strong>S4 (Interação Regional LOO):</strong> <span class="math display">\[\begin{aligned}
   \theta_{j(i)} = \alpha &amp;+ \beta_1 \, e_i + \beta_2 \big(e_i \times \text{formal}_{-i, u}^{\text{LOO}}\big) \\
   &amp;+ \beta_3 \, \text{formal}_{-i, u}^{\text{LOO}} + \mathbf{X}_i'\boldsymbol{\gamma} + \varepsilon_i
@@ -289,7 +292,7 @@ A associação bruta exposição–formalidade atenua-se ao condicionar na escol
 <ul>
 <li><strong>S1 Baseline:</strong> <span class="math inline">\(\hat{\beta}_1 = \mathbf{0{,}2288} \approx \mathbf{0{,}23}\)</span> (EP <span class="math inline">\(0{,}028; p &lt; 0{,}001; R^2 = 0{,}246\)</span>).</li>
 <li>Cada 4 anos de estudo elevam a exposição em <span class="math inline">\(\sim 1\)</span> ponto no escore 0–10.</li>
-<li><strong>S2 com Salário:</strong> <span class="math inline">\(\hat{\beta}_1 = \mathbf{0{,}21}\)</span> (EP <span class="math inline">\(0{,}026\)</span>); Rendimento: <span class="math inline">\(\hat{\beta}_{\text{sal}} = \mathbf{0{,}043}\)</span> (<span class="math inline">\(p &lt; 0{,}001\)</span>).</li>
+<li><strong>S2 Salário:</strong> <span class="math inline">\(\hat{\beta}_1 = \mathbf{0{,}21}\)</span> (EP <span class="math inline">\(0{,}026\)</span>); Rendimento: <span class="math inline">\(\hat{\beta}_w = \mathbf{0{,}043}\)</span> (<span class="math inline">\(p &lt; 0{,}001\)</span>).</li>
 </ul>
 <div class="keybox">
 <p><strong>Limites de Oster (2019)</strong></p>
@@ -344,8 +347,8 @@ A associação bruta exposição–formalidade atenua-se ao condicionar na escol
 <div class="keybox">
 <p><strong>Limiar Crítico de Polarização: <span class="math inline">\(e^* = 11{,}14\)</span> anos</strong></p>
 <ul>
-<li><span class="math inline">\(e_i = 8\)</span> anos (Fund.): <span class="math inline">\(\frac{\partial \theta}{\partial \text{formal}_u} = \mathbf{-0{,}86}\)</span> ponto.</li>
-<li><span class="math inline">\(e_i = 16\)</span> anos (Sup.): <span class="math inline">\(\frac{\partial \theta}{\partial \text{formal}_u} = \mathbf{+1{,}38}\)</span> ponto.</li>
+<li><span class="math inline">\(e_i = 8\)</span> anos (Fund.): <span class="math inline">\(\frac{\partial \theta}{\partial \text{formal}_u} = \mathbf{-0{,}86}\)</span> ponto (segregação manual).</li>
+<li><span class="math inline">\(e_i = 16\)</span> anos (Sup.): <span class="math inline">\(\frac{\partial \theta}{\partial \text{formal}_u} = \mathbf{+1{,}38}\)</span> ponto (complementaridade).</li>
 </ul>
 </div>
 </div><div class="column" style="width:46%;">
@@ -361,13 +364,11 @@ A associação bruta exposição–formalidade atenua-se ao condicionar na escol
 <h2 class="anchored" data-anchor-id="bateria-de-robustez-econométrica-r1r7">Bateria de Robustez Econométrica (R1–R7)</h2>
 <div class="columns">
 <div class="column" style="width:50%;">
-<p><strong>Testes de Sensibilidade:</strong></p>
+<p><strong>Sensibilidade e Especificação:</strong></p>
 <ul>
-<li><strong>OLS Não-Ponderado (R1):</strong> <span class="math inline">\(\hat{\beta}_1 = 0{,}21\)</span> (EP <span class="math inline">\(0{,}03\)</span>).</li>
-<li><strong>Winsorização 1%/99% (R5):</strong> <span class="math inline">\(\hat{\beta}_1 = 0{,}23\)</span> (EP <span class="math inline">\(0{,}03\)</span>).</li>
-<li><strong>Exclusão p99 (<span class="math inline">\(N = 225.478\)</span>):</strong> <span class="math inline">\(\hat{\beta}_1 = 0{,}22\)</span> (EP <span class="math inline">\(0{,}03\)</span>).</li>
-<li><strong>Transformação <span class="math inline">\(\log(1+\theta)\)</span> (R4):</strong> <span class="math inline">\(\hat{\beta}_1 = 0{,}07\)</span> (<span class="math inline">\(p &lt; 0{,}001\)</span>).</li>
-<li><strong>Exclusão dos 9 Grupos COD</strong>: <span class="math inline">\(\hat{\beta}_1 \in [0{,}19; 0{,}26]\)</span>.</li>
+<li><strong>Amostra e Outliers:</strong> Winsorização 1%/99% (<span class="math inline">\(\hat{\beta}_1 = 0{,}23\)</span>); Exclusão p99 (<span class="math inline">\(\hat{\beta}_1 = 0{,}22\)</span>); Exclusão dos 9 grupos COD (<span class="math inline">\(\hat{\beta}_1 \in [0{,}19; 0{,}26]\)</span>).</li>
+<li><strong>Forma Funcional (R4):</strong> <span class="math inline">\(\log(1+\theta)\)</span> (<span class="math inline">\(\hat{\beta}_1 = 0{,}07; p &lt; 0{,}001\)</span>).</li>
+<li><strong>Pesos Amostrais (R1):</strong> OLS não-ponderado (<span class="math inline">\(\hat{\beta}_1 = 0{,}21\)</span>).</li>
 </ul>
 <div class="methodbox">
 <p><strong>Wild Cluster Bootstrap (27 UFs)</strong></p>

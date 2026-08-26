@@ -41,13 +41,13 @@ from pathlib import Path
 from datetime import datetime
 
 
-def get_state_dir() -> Path:
-    project_dir = os.environ.get("CLAUDE_PROJECT_DIR", "")
-    if not project_dir:
-        d = Path.home() / ".claude" / "sessions" / "default"
+def get_state_dir(project_dir: str = "") -> Path:
+    pd = project_dir or os.environ.get("AGY_PROJECT_DIR") or os.environ.get("CLAUDE_PROJECT_DIR") or ""
+    if not pd:
+        d = Path.home() / ".gemini" / "antigravity" / "sessions" / "default"
     else:
-        h = hashlib.md5(project_dir.encode()).hexdigest()[:8]
-        d = Path.home() / ".claude" / "sessions" / h
+        h = hashlib.md5(pd.encode()).hexdigest()[:8]
+        d = Path.home() / ".gemini" / "antigravity" / "sessions" / h
     d.mkdir(parents=True, exist_ok=True)
     return d
 
@@ -113,7 +113,12 @@ def main() -> int:
     if hook_input.get("stop_hook_active", False):
         return 0
 
-    project_dir = os.environ.get("CLAUDE_PROJECT_DIR", "") or hook_input.get("cwd", "")
+    ws_paths = hook_input.get("workspacePaths", [])
+    if ws_paths and isinstance(ws_paths, list):
+        project_dir = ws_paths[0]
+    else:
+        project_dir = os.environ.get("AGY_PROJECT_DIR", "") or os.environ.get("CLAUDE_PROJECT_DIR", "") or hook_input.get("cwd", "") or os.getcwd()
+    
     if not project_dir or not Path(project_dir).is_dir():
         return 0
 
@@ -121,7 +126,7 @@ def main() -> int:
     if not status.strip():
         return 0  # nothing changed — nothing to log
 
-    state_path = get_state_dir() / "session-log-state.json"
+    state_path = get_state_dir(project_dir) / "session-log-state.json"
     status_hash = hashlib.md5(status.encode()).hexdigest()
     try:
         prev = json.loads(state_path.read_text()).get("last_hash")
@@ -166,13 +171,16 @@ def main() -> int:
     except Exception:
         pass
 
-    sys.stderr.write(f"[session-log] appended {len(changed)} change(s) to {log_file.name}\n")
+    is_antigravity = "workspacePaths" in hook_input or "executionNum" in hook_input
 
     # Opt-in compile gate: turn the uncompiled note into a Stop-block.
-    if flagged and os.environ.get("CLAUDE_COMPILE_GATE", "") == "block":
+    if flagged and (os.environ.get("AGY_COMPILE_GATE", "") == "block" or os.environ.get("CLAUDE_COMPILE_GATE", "") == "block"):
         reason = ("Uncompiled artifacts before stop: " + "; ".join(flagged) +
-                  ". Run /compile-latex or /deploy, or set CLAUDE_COMPILE_GATE= to disable this gate.")
-        json.dump({"decision": "block", "reason": reason}, sys.stdout)
+                  ". Run /compile-latex or /deploy, or set AGY_COMPILE_GATE= to disable this gate.")
+        decision = "continue" if is_antigravity else "block"
+        json.dump({"decision": decision, "reason": reason}, sys.stdout)
+    elif is_antigravity:
+        json.dump({}, sys.stdout)
 
     return 0
 

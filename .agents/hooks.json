@@ -28,5 +28,25 @@
         ]
       }
     ]
+  },
+  "status-context": {
+    "enabled": true,
+    "PreInvocation": [
+      {
+        "type": "command",
+        "command": "python hooks/statusline.py",
+        "timeout": 5
+      }
+    ]
+  },
+  "session-log": {
+    "enabled": true,
+    "Stop": [
+      {
+        "type": "command",
+        "command": "python hooks/log-reminder.py",
+        "timeout": 10
+      }
+    ]
   }
 }
