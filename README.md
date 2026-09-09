@@ -1,5 +1,6 @@
 # Exposição à Inteligência Artificial em um Mercado de Trabalho Informal: Teoria e Evidências para o Brasil
 
+**Artigo (PDF):** [Ler online](paper/main.pdf) · [Download v1.0](https://github.com/coach-sarmelo/exposicao-ia-trabalho-informal-brasil/releases/download/v1.0/Exposicao_IA_Trabalho_Informal_Brasil.pdf)  
 **Autor:** Marcelo Moura Freire  
 **Padrão de Reprodutibilidade:** [AEA Data and Code Availability Standard (DCAS)](https://www.aeaweb.org/journals/data)  
 **Licença:** BSD 3-Clause (Código) / CC-BY 4.0 (Documentos e Dados Derivados)  
