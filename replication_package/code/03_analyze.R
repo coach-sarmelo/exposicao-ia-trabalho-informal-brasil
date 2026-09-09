@@ -121,9 +121,9 @@ fit_r5 <- feols(
   data = df_winsor
 )
 
-# R6: Exclude Top 1% Income
-p99_inc <- quantile(df$income, 0.99, na.rm = TRUE)
-df_no_p99 <- df[income <= p99_inc]
+# R6: Exclude Top 1% Exposure
+p99_exp <- quantile(df$exposure, 0.99, na.rm = TRUE)
+df_no_p99 <- df[exposure <= p99_exp]
 fit_r6 <- feols(
   exposure ~ years_of_study + age + age_sq + is_female + i(race, ref = "1"),
   weights = ~weight,
