@@ -212,6 +212,17 @@ Erros-padrão clusterizados no nível de ocupação (122 clusters COD) entre par
 :::
 :::
 
+::: {.card title="Diagrama Causal de Mediação (DAG)"}
+![](images/fig_dag_mediacao.png)
+
+::: {.callout-note title="Decomposição Estrutural dos Canais"}
+A análise econométrica decompõe a relação negativa entre exposição à IA e informalidade ($-6{,}23$ p.p., Modelo S3a):
+
+- **Canal Indireto (Composição Educacional, $37{,}2\%$):** Ocupações com maior exposição selecionam trabalhadores mais escolarizados ($\hat{\beta}_1 = +0{,}23^{***}$), reduzindo a informalidade em $-2{,}61^{***}$ p.p./ano.
+- **Canal Direto (Capital Organizacional Corporativo, $62{,}8\%$):** O efeito residual direto ($\hat{\delta}_1 = -3{,}91^{***}$ p.p., Modelo S3) capta a exigência de governança, infraestrutura de dados e escala de firmas formais.
+:::
+:::
+
 ::: {.card title="Modelo S4: Heterogeneidade Espacial"}
 | Regressor | (S4) Interação Regional |
 |:----------|------------------------:|
