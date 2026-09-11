@@ -1,6 +1,6 @@
 # Exposição à Inteligência Artificial em um Mercado de Trabalho Informal: Teoria e Evidências para o Brasil
 
-**Artigo (PDF):** [Ler online](paper/main.pdf) · [Download v1.0](https://github.com/coach-sarmelo/exposicao-ia-trabalho-informal-brasil/releases/download/v1.0/Exposicao_IA_Trabalho_Informal_Brasil.pdf)  
+**Artigo (PDF):** [Ler online](paper/main.pdf) · [Download v1.1](https://github.com/coach-sarmelo/exposicao-ia-trabalho-informal-brasil/releases/download/v1.1/Exposicao_IA_Trabalho_Informal_Brasil.pdf)  
 **Autor:** Marcelo Moura Freire  
 **Padrão de Reprodutibilidade:** [AEA Data and Code Availability Standard (DCAS)](https://www.aeaweb.org/journals/data)  
 **Licença:** BSD 3-Clause (Código) / CC-BY 4.0 (Documentos e Dados Derivados)  
@@ -24,7 +24,7 @@ Este projeto investiga como a dualidade entre **informalidade** e **capital huma
 ```
 exposicao-ia-trabalho-informal-brasil/
 ├── paper/                          # Artigo acadêmico completo em LaTeX
-│   ├── main.tex                    # Fonte principal (17 páginas, padrão AEA)
+│   ├── main.tex                    # Fonte principal (19 páginas, padrão AEA)
 │   ├── main.pdf                    # Manuscrito compilado pronto para submissão
 │   ├── sections/                   # Seções modulares (00_resumo .. 06_conclusao, apendice)
 │   ├── tables/                     # Tabelas em LaTeX geradas pela pipeline
@@ -40,7 +40,8 @@ exposicao-ia-trabalho-informal-brasil/
 │   ├── fig1_gradiente.{pdf,svg,png}
 │   ├── fig2_mediacao.{pdf,svg,png}
 │   ├── fig3_regional_slopes.{pdf,svg,png}
-│   └── fig5_robustez_forest.{pdf,svg,png}
+│   ├── fig5_robustez_forest.{pdf,svg,png}
+│   └── fig_dag_mediacao.{pdf,svg,png,tex}
 │
 ├── replication_package/            # Pacote de replicação autônomo (AEA DCAS)
 │   ├── README.md                   # Manifesto de replicação e mapeamento Tabela/Figura -> código
@@ -94,7 +95,8 @@ Rscript test_econometrics.R
 | **Tabela A.1** | Sensibilidade por Exclusão de Grandes Grupos COD | `code/04_tables.R:250` | `output/tables/tab_robustez_grupos.tex` |
 | **Figura 1** | Gradiente Escolaridade vs. Exposição à IA | `code/05_figures.R:40` | `output/figures/fig1_gradiente.*` |
 | **Figura 2** | Decomposição da Mediação da Informalidade | `code/05_figures.R:110` | `output/figures/fig2_mediacao.*` |
-| **Figura 3** | Slopes Educacionais nas 5 Macro-Regiões | `code/05_figures.R:168` | `output/figures/fig3_regional_slopes.*` |
+| **Figura 3** | Diagrama Causal de Mediação (DAG) | `Figures/fig_dag_mediacao.tex` | `Figures/fig_dag_mediacao.*` |
+| **Figura 4** | Slopes Educacionais nas 5 Macro-Regiões | `code/05_figures.R:168` | `output/figures/fig3_regional_slopes.*` |
 | **Figura 5** | Forest Plot de Estabilidade de Coeficientes | `code/05_figures.R:216` | `output/figures/fig5_robustez_forest.*` |
 
 ---
