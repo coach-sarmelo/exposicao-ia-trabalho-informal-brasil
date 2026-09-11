@@ -4,6 +4,7 @@
 **Autor:** Marcelo Moura Freire  
 **Padrão de Reprodutibilidade:** [AEA Data and Code Availability Standard (DCAS)](https://www.aeaweb.org/journals/data)  
 **Licença:** BSD 3-Clause (Código) / CC-BY 4.0 (Documentos e Dados Derivados)  
+**Painel Interativo / Dashboard (GitHub Pages):** [Acessar Dashboard](https://coach-sarmelo.github.io/exposicao-ia-trabalho-informal-brasil/)  
 **Slides Interativos (GitHub Pages):** [Visualizar Apresentação RevealJS](https://coach-sarmelo.github.io/exposicao-ia-trabalho-informal-brasil/01_exposicao_ia_brasil.html)  
 
 ---
