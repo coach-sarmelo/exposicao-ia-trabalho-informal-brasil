@@ -144,8 +144,8 @@ Em uma economia caracterizada pela informalidade contratual, a adoção de IA se
 2. **Integração Corporativa/Empresarial:** Firmas formais investem em fluxos proprietários de IA, APIs empresariais e reestruturação organizacional de processos. Isso requer segurança jurídica, responsabilidade corporativa, capital gerencial e infraestrutura digital complementar.
 :::
 
-::: {.callout-important title="O Escudo Protetor da Informalidade"}
-Como **40,5% dos trabalhadores brasileiros são informais**, a ausência de capital organizacional nas firmas atua como escudo protetor para trabalhadores de baixa qualificação contra o deslocamento corporativo por IA. **35,7 milhões de trabalhadores (35%)** ocupam postos com exposição quase nula ($\theta \le 2$), predominantemente na agricultura de subsistência, serviços domésticos informais e cuidados pessoais.
+::: {.callout-important title="A Informalidade como Amortecedor Tecnológico"}
+Como **40,5% dos trabalhadores brasileiros são informais**, a ausência de capital organizacional corporativo funciona como amortecedor para ocupações de menor escolaridade contra choques imediatos de automação. **35,7 milhões de trabalhadores (35%)** ocupam postos com exposição quase nula ($\theta \le 2$), predominantemente na agricultura de subsistência, serviços domésticos informais e cuidados pessoais.
 :::
 :::
 
@@ -352,9 +352,9 @@ A interação leave-one-out ($\hat{\beta}_2 = 0{,}2786^{***}$) demonstra que cad
 ::: {.card title="Sobre o Autor"}
 ::: {.author-card}
 ### Marcelo Moura Freire
-**Graduando em Economia — Universidade de Coimbra**
+**Economista — Universidade de Coimbra**
 
-Este é um projeto de portfólio em microeconomia aplicada que analisa como a informalidade estrutural molda a transição tecnológica em economias emergentes. Desenvolve um modelo formal de designação ocupacional com dupla adoção de IA (individual e corporativa), vinculado deterministicamente a microdados oficiais da pesquisa domiciliar brasileira.
+Pesquisa em microeconomia aplicada sobre como a informalidade estrutural molda a transição tecnológica em economias emergentes. Combina um modelo formal de designação ocupacional com dupla adoção de IA (individual e corporativa) e microdados da pesquisa domiciliar brasileira.
 
 ##### Competências Demonstradas
 [Microeconometria (WLS, MQO)]{.competency-tag}

@@ -58,7 +58,7 @@ exposicao-ia-trabalho-informal-brasil/
 
 ## ⚡ Guia Rápido de Reprodução (Quickstart)
 
-Toda a análise empírica, tabelas em LaTeX e figuras em formatos vetoriais são reproduzidas em **menos de 20 segundos** a partir dos microdados brutos:
+A pipeline reproduz integralmente todas as análises empíricas, tabelas em LaTeX e figuras vetoriais a partir dos microdados brutos:
 
 ### Pré-requisitos
 - **R (versão $\ge 4.2.0$)** com os pacotes: `data.table`, `fixest`, `ggplot2`, `jsonlite`, `testthat`.
