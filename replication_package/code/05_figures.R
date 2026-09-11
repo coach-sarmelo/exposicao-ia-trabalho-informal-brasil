@@ -82,9 +82,29 @@ save_all_formats <- function(base_name, plot_obj, width = 6.5, height = 4.2) {
     if (dir.exists(file.path(root_dir, "replication_package", "output", "figures"))) file.path(root_dir, "replication_package", "output", "figures") else NULL,
     if (dir.exists(file.path(root_dir, "paper", "figures"))) file.path(root_dir, "paper", "figures") else NULL,
     if (dir.exists(file.path(root_dir, "Figures"))) file.path(root_dir, "Figures") else NULL,
+    if (dir.exists(file.path(root_dir, "Quarto", "images"))) file.path(root_dir, "Quarto", "images") else NULL,
     if (dir.exists(file.path(out_dir, "figures"))) file.path(out_dir, "figures") else NULL,
     if (basename(out_dir) == "_outputs") out_dir else NULL
   ))
+
+  tikz_tex <- file.path(root_dir, "Figures", paste0(base_name, ".tex"))
+  tikz_pdf <- file.path(root_dir, "Figures", paste0(base_name, ".pdf"))
+
+  if (file.exists(tikz_tex) && file.exists(tikz_pdf)) {
+    exts <- c(".pdf", ".svg", ".png", ".tex")
+    for (d in dest_dirs) {
+      if (!dir.exists(d)) dir.create(d, showWarnings = FALSE, recursive = TRUE)
+      for (ext in exts) {
+        src_f <- file.path(root_dir, "Figures", paste0(base_name, ext))
+        if (file.exists(src_f)) {
+          file.copy(src_f, file.path(d, paste0(base_name, ext)), overwrite = TRUE)
+        }
+      }
+    }
+    message("  Preserved TikZ standalone vector figure for ", base_name, " across directories.")
+    return(invisible(TRUE))
+  }
+
   for (d in dest_dirs) {
     if (!dir.exists(d)) dir.create(d, showWarnings = FALSE, recursive = TRUE)
     ggsave(file.path(d, paste0(base_name, ".pdf")), plot_obj, width = width, height = height, bg = "transparent", device = grDevices::pdf)
