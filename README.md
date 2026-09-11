@@ -5,7 +5,6 @@
 **Padrão de Reprodutibilidade:** [AEA Data and Code Availability Standard (DCAS)](https://www.aeaweb.org/journals/data)  
 **Licença:** BSD 3-Clause (Código) / CC-BY 4.0 (Documentos e Dados Derivados)  
 **Painel Interativo / Dashboard (GitHub Pages):** [Acessar Dashboard](https://coach-sarmelo.github.io/exposicao-ia-trabalho-informal-brasil/)  
-**Slides Interativos (GitHub Pages):** [Visualizar Apresentação RevealJS](https://coach-sarmelo.github.io/exposicao-ia-trabalho-informal-brasil/01_exposicao_ia_brasil.html)  
 
 ---
 
@@ -32,14 +31,10 @@ exposicao-ia-trabalho-informal-brasil/
 │   ├── figures/                    # Gráficos vetoriais de alta resolução (PDF, SVG, PNG)
 │   └── references.bib              # Bibliografia verificada
 │
-├── Slides/                         # Apresentação de seminário acadêmico
-│   ├── 01_exposicao_ia_brasil.tex  # Fonte Beamer (16:9 widescreen)
-│   └── 01_exposicao_ia_brasil.pdf  # Slide deck compilado (16 frames)
-│
-├── Quarto/                         # Apresentação interativa para a Web
-│   ├── 01_exposicao_ia_brasil.qmd  # Código-fonte Quarto RevealJS
-│   ├── 01_exposicao_ia_brasil.html # Deck HTML autocontido (recursos e SVGs embutidos)
-│   └── theme-template.scss         # Tema institucional alinhado à paleta da pesquisa
+├── Quarto/                         # Código-fonte do Painel Interativo Web (Quarto Dashboard)
+│   ├── index.qmd                   # Dashboard analítico em 5 abas (Visão Geral, Ocupações, etc.)
+│   ├── dashboard-theme.scss        # Tema customizado SCSS com paleta institucional
+│   └── images/                     # Figuras de publicação em alta resolução incorporadas
 │
 ├── Figures/                        # Figuras de publicação prontas para visualização
 │   ├── fig1_gradiente.{pdf,svg,png}
@@ -55,7 +50,7 @@ exposicao-ia-trabalho-informal-brasil/
 │   ├── data/                       # Microdados individuais, matrizes de crosswalk e painel UF
 │   └── output/                     # Resultados serializados (results.rds) e tabelas/figuras
 │
-└── docs/                           # Mirror para publicação no GitHub Pages
+└── docs/                           # Publicação GitHub Pages (index.html autocontido e .nojekyll)
 ```
 
 ---

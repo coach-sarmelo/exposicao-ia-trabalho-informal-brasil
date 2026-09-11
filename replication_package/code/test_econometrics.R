@@ -119,3 +119,4 @@ test_that("All 4 figures exist in PDF, SVG, and PNG with positive file sizes", {
   }
 })
 message("\nAll econometric testthat assertions PASSED [100%]\n")
+quit(save = "no", status = 0)
