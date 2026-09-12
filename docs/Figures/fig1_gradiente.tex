@@ -1,0 +1,96 @@
+% fig1_gradiente.tex — Gradiente Educacional de Exposição à IA
+% Compilar standalone via: pdflatex fig1_gradiente.tex
+\documentclass[border=6pt]{standalone}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,calc}
+
+% Paleta Institucional
+\definecolor{instblue}{HTML}{012169}
+\definecolor{instgold}{HTML}{B9975B}
+\definecolor{vermillion}{HTML}{D55E00}
+\definecolor{gridgray}{HTML}{E5E5E5}
+\definecolor{axisgray}{HTML}{333333}
+
+\begin{document}
+% Coordinate map:
+% x represents schooling in [4, 16], scale: X(x) = (x - 4) * 0.95 cm -> range [0, 11.4] cm
+% y represents AI exposure in [0, 10], scale: Y(y) = y * 0.55 cm -> range [0, 5.5] cm
+\begin{tikzpicture}[x=0.95cm, y=0.55cm]
+
+  % Background grid lines
+  \foreach \x in {4, 6, 8, 10, 12, 14, 16} {
+    \draw[gridgray, line width=0.5pt] (\x - 4, 0) -- (\x - 4, 10.2);
+    \draw[axisgray, line width=0.6pt] (\x - 4, 0) -- (\x - 4, -0.2);
+    \node[below, font=\footnotesize, text=axisgray] at (\x - 4, -0.2) {\x};
+  }
+
+  \foreach \y in {0, 2, 4, 6, 8, 10} {
+    \draw[gridgray, line width=0.5pt] (0, \y) -- (11.8, \y);
+    \draw[axisgray, line width=0.6pt] (0, \y) -- (-0.2, \y);
+    \node[left, font=\footnotesize, text=axisgray] at (-0.2, \y) {\y};
+  }
+
+  % Axes
+  \draw[axisgray, line width=0.9pt, ->, >=Stealth] (0, 0) -- (12.4, 0) node[right, font=\small\bfseries, text=axisgray] {Anos de Estudo ($e_i$)};
+  \draw[axisgray, line width=0.9pt, ->, >=Stealth] (0, 0) -- (0, 10.6) node[above, font=\small\bfseries, text=axisgray] {Exposição à IA ($\theta_j$)};
+
+  % Confidence interval band (95% CI)
+  \fill[instgold!30, opacity=0.7] 
+    (2.43, 0.00) -- (2.85, 0.47) -- (3.32, 0.74) -- (3.80, 1.01) -- (4.27, 1.28) -- (4.75, 1.55) -- (5.22, 1.83) -- (5.70, 2.10) -- (6.17, 2.37) -- (6.65, 2.65) -- (7.12, 2.92) -- (7.60, 3.20) -- (8.07, 3.48) -- (8.55, 3.76) -- (9.03, 4.04) -- (9.50, 4.33) -- (9.97, 4.61) -- (10.45, 4.90) -- (10.92, 5.18) -- (11.40, 5.47)
+    -- (11.40, 4.62) -- (10.92, 4.40) -- (10.45, 4.17) -- (9.97, 3.93) -- (9.50, 3.70) -- (9.03, 3.46) -- (8.55, 3.22) -- (8.07, 2.96) -- (7.60, 2.71) -- (7.12, 2.44) -- (6.65, 2.16) -- (6.17, 1.88) -- (5.70, 1.59) -- (5.22, 1.30) -- (4.75, 0.99) -- (4.27, 0.71) -- (3.80, 0.40) -- (3.32, 0.10) -- (3.17, 0.00) -- cycle;
+
+  % Regression Fit Line (WLS on occupation aggregate: y = -3.73 + 0.569 x)
+  % Clamped to y in [0, 10]: x = 6.56 at y = 0; x = 16 at y = 5.37
+  \draw[vermillion, line width=1.8pt] (2.43, 0) -- (11.4, 5.37);
+
+  % Scatter points of 122 occupations (X, Y, radius proportional to employment in millions)
+  \foreach \px/\py/\pr in {
+    7.30/4.10/5.5, 4.76/0.10/5.4, 9.03/5.80/3.7, 6.74/2.90/3.4, 4.08/0.90/3.3, 7.16/2.80/3.2, 
+    3.62/1.40/3.2, 7.18/2.30/2.9, 5.68/3.10/2.9, 11.06/3.00/2.8, 2.81/0.60/2.7, 6.23/1.70/2.6, 
+    8.23/5.60/2.6, 3.99/0.40/2.5, 7.34/2.50/2.4, 6.13/1.20/2.4, 5.97/1.90/2.4, 3.68/2.80/2.3, 
+    5.94/2.50/2.3, 7.54/3.10/2.3, 7.53/3.10/2.2, 11.37/4.30/2.2, 11.28/3.60/2.1, 8.64/2.70/2.1, 
+    7.59/2.10/2.1, 5.63/1.20/2.0, 8.91/4.30/2.0, 6.07/0.10/2.0, 5.99/0.70/2.0, 6.14/0.20/1.9, 
+    6.41/0.70/1.9, 5.71/0.70/1.9, 11.29/5.40/1.9, 8.81/3.10/1.9, 9.64/5.80/1.9, 5.71/1.80/1.9, 
+    10.98/5.30/1.9, 6.00/2.20/1.9, 9.02/5.50/1.9, 6.29/2.30/1.9, 5.22/0.50/1.9, 10.39/3.70/1.9, 
+    10.25/5.00/1.9, 11.18/7.50/1.9, 11.02/3.90/1.8, 5.11/1.30/1.8, 11.27/3.30/1.8, 6.39/1.80/1.8, 
+    5.74/1.70/1.8, 9.48/5.50/1.8, 11.38/4.20/1.8, 9.19/6.90/1.8, 11.36/5.20/1.8, 11.36/3.80/1.7, 
+    3.29/2.90/1.7, 10.05/5.40/1.7, 8.63/4.80/1.7, 10.77/4.80/1.7, 10.19/4.50/1.7, 10.25/2.60/1.7, 
+    8.94/6.40/1.7, 5.99/0.90/1.7, 6.34/3.50/1.7, 7.93/4.10/1.7, 10.24/4.80/1.7, 9.43/7.80/1.7, 
+    5.74/0.10/1.7, 9.85/3.50/1.7, 6.68/1.10/1.6, 6.97/1.60/1.6, 9.27/5.00/1.6, 10.57/4.90/1.6, 
+    5.93/0.60/1.6, 4.84/0.90/1.6, 7.45/3.30/1.6, 9.85/6.40/1.6, 11.39/4.80/1.6, 8.43/4.60/1.6, 
+    2.83/1.60/1.6, 9.95/7.20/1.6, 4.54/1.00/1.6, 7.72/3.60/1.6, 8.50/4.20/1.6, 8.79/2.60/1.6, 
+    6.21/0.60/1.6, 7.72/2.40/1.6, 8.29/4.80/1.5, 8.36/4.30/1.5, 5.49/2.60/1.5, 11.28/4.90/1.5, 
+    8.61/4.70/1.5, 7.79/5.20/1.5, 10.56/4.60/1.5, 10.60/5.30/1.5, 11.39/2.70/1.5, 6.64/0.70/1.5, 
+    9.23/4.90/1.5, 11.38/6.10/1.5, 11.08/6.80/1.5, 6.79/2.80/1.5, 10.00/4.10/1.5, 7.96/3.10/1.5, 
+    9.80/4.80/1.5, 4.96/0.30/1.5, 8.76/3.40/1.5, 8.83/5.20/1.5, 5.20/0.70/1.5, 2.87/2.00/1.5, 
+    9.94/1.40/1.5, 5.89/0.40/1.5, 7.19/3.70/1.5, 7.03/1.40/1.5, 9.59/4.00/1.5, 9.55/3.00/1.5, 
+    11.38/4.70/1.5, 10.84/5.30/1.5, 9.60/4.30/1.5, 4.68/0.40/1.5, 8.63/2.50/1.5, 9.24/8.60/1.5, 
+    9.08/1.90/1.5, 6.14/1.40/1.5
+  } {
+    \filldraw[fill=instblue!70, draw=instblue!90, line width=0.4pt, opacity=0.65] (\px, \py) circle (\pr pt);
+  }
+
+  % Annotations Box
+  \node[draw=gray!30, fill=white, rounded corners=3pt, inner sep=4pt, anchor=north west] at (0.3, 10.0) {
+    \begin{tabular}{l}
+      \textbf{Gradiente Baseline (S1):} \\
+      $\hat{\beta}_1 = 0{,}2288$ (EP $0{,}0278$) \\
+      $p < 0{,}001 \quad (N = 227.629)$ \\
+      $R^2 = 0{,}2457 \quad (122 \text{ clusters})$
+    \end{tabular}
+  };
+
+  % Legend for dots and fit at bottom right
+  \node[draw=gray!30, fill=gray!5, rounded corners=3pt, inner sep=4pt, anchor=south east] at (11.8, 0.4) {
+    \begin{tikzpicture}[baseline=-0.5ex]
+      \draw[vermillion, line width=1.5pt] (0, 0) -- (0.6, 0) node[right, font=\tiny, text=axisgray] {Ajuste WLS com IC 95\%};
+      \filldraw[fill=instblue!70, draw=instblue, opacity=0.7] (3.8, 0) circle (3pt);
+      \node[right, font=\tiny, text=axisgray] at (4.0, 0) {Ocupações ($\propto$ Emprego)};
+    \end{tikzpicture}
+  };
+
+\end{tikzpicture}
+\end{document}
