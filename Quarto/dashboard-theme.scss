@@ -1,0 +1,393 @@
+/*-- scss:defaults --*/
+
+// Palette — matches replication_package/code/05_figures.R PALETTE
+$primary:       #012169;  // Institutional blue
+$secondary:     #B9975B;  // Institutional gold
+$success:       #009E73;  // Okabe-Ito green
+$info:          #0072B2;  // Okabe-Ito blue
+$warning:       #E69F00;  // Okabe-Ito orange
+$danger:        #D55E00;  // Okabe-Ito vermillion
+
+$body-color:    #1A1A1A;  // Jet
+$body-bg:       #FAFBFD;
+$light:         #F0F2F6;
+$dark:          #012169;
+
+$font-family-sans-serif: "Source Sans Pro", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+$headings-font-weight:   600;
+$headings-color:         $primary;
+
+// Cards
+$card-border-color:      rgba($primary, 0.12);
+$card-cap-bg:            rgba($primary, 0.04);
+
+/*-- scss:rules --*/
+
+// ---- Navbar ----------------------------------------------------------------
+.navbar {
+  background-color: $primary !important;
+  border-bottom: 3px solid $secondary;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+
+  .navbar-brand {
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+
+  .nav-link {
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    transition: opacity 0.2s ease;
+
+    &:hover {
+      opacity: 0.85;
+    }
+  }
+}
+
+// ---- Value boxes -----------------------------------------------------------
+.valuebox, .bslib-value-box {
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  }
+
+  .valuebox-value, .value-box-value {
+    font-weight: 700;
+    font-size: 1.8rem;
+  }
+
+  .valuebox-title, .value-box-title {
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-size: 0.75rem;
+  }
+}
+
+// ---- Cards -----------------------------------------------------------------
+.card {
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba($primary, 0.1);
+
+  .card-header {
+    font-weight: 600;
+    color: $primary;
+    border-bottom: 2px solid rgba($secondary, 0.3);
+    background: rgba($primary, 0.03);
+  }
+
+  .card-body img, img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+}
+
+// ---- Custom content boxes --------------------------------------------------
+.keybox {
+  background: rgba($secondary, 0.1);
+  border-left: 4px solid $secondary;
+  border-radius: 6px;
+  padding: 1rem 1.25rem;
+  margin: 0.75rem 0;
+}
+
+.methodbox {
+  background: rgba($primary, 0.05);
+  border-left: 4px solid $primary;
+  border-radius: 6px;
+  padding: 1rem 1.25rem;
+  margin: 0.75rem 0;
+}
+
+.statbox {
+  background: rgba($primary, 0.03);
+  border: 1px solid rgba($primary, 0.12);
+  border-radius: 8px;
+  padding: 1.25rem 1rem;
+  text-align: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+
+  .stat-value {
+    font-size: 1.85rem;
+    font-weight: 700;
+    color: $primary;
+    line-height: 1.15;
+  }
+
+  .stat-label {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+    color: #555;
+    margin-top: 0.35rem;
+  }
+
+  .stat-detail {
+    font-size: 0.82rem;
+    color: #777;
+    margin-top: 0.2rem;
+  }
+}
+
+// ---- Regression table styling ----------------------------------------------
+.reg-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+
+  th {
+    background: rgba($primary, 0.06);
+    color: $primary;
+    font-weight: 600;
+    padding: 0.55rem 0.75rem;
+    border-bottom: 2px solid $secondary;
+    text-align: center;
+
+    &:first-child {
+      text-align: left;
+    }
+  }
+
+  td {
+    padding: 0.4rem 0.75rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    text-align: center;
+
+    &:first-child {
+      text-align: left;
+      font-weight: 500;
+    }
+  }
+
+  tr:hover td {
+    background-color: rgba($primary, 0.02);
+  }
+
+  .se-row td {
+    color: #777;
+    font-size: 0.82em;
+    padding-top: 0;
+    border-bottom: none;
+  }
+
+  .midrule td {
+    border-top: 1px solid rgba($primary, 0.25);
+    font-weight: 600;
+  }
+
+  .stars {
+    color: $secondary;
+    font-weight: 600;
+  }
+}
+
+// ---- Badges and Table Controls ---------------------------------------------
+.badge-score {
+  display: inline-block;
+  color: #fff;
+  font-weight: 700;
+  padding: 0.2rem 0.55rem;
+  border-radius: 4px;
+  font-size: 0.82rem;
+  min-width: 38px;
+  text-align: center;
+}
+
+.group-badge {
+  display: inline-block;
+  background: rgba($primary, 0.08);
+  color: $primary;
+  padding: 0.2rem 0.55rem;
+  border-radius: 12px;
+  font-size: 0.76rem;
+  font-weight: 600;
+}
+
+.table-filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+  margin-bottom: 0.75rem;
+  padding: 0.6rem 0.85rem;
+  background: rgba($primary, 0.02);
+  border: 1px solid rgba($primary, 0.1);
+  border-radius: 6px;
+
+  input[type="text"], select {
+    padding: 0.35rem 0.65rem;
+    border: 1px solid rgba($primary, 0.2);
+    border-radius: 4px;
+    font-size: 0.85rem;
+    outline: none;
+
+    &:focus {
+      border-color: $primary;
+      box-shadow: 0 0 0 2px rgba($primary, 0.15);
+    }
+  }
+
+  .counter-badge {
+    margin-left: auto;
+    font-size: 0.82rem;
+    color: #666;
+    font-weight: 500;
+  }
+}
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-bottom: 0.5rem;
+
+  table {
+    margin-bottom: 0;
+    width: 100%;
+  }
+}
+
+.table-scroll-container {
+  max-height: 480px;
+  overflow: auto;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 6px;
+
+  table {
+    margin-bottom: 0;
+    width: 100%;
+  }
+
+  table thead th {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background: #eef2f8;
+  }
+}
+
+// ---- Author card -----------------------------------------------------------
+.author-card {
+  text-align: center;
+  padding: 1.75rem 1.25rem;
+
+  .author-name {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: $primary;
+    margin-bottom: 0.25rem;
+  }
+
+  .author-affiliation {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 1rem;
+  }
+
+  .competency-tag {
+    display: inline-block;
+    background: rgba($primary, 0.08);
+    color: $primary;
+    padding: 0.3rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    margin: 0.2rem;
+    border: 1px solid rgba($primary, 0.15);
+  }
+}
+
+// ---- Links and buttons -----------------------------------------------------
+a.btn-primary {
+  background-color: $primary;
+  border-color: $primary;
+
+  &:hover {
+    background-color: darken($primary, 8%);
+  }
+}
+
+a.btn-outline-primary {
+  color: $primary;
+  border-color: $primary;
+
+  &:hover {
+    background-color: $primary;
+    color: white;
+  }
+}
+
+.btn-gold {
+  background-color: $secondary;
+  border-color: $secondary;
+  color: white;
+  font-weight: 600;
+
+  &:hover {
+    background-color: darken($secondary, 10%);
+    border-color: darken($secondary, 10%);
+    color: white;
+  }
+}
+
+// ---- Responsive tweaks -----------------------------------------------------
+@media (max-width: 768px) {
+  .valuebox .valuebox-value {
+    font-size: 1.4rem;
+  }
+
+  .statbox .stat-value {
+    font-size: 1.5rem;
+  }
+}
+
+// ---- Gold accent underline for section headings ----------------------------
+.dashboard .tab-content h3,
+.dashboard .tab-content h4 {
+  border-bottom: 2px solid rgba($secondary, 0.3);
+  padding-bottom: 0.4rem;
+  margin-bottom: 1rem;
+}
+
+// ---- Competency Tags -------------------------------------------------------
+.competency-tag {
+  display: inline-block;
+  background-color: rgba($primary, 0.08);
+  color: $primary;
+  border: 1px solid rgba($primary, 0.2);
+  border-radius: 9999px;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  margin: 0.2rem 0.25rem 0.2rem 0;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: $primary;
+    color: #ffffff;
+  }
+}
+
+// ---- Footer ----------------------------------------------------------------
+.dashboard-footer {
+  font-size: 0.8rem;
+  color: #888;
+  text-align: center;
+  padding: 1rem;
+  border-top: 1px solid rgba($primary, 0.1);
+}
