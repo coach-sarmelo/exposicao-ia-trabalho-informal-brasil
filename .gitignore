@@ -14,14 +14,14 @@ __pycache__/
 *.pyc
 *.pyo
 *.pyd
-data/
+/data/
 
 # Quarto & web render cache
 .quarto/
 *_files/
 *_cache/
-guide/
-scripts/
+/guide/
+/scripts/
 
 # LaTeX auxiliary build files
 *.aux

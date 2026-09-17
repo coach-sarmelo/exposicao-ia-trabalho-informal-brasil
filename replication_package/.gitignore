@@ -1,0 +1,26 @@
+# Runtime / regenerable outputs (never shipped; see README Section 4)
+data/output/
+
+# Deck-figure directory created on pipeline re-run (presentation slides, not the manuscript)
+/Figures/
+
+# LaTeX build artifacts (regenerate with `make` in paper/)
+*.aux
+*.log
+*.fls
+*.fdb_latexmk
+*.out
+*.blg
+*.synctex.gz
+
+# Python
+__pycache__/
+*.pyc
+
+# Environments
+.venv/
+venv/
+
+# OS / editor noise
+.DS_Store
+Thumbs.db

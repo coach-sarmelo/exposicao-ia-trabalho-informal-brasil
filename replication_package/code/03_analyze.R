@@ -173,14 +173,16 @@ b_s2  <- as.numeric(coef(fit_s2)["years_of_study"])
 r2_s2 <- as.numeric(r2(fit_s2, "r2"))
 r_max <- 1.3 * r2_s2
 
-# Oster (2019, JBES): adjustment distance measures remaining variation relative to controlled model
-delta_denom <- (b_s1 - b_s2) * (r_max - r2_s1)
+# Oster (2019, JBES), as implemented by psacalc/robomit: the bias is
+# extrapolated from the CONTROLLED model's R-squared toward R_max.
+# delta_oster solves beta* = 0; bstar_oster is beta* evaluated at delta = 1.
+delta_denom <- (b_s1 - b_s2) * (r_max - r2_s2)
 r2_diff     <- r2_s2 - r2_s1
 eps <- 1e-12
 
 if (abs(delta_denom) > eps && abs(r2_diff) > eps) {
   delta_oster <- unname((b_s2 * r2_diff) / delta_denom)
-  bstar_oster <- unname(b_s2 - (b_s1 - b_s2) * (r_max - r2_s1) / r2_diff)
+  bstar_oster <- unname(b_s2 - (b_s1 - b_s2) * (r_max - r2_s2) / r2_diff)
 } else {
   delta_oster <- NA_real_
   bstar_oster <- NA_real_
@@ -197,10 +199,17 @@ calc_stats <- function(sub_df) {
     pop_m   = sum(w, na.rm = TRUE) / 1e6,
     exp_m   = m_exp,
     exp_sd  = sqrt(sum(w * (sub_df$exposure - m_exp)^2, na.rm = TRUE) / sum(w, na.rm = TRUE)),
+    exp_min = min(sub_df$exposure, na.rm = TRUE),
+    exp_max = max(sub_df$exposure, na.rm = TRUE),
     sch_m   = m_sch,
     sch_sd  = sqrt(sum(w * (sub_df$years_of_study - m_sch)^2, na.rm = TRUE) / sum(w, na.rm = TRUE)),
+    sch_min = min(sub_df$years_of_study, na.rm = TRUE),
+    sch_max = max(sub_df$years_of_study, na.rm = TRUE),
     inc_m   = m_inc,
     inc_sd  = sqrt(sum(w * (sub_df$income - m_inc)^2, na.rm = TRUE) / sum(w, na.rm = TRUE)),
+    inc_min = min(sub_df$income, na.rm = TRUE),
+    inc_max = max(sub_df$income, na.rm = TRUE),
+    inf_pct = weighted.mean(sub_df$informal, w, na.rm = TRUE) * 100.0,
     fem_pct = weighted.mean(sub_df$is_female, w, na.rm = TRUE) * 100.0,
     age_m   = weighted.mean(sub_df$age, w, na.rm = TRUE)
   )

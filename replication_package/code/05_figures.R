@@ -117,6 +117,31 @@ save_all_formats <- function(base_name, plot_obj, width = 6.5, height = 4.2) {
 # =============================================================================
 # 1. Figura 1: Gradiente Educacional (Escolaridade x Exposição)
 # =============================================================================
+# ---- Fitted lines evaluated at weighted means of the covariates -----------
+# Lines drawn from the ESTIMATED MODELS (results.rds), not from ad-hoc fits
+# to the plotted aggregates: slope = focus coefficient; intercept = linear
+# predictor at the weighted means of the remaining covariates.
+ctl_mean_map <- c(
+  "years_of_study" = weighted.mean(df$years_of_study, df$weight, na.rm = TRUE),
+  "age"            = weighted.mean(df$age, df$weight, na.rm = TRUE),
+  "age_sq"         = weighted.mean(df$age_sq, df$weight, na.rm = TRUE),
+  "is_female"     = weighted.mean(df$is_female, df$weight, na.rm = TRUE),
+  "race::2"        = weighted.mean(as.integer(df$race == "2"), df$weight, na.rm = TRUE),
+  "race::3"        = weighted.mean(as.integer(df$race == "3"), df$weight, na.rm = TRUE),
+  "race::4"        = weighted.mean(as.integer(df$race == "4"), df$weight, na.rm = TRUE),
+  "race::5"        = weighted.mean(as.integer(df$race == "5"), df$weight, na.rm = TRUE),
+  "race::9"        = weighted.mean(as.integer(df$race == "9"), df$weight, na.rm = TRUE)
+)
+
+line_at_means <- function(model, focus) {
+  coefs <- model$coefficients
+  ctl <- intersect(setdiff(names(coefs), c("(Intercept)", focus)), names(ctl_mean_map))
+  list(
+    intercept = unname(coefs["(Intercept)"] + sum(coefs[ctl] * ctl_mean_map[ctl])),
+    slope     = unname(coefs[focus])
+  )
+}
+
 message("Generating Figura 1 (fig1_gradiente)...")
 occ_agg <- df[, .(
   exposure       = mean(exposure, na.rm = TRUE),
@@ -124,15 +149,19 @@ occ_agg <- df[, .(
   employment_m   = sum(weight, na.rm = TRUE) / 1e6
 ), by = occupation]
 
+s1_line <- line_at_means(results$models$s1, "years_of_study")
+sub1 <- bquote(paste("PNAD Contínua 2026Q1 — ", hat(beta)[1], " = ",
+                     .(formatC(s1_line$slope, format = "f", digits = 2, decimal.mark = ",")),
+                     " (EP ", .(formatC(results$models$s1$se[["years_of_study"]],
+                                        format = "f", digits = 3, decimal.mark = ",")),
+                     "; p < 0,001; N = ", .(format(results$models$s1$nobs,
+                                                    big.mark = ".", scientific = FALSE, trim = TRUE)), ")"))
+
 p1 <- ggplot(occ_agg, aes(x = years_of_study, y = exposure)) +
   geom_point(aes(size = employment_m), color = PALETTE$blue, alpha = 0.65) +
-  geom_smooth(
-    method = "lm",
-    formula = y ~ x,
-    color = PALETTE$vermillion,
-    fill = PALETTE$gold,
-    alpha = 0.25,
-    linewidth = 0.9
+  geom_abline(
+    intercept = s1_line$intercept, slope = s1_line$slope,
+    color = PALETTE$vermillion, linewidth = 0.9
   ) +
   scale_size_continuous(
     name = "Emprego (Milhões)",
@@ -143,10 +172,12 @@ p1 <- ggplot(occ_agg, aes(x = years_of_study, y = exposure)) +
   scale_y_continuous(breaks = seq(0, 10, 2.5), limits = c(0, 10)) +
   labs(
     title = "Gradiente Educacional de Exposição à Inteligência Artificial",
-    subtitle = expression(paste("PNAD Contínua 2026Q1 — ", hat(beta)[1], " = 0,23 (EP 0,028; p < 0,001; N = 227.629)")),
+    subtitle = sub1,
     x = "Escolaridade Média (Anos de Estudo)",
     y = expression(paste("Escore de Exposição à IA (", theta[j], ", 0–10)")),
-    caption = "Nota: Tamanho dos círculos proporcional ao emprego ocupacional ponderado. Reta WLS estimada no nível individual."
+    caption = paste0("Nota: Tamanho dos círculos proporcional ao emprego ocupacional ponderado; pontos = médias ponderadas por ocupação (",
+                     format(nrow(occ_agg), big.mark = ".", trim = TRUE),
+                     " ocupações). Reta = efeito estimado de S1 (WLS individual, EP agrupado por ocupação), avaliado nas médias ponderadas das covariáveis.")
   ) +
   theme_academic()
 
@@ -156,34 +187,39 @@ save_all_formats("fig1_gradiente", p1)
 # 2. Figura 2: Mediação da Informalidade (Efeito Bruto vs Condicional)
 # =============================================================================
 message("Generating Figura 2 (fig2_mediacao)...")
+s3a_line <- line_at_means(results$models$s3a, "exposure")
+s3_line  <- line_at_means(results$models$s3,  "exposure")
+attenuation_pct <- 100 * (1 - s3_line$slope / s3a_line$slope)
+fmt_dec <- function(x, d) formatC(x, format = "f", digits = d, decimal.mark = ",")
+lab_s3a <- sprintf("S3a (sem escolaridade): %s p.p.", fmt_dec(s3a_line$slope, 2))
+lab_s3  <- sprintf("S3 (com escolaridade): %s p.p.", fmt_dec(s3_line$slope, 2))
+occ_inf <- df[, .(inf = weighted.mean(informal_pct, weight, na.rm = TRUE)), by = occupation]
+
 p2 <- ggplot(occ_agg, aes(x = exposure)) +
-  geom_point(aes(y = df[, .(inf = weighted.mean(informal_pct, weight, na.rm = TRUE)), by = occupation]$inf,
-                 size = employment_m), color = PALETTE$gold, alpha = 0.70) +
-  geom_smooth(
-    aes(y = df[, .(inf = weighted.mean(informal_pct, weight, na.rm = TRUE)), by = occupation]$inf,
-        color = "S3a (Bruta: -6,23 p.p.)"),
-    method = "lm", formula = y ~ x, se = FALSE, linewidth = 1.0
+  geom_point(aes(y = occ_inf$inf, size = employment_m), color = PALETTE$gold, alpha = 0.70) +
+  geom_abline(
+    aes(color = lab_s3a, intercept = s3a_line$intercept, slope = s3a_line$slope),
+    linewidth = 1.0
   ) +
   geom_abline(
-    aes(intercept = 54.0, slope = -3.9068, color = "S3 (Líquida / Condicional: -3,91 p.p.)"),
+    aes(color = lab_s3, intercept = s3_line$intercept, slope = s3_line$slope),
     linewidth = 1.0, linetype = "dashed"
   ) +
   scale_color_manual(
     name = "Especificação",
-    values = c(
-      "S3a (Bruta: -6,23 p.p.)" = PALETTE$vermillion,
-      "S3 (Líquida / Condicional: -3,91 p.p.)" = PALETTE$blue
-    )
+    values = setNames(c(PALETTE$vermillion, PALETTE$blue), c(lab_s3a, lab_s3))
   ) +
   scale_size_continuous(name = "Emprego (Milhões)", range = c(1.5, 9.0), breaks = c(2, 4, 6)) +
   scale_x_continuous(breaks = seq(0, 10, 2), limits = c(0, 10)) +
   scale_y_continuous(breaks = seq(0, 100, 20), limits = c(0, 100)) +
   labs(
-    title = "Decomposição de Mediação: Exposição à IA e Informalidade",
-    subtitle = "Atenuação de 37,2% via escolaridade vs 62,8% efeito direto do canal de governança",
+    title = "Exposição à IA e Informalidade: Atenuação pela Escolaridade",
+    subtitle = sprintf("O coeficiente de exposição atenua %.0f%% ao incluir anos de estudo (S3a → S3)",
+                       attenuation_pct),
     x = expression(paste("Escore de Exposição à IA (", theta[j], ")")),
     y = "Taxa de Informalidade (%)",
-    caption = "Nota: Linha contínua = efeito bruto S3a; linha tracejada = efeito direto líquido S3 controlando para anos de estudo."
+    caption = paste0("Nota: Linha contínua = S3a (sem escolaridade); linha tracejada = S3 (com escolaridade); ambas WLS individuais com controles mincerianos, avaliadas nas médias ponderadas das covariáveis. Pontos = taxas de informalidade médias ponderadas por ocupação (",
+                     format(nrow(occ_agg), big.mark = ".", trim = TRUE), " ocupações).")
   ) +
   theme_academic() +
   guides(color = guide_legend(nrow = 2L, byrow = TRUE))
@@ -195,14 +231,15 @@ save_all_formats("fig2_mediacao", p2)
 # =============================================================================
 message("Generating Figura 3 (fig3_regional_slopes)...")
 
-# Define macro-region mapping from UF code
+# Define macro-region mapping from UF initials (character coding in the extract)
 df[, regiao := fcase(
-  uf %in% c(11, 12, 13, 14, 15, 16, 17), "Norte (34,8% Formal)",
-  uf %in% c(21, 22, 23, 24, 25, 26, 27, 28, 29), "Nordeste (38,2% Formal)",
-  uf %in% c(50, 51, 52, 53), "Centro-Oeste (56,4% Formal)",
-  uf %in% c(31, 32, 33, 35), "Sudeste (68,5% Formal)",
-  uf %in% c(41, 42, 43), "Sul (72,1% Formal)"
+  uf %in% c("AC", "AP", "AM", "PA", "RO", "RR", "TO"), "Norte (34,8% Formal)",
+  uf %in% c("AL", "BA", "CE", "MA", "PB", "PE", "PI", "RN", "SE"), "Nordeste (38,2% Formal)",
+  uf %in% c("DF", "GO", "MT", "MS"), "Centro-Oeste (56,4% Formal)",
+  uf %in% c("ES", "MG", "RJ", "SP"), "Sudeste (68,5% Formal)",
+  uf %in% c("PR", "RS", "SC"), "Sul (72,1% Formal)"
 )]
+stopifnot(!any(is.na(df$regiao)))  # fail loudly if the uf coding ever changes again
 
 regiao_cores <- c(
   "Norte (34,8% Formal)"        = "#E69F00",
@@ -257,7 +294,7 @@ forest_dt <- data.table(
     "Baseline (WLS + Mincer)",
     "OLS Não-Ponderado (R1)",
     "Winsorização 1%/99% (R5)",
-    "Exclusão p99 Renda (R6)",
+    "Exclusão p99 Exposição (R6)",
     "Sem Dirigentes (COD 1)",
     "Sem Profissionais (COD 2)",
     "Sem Técnicos (COD 3)",

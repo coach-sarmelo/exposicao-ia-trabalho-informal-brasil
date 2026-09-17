@@ -1,0 +1,26 @@
+cff-version: 1.2.0
+message: >-
+  If you use this replication package, please cite it and the
+  accompanying paper.
+type: dataset
+title: >-
+  Replication package for "Exposição à Inteligência Artificial em um
+  Mercado de Trabalho Informal: Teoria e Evidências para o Brasil"
+authors:
+  - family-names: Freire
+    given-names: Marcelo Moura
+version: 1.1.0
+date-released: "2026-09-16"
+license: BSD-3-Clause
+keywords:
+  - artificial intelligence
+  - labor economics
+  - informality
+  - Brazil
+  - PNAD Continua
+  - replication
+abstract: >-
+  Data, code, and generated artifacts replicating the estimates in the
+  paper: a two-engine (R + Python) pipeline from IBGE PNAD Contínua
+  2026Q1 microdata and the Eloundou et al. (2024) occupational AI
+  exposure index to every table and figure in the manuscript.

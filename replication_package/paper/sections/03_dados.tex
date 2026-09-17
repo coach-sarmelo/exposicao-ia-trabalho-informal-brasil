@@ -1,0 +1,43 @@
+\section{Dados}
+\label{sec:dados}
+
+\subsection{Fontes}
+
+A análise empírica combina os microdados trimestrais da Pesquisa Nacional por Amostra de Domicílios Contínua (PNAD Contínua) do Instituto Brasileiro de Geografia e Estatística (IBGE) \citep{ibgepnad}, referentes ao primeiro trimestre de 2026 (2026Q1), com o índice de exposição ocupacional de \citet{eloundou2024gpts}. A compatibilização entre a Classificação de Ocupações para Pesquisas Domiciliares (COD, compatível com a ISCO-08) e o sistema O*NET-SOC é realizada a partir das tabelas oficiais de conversão do Bureau of Labor Statistics \citep{blscrosswalk}. Da PNAD Contínua, extraem-se a ocupação (COD a 3 dígitos), a condição de formalidade, o rendimento habitual, os anos de estudo, idade, gênero, cor/raça e a Unidade da Federação, preservando os pesos amostrais oficiais (\texttt{V1028}). O desenho amostral da PNAD Contínua (painel rotativo em setores trimestrais) não é modelado explicitamente: o extrato depositado não inclui as variáveis de estratificação e de unidade primária de amostragem, de modo que a inferência agrupa os erros-padrão por ocupação.
+
+\subsection{Construção do cruzamento e do índice}
+
+A exposição $\theta_j \in [0, 10]$ de cada ocupação brasileira corresponde à média ponderada dos escores \texttt{dv\_rating\_beta} de \citet{eloundou2024gpts} (escala original 0--1, reescalada $\times$ 10) dos códigos SOC mapeados, ponderada pelo emprego americano desses códigos (OEWS, maio de 2021) quando a ocupação COD mapeia para múltiplos códigos SOC. O cálculo é estritamente determinístico, reproduzível por rotinas públicas em Python e sem geração probabilística de conteúdo por LLMs. Ocupações não cobertas pelo escopo original (como forças armadas) recebem valor nulo (\texttt{null}) de forma explícita, sem imputações artificiais.
+
+\subsection{Amostra e variáveis}
+
+A amostra econométrica final é composta por $227.629$ indivíduos ocupados em 122 ocupações com escore válido de exposição e informações completas para todas as covariáveis mincerianas. A taxa de cobertura atinge 99{,}7\% do emprego brasileiro observado. As variáveis centrais são:
+\begin{itemize}
+    \item \textbf{Exposição à IA ($\theta_j$):} índice de 0 a 10 atribuído à ocupação do trabalhador.
+    \item \textbf{Escolaridade ($e_i$):} anos completos de estudo do indivíduo, conforme a variável derivada \texttt{VD3005} do IBGE ($0$ a $16$; fundamental completo $= 8$, superior completo $= 16$).
+    \item \textbf{Informalidade ($\text{informal}_i$):} variável indicadora ($1$ se sem carteira assinada, sem CNPJ no conta-própria/empregador ou trabalhador familiar auxiliar; $0$ caso contrário), conforme a definição institucional oficial do IBGE.
+    \item \textbf{Controles mincerianos:} idade, idade ao quadrado, gênero ($1$ para feminino) e variáveis indicadoras para categorias de cor/raça (preta, parda, amarela, indígena e ignorada --- 19 observações ---, com base branca).
+\end{itemize}
+
+\subsection{Estatísticas descritivas}
+
+A amostra de indivíduos ocupados em 2026Q1 apresenta exposição média de 2{,}86 (escala 0--10), com 35{,}2\% da força de trabalho ocupada (35{,}7 milhões de trabalhadores) situada em ocupações com $\theta \le 2$ (Tabela~\ref{tab:descritivas}). A escolaridade média alcança 11{,}6 anos e a taxa de informalidade média ponderada é de 40{,}5\% (45{,}7\% sem ponderação).
+
+\begin{table}[htbp]
+\centering
+\caption{Estatísticas descritivas da amostra de indivíduos ocupados (PNAD Contínua, 2026Q1; $N = 227.629$). Médias e desvios-padrão ponderados pelos pesos amostrais; mínimos e máximos observados (não ponderados). Escolaridade em anos completos de estudo; informalidade em porcentagem; rendimento habitual mensal em reais.}
+\label{tab:descritivas}
+\begin{tabular}{lccccc}
+\toprule
+Variável & N & Média & DP & Mín & Máx \\
+\midrule
+\input{tables/tab_descritivas} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+O contraste estrutural da economia brasileira é visível nas dez maiores ocupações do país: enquanto serviços domésticos combinam exposição quase nula ($0{,}1$) e informalidade de 54{,}3\%, ocupações de apoio administrativo registram exposição elevada ($5{,}8$) e baixa informalidade ($18{,}6\%$).
+
+\subsection{Limitações metodológicas e intensidade de capital}
+
+Três ressalvas metodológicas devem ser delimitadas. Primeiro, a exposição é mensurada no nível ocupacional, não refletindo a heterogeneidade intra-ocupacional de tarefas entre trabalhadores com a mesma COD, nem a clivagem urbano-rural na execução dessas rotinas (embora a variação regional ampla seja absorvida nas estimativas por UF). Segundo, o índice de \citet{eloundou2024gpts} reflete a estrutura tecnológica da economia americana, e a ponderação entre múltiplos códigos SOC de uma mesma ocupação usa o emprego americano (OEWS, maio de 2021) --- a composição intra-ocupação pode, portanto, diferir no Brasil. Em países em desenvolvimento como o Brasil, onde a relação capital-trabalho é substancialmente menor, ocupações formais homônimas podem incorporar mais rotinas manuais ou analógicas de suporte (\emph{task downgrading}; ver \citealt{dicarlo2016task}), fazendo com que o escore O*NET represente um teto superior para a verdadeira exposição efetiva brasileira. Terceiro, os dados capturam equilíbrios transversais de alocação (\emph{sorting}), não identificando impactos causais da difusão tecnológica sobre salários ou transições ocupacionais.

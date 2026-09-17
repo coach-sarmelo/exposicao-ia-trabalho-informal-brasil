@@ -135,16 +135,20 @@ get_occ_name <- function(code) {
 # ---- 1. tab_descritivas.tex -------------------------------------------------
 if (!is.null(results$desc_stats)) {
   st <- results$desc_stats$total
+  n_str <- format(st$n_obs, big.mark = ".", scientific = FALSE, trim = TRUE)
   lines_desc <- c(
     "% AUTO-GERADO por scripts/R/04_tables.R — nao editar a mao",
-    sprintf("Exposi\\c c\\~ao \\`a IA (0--10) & 227.629 & %s & %s & 0,55 & 9,53 \\\\",
-            fmt_br(st$exp_m, 2L), fmt_br(st$exp_sd, 2L)),
-    sprintf("Escolaridade (anos) & 227.629 & %s & %s & 0 & 16 \\\\",
-            fmt_br(st$sch_m, 2L), fmt_br(st$sch_sd, 2L)),
-    sprintf("Informalidade (\\%%) & 227.629 & %s & -- & 0 & 100 \\\\",
-            fmt_br(38.8, 1L)),
-    sprintf("Rendimento habitual (R\\$) & 227.629 & %s & %s & 0 & 150.000",
-            fmt_br(st$inc_m, 0L), fmt_br(st$inc_sd, 0L))
+    sprintf("Exposi\\c c\\~ao \\`a IA (0--10) & %s & %s & %s & %s & %s \\\\",
+            n_str, fmt_br(st$exp_m, 2L), fmt_br(st$exp_sd, 2L),
+            fmt_br(st$exp_min, 2L), fmt_br(st$exp_max, 2L)),
+    sprintf("Escolaridade (anos) & %s & %s & %s & %s & %s \\\\",
+            n_str, fmt_br(st$sch_m, 2L), fmt_br(st$sch_sd, 2L),
+            fmt_br(st$sch_min, 0L), fmt_br(st$sch_max, 0L)),
+    sprintf("Informalidade (\\%%) & %s & %s & -- & 0 & 100 \\\\",
+            n_str, fmt_br(st$inf_pct, 1L)),
+    sprintf("Rendimento habitual (R\\$) & %s & %s & %s & %s & %s",
+            n_str, fmt_br(st$inc_m, 0L), fmt_br(st$inc_sd, 0L),
+            fmt_br(st$inc_min, 0L), fmt_br(st$inc_max, 0L))
   )
   write_table(lines_desc, "tab_descritivas.tex")
 }
