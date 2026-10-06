@@ -43,8 +43,8 @@
 
 ## Environment Artifacts in Repository
 
-1. `replication_package/output/sessionInfo.txt` — Full human-readable R session capture.
-2. `replication_package/output/computational_requirements.md` — Standalone replication requirements.
+1. `output/sessionInfo.txt` — Full human-readable R session capture.
+2. `output/computational_requirements.md` — Standalone replication requirements.
 
 ## Python Data-Construction Pipeline (`scripts/`)
 

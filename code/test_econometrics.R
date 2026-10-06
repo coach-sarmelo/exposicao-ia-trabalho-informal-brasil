@@ -15,10 +15,10 @@ suppressPackageStartupMessages({
 
 root_dir <- if (requireNamespace("here", quietly = TRUE)) here::here() else getwd()
 
-results_path <- if (file.exists(file.path(root_dir, "replication_package", "output", "results.rds"))) {
-  file.path(root_dir, "replication_package", "output", "results.rds")
-} else if (file.exists(file.path(root_dir, "output", "results.rds"))) {
+results_path <- if (file.exists(file.path(root_dir, "output", "results.rds"))) {
   file.path(root_dir, "output", "results.rds")
+} else if (file.exists(file.path(root_dir, "replication_package", "output", "results.rds"))) {
+  file.path(root_dir, "replication_package", "output", "results.rds")
 } else {
   file.path(root_dir, "scripts", "R", "_outputs", "results.rds")
 }
@@ -78,10 +78,10 @@ test_that("Oster (2019) bounding parameter delta is robust", {
 })
 
 test_that("All 7 LaTeX tables are generated and non-empty", {
-  tables_dir <- if (dir.exists(file.path(root_dir, "replication_package", "output", "tables"))) {
-    file.path(root_dir, "replication_package", "output", "tables")
-  } else if (dir.exists(file.path(root_dir, "output", "tables"))) {
+  tables_dir <- if (dir.exists(file.path(root_dir, "output", "tables"))) {
     file.path(root_dir, "output", "tables")
+  } else if (dir.exists(file.path(root_dir, "replication_package", "output", "tables"))) {
+    file.path(root_dir, "replication_package", "output", "tables")
   } else {
     file.path(root_dir, "paper", "tables")
   }
@@ -102,10 +102,10 @@ test_that("All 7 LaTeX tables are generated and non-empty", {
 })
 
 test_that("All 4 figures exist in PDF, SVG, and PNG with positive file sizes", {
-  figs_dir <- if (dir.exists(file.path(root_dir, "replication_package", "output", "figures"))) {
-    file.path(root_dir, "replication_package", "output", "figures")
-  } else if (dir.exists(file.path(root_dir, "output", "figures"))) {
+  figs_dir <- if (dir.exists(file.path(root_dir, "output", "figures"))) {
     file.path(root_dir, "output", "figures")
+  } else if (dir.exists(file.path(root_dir, "replication_package", "output", "figures"))) {
+    file.path(root_dir, "replication_package", "output", "figures")
   } else {
     file.path(root_dir, "paper", "figures")
   }
@@ -119,4 +119,3 @@ test_that("All 4 figures exist in PDF, SVG, and PNG with positive file sizes", {
   }
 })
 message("\nAll econometric testthat assertions PASSED [100%]\n")
-quit(save = "no", status = 0)

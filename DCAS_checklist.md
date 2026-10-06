@@ -3,7 +3,7 @@
 **Paper:** *Exposição à Inteligência Artificial em um Mercado de Trabalho Informal: Teoria e Evidências para o Brasil*  
 **Author:** Marcelo Moura Freire  
 **Date of Verification:** 2026-08-23  
-**Replication Package Location:** `replication_package/`  
+**Replication Package Location:** Root repository (`./`)  
 
 ---
 

@@ -62,10 +62,12 @@ For full metadata and checksums, see [`data/external/SOURCES.md`](data/external/
 ### Package Structure
 
 ```
-replication_package/
-├── README.md                  this file
+.
+├── README.md                  this file (AEA DCAS replication package guide)
 ├── DCAS_checklist.md          compliance checklist
 ├── LICENSE.txt
+├── CITATION.cff
+├── renv.lock
 ├── code/                      R pipeline (canonical replication path)
 │   ├── 00_run_all.R           driver: Rscript code/00_run_all.R
 │   ├── 01_*.R … 05_*.R        data prep, estimation, analysis, tables, figures
@@ -74,6 +76,10 @@ replication_package/
 │   ├── analysis/              shipped analysis inputs (see manifest above)
 │   ├── external/              third-party inputs (O*NET-SOC ratings, crosswalks)
 │   └── reference/             fixed-width layout and COD/SOC code mappings
+├── docs/                      interactive dashboard & preprint PDF (GitHub Pages)
+│   ├── index.html             interactive dashboard
+│   ├── paper.pdf              compiled paper
+│   └── .nojekyll
 ├── output/                    generated artifacts (results.rds, figures/, tables/)
 ├── paper/                     manuscript (LaTeX sources + compiled PDF)
 │   ├── main.tex … main.pdf    article: `make` (or latexmk) rebuilds the PDF

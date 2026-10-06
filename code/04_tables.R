@@ -17,8 +17,8 @@ root_dir <- if (requireNamespace("here", quietly = TRUE)) here::here() else getw
 out_dir  <- if (exists("OUT_DIR", inherits = FALSE)) OUT_DIR else file.path(root_dir, "scripts", "R", "_outputs")
 
 out_tables_list <- unique(c(
-  if (dir.exists(file.path(root_dir, "replication_package", "output", "tables"))) file.path(root_dir, "replication_package", "output", "tables") else NULL,
   if (dir.exists(file.path(root_dir, "output", "tables"))) file.path(root_dir, "output", "tables") else NULL,
+  if (dir.exists(file.path(root_dir, "replication_package", "output", "tables"))) file.path(root_dir, "replication_package", "output", "tables") else NULL,
   if (dir.exists(file.path(root_dir, "paper", "tables"))) file.path(root_dir, "paper", "tables") else NULL,
   file.path(out_dir, "tables")
 ))
@@ -36,10 +36,10 @@ if (!file.exists(results_path)) {
 }
 results <- readRDS(results_path)
 
-scores_path <- if (file.exists(file.path(root_dir, "replication_package", "data", "analysis", "scores.json"))) {
-  file.path(root_dir, "replication_package", "data", "analysis", "scores.json")
-} else if (file.exists(file.path(root_dir, "data", "analysis", "scores.json"))) {
+scores_path <- if (file.exists(file.path(root_dir, "data", "analysis", "scores.json"))) {
   file.path(root_dir, "data", "analysis", "scores.json")
+} else if (file.exists(file.path(root_dir, "replication_package", "data", "analysis", "scores.json"))) {
+  file.path(root_dir, "replication_package", "data", "analysis", "scores.json")
 } else {
   file.path(root_dir, "data", "output", "scores.json")
 }

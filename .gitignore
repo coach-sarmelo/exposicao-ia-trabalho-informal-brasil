@@ -1,40 +1,27 @@
-# Agent & IDE harness (local only)
-.agents/
-.claude/
-.gemini/
-quality_reports/
-AGENTS.md
-CLAUDE.md
-GEMINI.md
+# Runtime / regenerable outputs (never shipped; see README Section 4)
+data/output/
 
-# Python & Pytest cache
-.pytest_cache/
-.cache/
+# Presentation slides / deck artifacts created on pipeline re-run
+/Figures/
+
+# LaTeX build artifacts (regenerate with `make` in paper/)
+*.aux
+*.log
+*.fls
+*.fdb_latexmk
+*.out
+*.blg
+*.bbl
+*.synctex.gz
+*.nav
+*.snm
+*.toc
+
+# Python
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
-/data/
-
-# Quarto & web render cache
-.quarto/
-*_files/
-*_cache/
-/guide/
-/scripts/
-
-# LaTeX auxiliary build files
-*.aux
-*.log
-*.nav
-*.snm
-*.toc
-*.fls
-*.fdb_latexmk
-*.synctex.gz
-*.out
-*.bbl
-*.blg
 
 # R temporary files
 .Rhistory
@@ -42,7 +29,17 @@ __pycache__/
 .Rproj.user/
 .Renviron
 
-# OS-specific files
+# Environments
+.venv/
+venv/
+
+# Agent & IDE harness (local only)
+.agents/
+.claude/
+.gemini/
+quality_reports/
+
+# OS / editor noise
 .DS_Store
 Thumbs.db
 desktop.ini

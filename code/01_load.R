@@ -30,8 +30,8 @@ find_path <- function(relative_options) {
 
 # ---- 1. Microdata -----------------------------------------------------------
 microdata_path <- find_path(c(
-  file.path("replication_package", "data", "analysis", "individual_microdata.csv"),
   file.path("data", "analysis", "individual_microdata.csv"),
+  file.path("replication_package", "data", "analysis", "individual_microdata.csv"),
   file.path("data", "output", "individual_microdata.csv")
 ))
 if (!file.exists(microdata_path)) {
@@ -42,15 +42,15 @@ message("Loaded ", nrow(raw_microdata), " microdata rows from ", microdata_path)
 
 # ---- 2. Reference & Benchmark JSONs -----------------------------------------
 scores_path <- find_path(c(
-  file.path("replication_package", "data", "analysis", "scores.json"),
   file.path("data", "analysis", "scores.json"),
+  file.path("replication_package", "data", "analysis", "scores.json"),
   file.path("data", "output", "scores.json")
 ))
 scores_json <- jsonlite::fromJSON(scores_path)
 
 panel_path <- find_path(c(
-  file.path("replication_package", "data", "analysis", "regional_panel.json"),
   file.path("data", "analysis", "regional_panel.json"),
+  file.path("replication_package", "data", "analysis", "regional_panel.json"),
   file.path("data", "output", "regional_panel.json")
 ))
 if (file.exists(panel_path)) {
@@ -60,8 +60,8 @@ if (file.exists(panel_path)) {
 }
 
 cod_path <- find_path(c(
-  file.path("replication_package", "data", "reference", "cod_estrutura.json"),
   file.path("data", "reference", "cod_estrutura.json"),
+  file.path("replication_package", "data", "reference", "cod_estrutura.json"),
   file.path("data", "scripts", "reference", "cod_estrutura.json")
 ))
 if (file.exists(cod_path)) {
@@ -71,8 +71,8 @@ if (file.exists(cod_path)) {
 }
 
 uf_path <- find_path(c(
-  file.path("replication_package", "data", "reference", "uf_codes.json"),
   file.path("data", "reference", "uf_codes.json"),
+  file.path("replication_package", "data", "reference", "uf_codes.json"),
   file.path("data", "scripts", "reference", "uf_codes.json")
 ))
 if (file.exists(uf_path)) {

@@ -297,10 +297,10 @@ econometrics_out <- list(
   )
 )
 
-econ_json_path <- if (file.exists(file.path(root_dir, "replication_package", "data", "analysis", "econometrics.json"))) {
-  file.path(root_dir, "replication_package", "data", "analysis", "econometrics.json")
-} else if (file.exists(file.path(root_dir, "data", "analysis", "econometrics.json"))) {
+econ_json_path <- if (file.exists(file.path(root_dir, "data", "analysis", "econometrics.json"))) {
   file.path(root_dir, "data", "analysis", "econometrics.json")
+} else if (file.exists(file.path(root_dir, "replication_package", "data", "analysis", "econometrics.json"))) {
+  file.path(root_dir, "replication_package", "data", "analysis", "econometrics.json")
 } else {
   file.path(root_dir, "data", "output", "econometrics.json")
 }

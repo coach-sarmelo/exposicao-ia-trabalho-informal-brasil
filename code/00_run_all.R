@@ -22,10 +22,10 @@ set.seed(PROJECT_SEED)
 root_dir <- if (requireNamespace("here", quietly = TRUE)) here::here() else getwd()
 
 # Locate code directory
-code_dir <- if (dir.exists(file.path(root_dir, "replication_package", "code"))) {
-  file.path(root_dir, "replication_package", "code")
-} else if (dir.exists(file.path(root_dir, "code"))) {
+code_dir <- if (dir.exists(file.path(root_dir, "code"))) {
   file.path(root_dir, "code")
+} else if (dir.exists(file.path(root_dir, "replication_package", "code"))) {
+  file.path(root_dir, "replication_package", "code")
 } else if (dir.exists(file.path(root_dir, "scripts", "R"))) {
   file.path(root_dir, "scripts", "R")
 } else {
@@ -35,10 +35,10 @@ code_dir <- if (dir.exists(file.path(root_dir, "replication_package", "code"))) 
 # Locate output directory
 OUT_DIR <- if (exists("OUT_DIR", inherits = FALSE) && !is.null(OUT_DIR)) {
   OUT_DIR
-} else if (dir.exists(file.path(root_dir, "replication_package", "output"))) {
-  file.path(root_dir, "replication_package", "output")
 } else if (dir.exists(file.path(root_dir, "output"))) {
   file.path(root_dir, "output")
+} else if (dir.exists(file.path(root_dir, "replication_package", "output"))) {
+  file.path(root_dir, "replication_package", "output")
 } else if (dir.exists(file.path(root_dir, "scripts", "R", "_outputs"))) {
   file.path(root_dir, "scripts", "R", "_outputs")
 } else {

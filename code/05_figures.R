@@ -79,6 +79,7 @@ theme_academic <- function(base_size = 11.0) {
 #' @param height Numeric height in inches.
 save_all_formats <- function(base_name, plot_obj, width = 6.5, height = 4.2) {
   dest_dirs <- unique(c(
+    if (dir.exists(file.path(root_dir, "output", "figures"))) file.path(root_dir, "output", "figures") else NULL,
     if (dir.exists(file.path(root_dir, "replication_package", "output", "figures"))) file.path(root_dir, "replication_package", "output", "figures") else NULL,
     if (dir.exists(file.path(root_dir, "paper", "figures"))) file.path(root_dir, "paper", "figures") else NULL,
     if (dir.exists(file.path(root_dir, "Figures"))) file.path(root_dir, "Figures") else NULL,
