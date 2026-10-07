@@ -1,0 +1,29 @@
+{
+ "S1_occupation_wild": {
+  "p_wild": 0.000999000999000999,
+  "t_stat": 8.245786931525966,
+  "n_draws": 1000,
+  "n_clusters": 122,
+  "restricted": true,
+  "rademacher": true,
+  "seed": 42
+ },
+ "S3_occupation_wild": {
+  "p_wild": 0.000999000999000999,
+  "t_stat": -4.084320042618267,
+  "n_draws": 1000,
+  "n_clusters": 122,
+  "restricted": true,
+  "rademacher": true,
+  "seed": 42
+ },
+ "_meta": {
+  "method": "restricted wild cluster bootstrap (Rademacher), mirrors compute_robustness.py::fast_wild_bootstrap_mc",
+  "cluster": "occupation (122)",
+  "n_draws": 1000,
+  "seed": 42,
+  "deterministic_given_seed": true,
+  "n": 227629,
+  "upa_wild_skipped": "16,026 PSU clusters - CRVE asymptotics reliable; bootstrap relevant where clusters are few (paper R2 logic)"
+ }
+}

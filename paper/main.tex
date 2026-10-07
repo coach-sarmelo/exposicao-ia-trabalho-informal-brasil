@@ -8,7 +8,7 @@
 
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
-\usepackage[brazilian]{babel}
+\usepackage[english,brazilian]{babel}
 \usepackage[margin=1in]{geometry}
 \usepackage{amsmath,amssymb,amsthm}
 \usepackage{graphicx}
@@ -22,6 +22,17 @@
 \captionsetup{font=small,labelfont=bf}
 \newtheorem{proposicao}{Proposição}
 \newtheorem{corolario}{Corolário}
+
+% Resumo/Abstract em corpo normal: a classe article define o abstract
+% unicolunar em \small; mantemos o mesmo layout (centro + quotation) sem a
+% redução, para fonte e entrelinha idênticas às do texto.
+\makeatletter
+\renewenvironment{abstract}{%
+  \begin{center}%
+    {\bfseries \abstractname\vspace{-.5em}\vspace{\z@}}%
+  \end{center}%
+  \quotation}{\endquotation}
+\makeatother
 
 % Título limpo sem asterisco e autor com filiação e nota de rodapé padrão
 \title{\textbf{Exposição à Inteligência Artificial em um Mercado de Trabalho Informal:}\\[0.2em] \Large Teoria e Evidências para o Brasil}

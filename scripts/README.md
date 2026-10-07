@@ -10,6 +10,8 @@ python scripts/run_all.py test       # test suite (upstream repo only; not shipp
 
 The canonical replication path for the paper is still the R pipeline in `code/` (`Rscript code/00_run_all.R`), which consumes the shipped `data/analysis/` files and requires no Python. The Python pipeline is an independent second engine.
 
+**v1.2.0 extension scripts** (not part of `run_all.py`; robustness battery — see `output/robustness_ext/README.md`): `build_exposure_variants.py` (θ for all six rating columns, 122/122 gate → `data/output/variants_scores.json`), `build_design_extract.py` (design-variable extract → `data/output/individual_microdata_design.csv`; honours `MICRODATA_ZIP`/`MICRODATA_TXT` to skip the 228.6 MB download), `compute_robustness_ext.py` (wild cluster bootstrap S1/S3 → `output/robustness_ext/p2_wild_bootstrap.json`).
+
 ## Requirements
 
 Python ≥ 3.10 with **`numpy`**, **`pandas`**, **`statsmodels`** (used by `compute_econometrics.py`, `compute_robustness.py`, `stats/logit.py`). Everything else is standard library. There is no `requirements.txt` in the upstream project; install with:

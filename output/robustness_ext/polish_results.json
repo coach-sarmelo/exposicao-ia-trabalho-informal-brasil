@@ -1,0 +1,68 @@
+{
+  "meta": {
+    "purpose": "robustness extension v1.2.0: P1 (UF FE, income form, top-code), P3 (rating variants, bounding), P5 (logit)",
+    "baseline_gate_max_diff": 0,
+    "n_estimation": 227629,
+    "n_occupation_clusters": 122,
+    "n_coverage_missing": 696,
+    "n_fallback_simple_groups": 25,
+    "dispersion_mean_sd": 0.7347,
+    "dispersion_max_sd": 2.568,
+    "deterministic": true,
+    "seed_note": "no stochastic step; paper seed 20260413 provenance only",
+    "original_results_canonical": "data/analysis/econometrics.json"
+  },
+  "baseline_check": [
+    {
+      "spec": "S1",
+      "max_abs_beta_diff": 0,
+      "max_abs_se_diff": 0,
+      "r2_diff": 0,
+      "n_diff": 0
+    },
+    {
+      "spec": "S2",
+      "max_abs_beta_diff": 0,
+      "max_abs_se_diff": 0,
+      "r2_diff": 0,
+      "n_diff": 0
+    },
+    {
+      "spec": "S3a",
+      "max_abs_beta_diff": 0,
+      "max_abs_se_diff": 0,
+      "r2_diff": 0,
+      "n_diff": 0
+    },
+    {
+      "spec": "S3",
+      "max_abs_beta_diff": 0,
+      "max_abs_se_diff": 0,
+      "r2_diff": 0,
+      "n_diff": 0
+    }
+  ],
+  "estimates": {
+    "label": ["S1 (baseline)", "S2 (baseline: income in levels)", "S3a (baseline, no schooling)", "S3 (baseline)", "S1_uf", "S3_uf", "S1_top16", "S3_top16", "S1_uf_top16", "S2_log", "S2_ihs", "S2_ihs_uf", "S1_dv_rating_alpha", "S3_dv_rating_alpha", "S1_dv_rating_gamma", "S3_dv_rating_gamma", "S1_human_rating_alpha", "S3_human_rating_alpha", "S1_human_rating_beta", "S3_human_rating_beta", "S1_human_rating_gamma", "S3_human_rating_gamma", "S1_bound0", "S3_bound0", "S1_bound10", "S3_bound10", "S3_logit"],
+    "family": ["S1: d(exposure)/d(schooling)", "S1: d(exposure)/d(schooling)", "S3: d(informality pp)/d(exposure)", "S3: d(informality pp)/d(exposure)", "S1: d(exposure)/d(schooling)", "S3: d(informality pp)/d(exposure)", "S1: d(exposure)/d(schooling)", "S3: d(informality pp)/d(exposure)", "S1: d(exposure)/d(schooling)", "S1: d(exposure)/d(schooling)", "S1: d(exposure)/d(schooling)", "S1: d(exposure)/d(schooling)", "S1: d(exposure)/d(schooling)", "S3: d(informality pp)/d(exposure)", "S1: d(exposure)/d(schooling)", "S3: d(informality pp)/d(exposure)", "S1: d(exposure)/d(schooling)", "S3: d(informality pp)/d(exposure)", "S1: d(exposure)/d(schooling)", "S3: d(informality pp)/d(exposure)", "S1: d(exposure)/d(schooling)", "S3: d(informality pp)/d(exposure)", "S1: d(exposure)/d(schooling)", "S3: d(informality pp)/d(exposure)", "S1: d(exposure)/d(schooling)", "S3: d(informality pp)/d(exposure)", "S3: d(informality pp)/d(exposure)"],
+    "focal": ["years_of_study", "years_of_study", "exposure", "exposure", "years_of_study", "exposure", "years_of_study", "exposure", "years_of_study", "years_of_study", "years_of_study", "years_of_study", "years_of_study", "exposure_dv_rating_alpha", "years_of_study", "exposure_dv_rating_gamma", "years_of_study", "exposure_human_rating_alpha", "years_of_study", "exposure_human_rating_beta", "years_of_study", "exposure_human_rating_gamma", "years_of_study", "exposure", "years_of_study", "exposure", "exposure"],
+    "est": [0.2288, 0.2097, -6.2285, -3.9068, 0.2268, -3.9343, 0.1702, -4.1146, 0.1678, 0.1803, 0.1793, 0.1757, 0.0639, -4.6541, 0.3945, -2.233, 0.1053, -5.8834, 0.219, -4.4384, 0.3304, -3.0471, 0.2268, -3.7143, 0.2322, -3.9731, -0.182],
+    "se": [0.0278, 0.026, 0.9871, 0.9565, 0.0277, 0.9371, 0.0236, 0.9504, 0.0233, 0.0216, 0.0215, 0.0213, 0.0186, 1.5768, 0.0435, 0.5936, 0.0115, 1.7713, 0.0222, 1.0455, 0.0351, 0.7151, 0.0278, 0.9562, 0.0277, 0.911, 0.0447],
+    "p": [2.2862e-13, 6.3958e-13, 4.7677e-09, 0.0001, 2.9746e-13, 0.0001, 5.1015e-11, 0, 5.6274e-11, 1.3026e-13, 1.2633e-13, 2.2591e-13, 0.0008, 0.0038, 2.6912e-15, 0.0003, 1.6193e-15, 0.0012, 2.9883e-17, 0, 4.1222e-16, 0, 3.0171e-13, 0.0002, 7.997e-14, 0, 0],
+    "r2": [0.2457, 0.2595, 0.08, 0.1082, 0.2477, 0.1414, 0.264, 0.11, 0.2658, 0.2769, 0.2763, 0.2805, 0.067, 0.1011, 0.2659, 0.1061, 0.1994, 0.1047, 0.2708, 0.1098, 0.2791, 0.1096, 0.2407, 0.107, 0.2402, 0.1099, null],
+    "n": [227629, 227629, 227629, 227629, 227629, 227629, 227629, 227629, 227629, 223034, 227629, 227629, 227629, 227629, 227629, 227629, 227629, 227629, 227629, 227629, 227629, 227629, 228325, 228325, 228325, 228325, 227629],
+    "n_clusters": [122, 122, 122, 122, 122, 122, 122, 122, 122, 122, 122, 122, 122, 122, 122, 122, 122, 122, 122, 122, 122, 122, 127, 127, 127, 127, 122],
+    "note": ["shipped specification", "shipped specification", "shipped specification", "shipped specification", "P1: + 27 UF fixed effects", "P1: + 27 UF fixed effects", "P1: + schooling top-code (16y) indicator", "P1: + schooling top-code (16y) indicator", "P1: UF FE + top-code indicator", "P1: log income, positive earners only", "P1: IHS income + zero-earner dummy (full sample)", "P1: IHS income + zero dummy + UF FE", "P3a: theta = dv_rating_alpha", "P3a: theta = dv_rating_alpha", "P3a: theta = dv_rating_gamma", "P3a: theta = dv_rating_gamma", "P3a: theta = human_rating_alpha", "P3a: theta = human_rating_alpha", "P3a: theta = human_rating_beta", "P3a: theta = human_rating_beta", "P3a: theta = human_rating_gamma", "P3a: theta = human_rating_gamma", "P3b: 696 coverage-missing set to theta=0 (n incl. 696)", "P3b: theta=0 bound", "P3b: 696 set to theta=10", "P3b: theta=10 bound", "P5: logit (log-odds; AME not reported)"],
+    "ci_lo": [0.1744, 0.1586, -8.1631, -5.7816, 0.1726, -5.7709, 0.124, -5.9774, 0.1221, 0.138, 0.1373, 0.134, 0.0273, -7.7446, 0.3093, -3.3966, 0.0828, -9.3552, 0.1756, -6.4875, 0.2616, -4.4486, 0.1723, -5.5884, 0.178, -5.7585, -0.2697],
+    "ci_hi": [0.2832, 0.2607, -4.2938, -2.032, 0.2811, -2.0976, 0.2164, -2.2517, 0.2135, 0.2226, 0.2214, 0.2175, 0.1004, -1.5636, 0.4798, -1.0695, 0.1279, -2.4116, 0.2624, -2.3894, 0.3993, -1.6456, 0.2813, -1.8402, 0.2864, -2.1876, -0.0944]
+  },
+  "spearman_occupation_level": [
+    [1, 0.6129, 0.9758, 0.7859, 0.9362, 0.9566],
+    [0.6129, 1, 0.4649, 0.594, 0.566, 0.5227],
+    [0.9758, 0.4649, 1, 0.7428, 0.9203, 0.953],
+    [0.7859, 0.594, 0.7428, 1, 0.9042, 0.8321],
+    [0.9362, 0.566, 0.9203, 0.9042, 1, 0.9845],
+    [0.9566, 0.5227, 0.953, 0.8321, 0.9845, 1]
+  ],
+  "worker_weighted_pearson_vs_baseline": [0.693, 0.9683, 0.7869, 0.9431, 0.9613]
+}

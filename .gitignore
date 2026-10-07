@@ -1,10 +1,7 @@
-# Runtime / regenerable outputs (never shipped; see README Section 4)
 data/output/
-
-# Presentation slides / deck artifacts created on pipeline re-run
 /Figures/
 
-# LaTeX build artifacts (regenerate with `make` in paper/)
+# LaTeX build artifacts
 *.aux
 *.log
 *.fls
@@ -43,3 +40,7 @@ quality_reports/
 .DS_Store
 Thumbs.db
 desktop.ini
+
+# Archives & bundle dumps
+*.zip
+replication_package.zip

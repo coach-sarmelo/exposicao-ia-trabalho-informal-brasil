@@ -2,7 +2,7 @@
 
 **Paper:** *Exposição à Inteligência Artificial em um Mercado de Trabalho Informal: Teoria e Evidências para o Brasil*  
 **Author:** Marcelo Moura Freire  
-**Date of Verification:** 2026-08-23  
+**Date of Verification:** 2026-08-23 (v1.2.0 extension verified 2026-09-18)  
 **Replication Package Location:** Root repository (`./`)  
 
 ---
@@ -18,9 +18,11 @@
 | **5. Table/Figure $\to$ Program:Line Map** | **PASS** | Complete 8-row exhibit map in `README.md` (Section 6) linking every manuscript table/figure (4 main tables, 3 figures incl. the hand-authored DAG, 1 appendix table) to exact script lines; `tab_s4`, `fig3_regional_slopes` and `fig5_robustez_forest` are generated for the deck but not in the manuscript. |
 | **6. Path Portability** | **PASS** | Zero absolute paths; all scripts use relative paths via `here::here()` or package root. |
 | **7. Seed Discipline** | **PASS** | `PROJECT_SEED <- 20260413L` initialized at master entry point and passed to child scripts. |
-| **8. Automated Test Suite** | **PASS** | `code/test_econometrics.R` validates the econometric estimates with a testthat suite of 24 assertions across 9 `test_that` blocks (14 `expect_equal`, 4 `expect_true`, 3 `expect_gt`, 2 `expect_lt`, 1 `expect_type`; loop-based checks expand to 58 executed expectation successes). Re-run 2026-09-15: 100% pass. |
+| **8. Automated Test Suite** | **PASS** | `code/test_econometrics.R` validates the econometric estimates with a testthat suite of 24 assertions across 9 `test_that` blocks (14 `expect_equal`, 4 `expect_true`, 3 `expect_gt`, 2 `expect_lt`, 1 `expect_type`; loop-based checks expand to 58 executed expectation successes). Re-run 2026-09-15: 100% pass. Re-run 2026-09-18 on the v1.2.0 tree: 100% pass (canonical chain untouched). |
 | **9. License & Permissions** | **PASS** | `LICENSE.txt` included (BSD 3-Clause for code, CC-BY 4.0 for data derivations). |
-| **10. Confidential / Restricted Data** | **PASS** | Verified: all inputs are open public access (IBGE open data and MIT-licensed benchmark ratings). `data/analysis/individual_microdata.csv` is a **derived 9-column extract** of the official `PNADC_012026.zip` — the raw archive is not redistributed. Extraction code is **shipped in-package** under `scripts/` (`fetch_pnad_layout.py`, `fetch_ibge_microdata.py`, `process_microdata.py`; see `scripts/README.md`) and was independently verified against IBGE's live server; the extract can be regenerated from IBGE's public FTP (228.6 MB download). V1028 calibrated weights are fractional by dictionary definition and untransformed; 696 workers in COD groups without O*NET-SOC coverage (11, 21, 212, 223, 224) are excluded from estimation (228,325 → 227,629). |
+| **10. Confidential / Restricted Data** | **PASS** | Verified: all inputs are open public access (IBGE open data and MIT-licensed benchmark ratings). `data/analysis/individual_microdata.csv` is a **derived 9-column extract** of the official `PNADC_012026.zip` — the raw archive is not redistributed. Extraction code is **shipped in-package** under `scripts/` (`fetch_pnad_layout.py`, `fetch_ibge_microdata.py`, `process_microdata.py`; see `scripts/README.md`) and was independently verified against IBGE's live server; the extract can be regenerated from IBGE's public FTP (228.6 MB download). V1028 calibrated weights are fractional by dictionary definition and untransformed; 696 workers in COD groups without O*NET-SOC coverage (11, 21, 212, 223, 224) are excluded from estimation (228,325 → 227,629). v1.2.0 adds a second derived extract with public-domain design variables (`individual_microdata_design.csv`), validated multiset-identical to the shipped extract on all 9 analytic columns. |
+
+**v1.2.0 robustness extensions (verified 2026-09-18):** beyond-manuscript battery under `code/06–07` + `scripts/{build_exposure_variants, build_design_extract, compute_robustness_ext}.py` with outputs in `output/robustness_ext/`. Every extension script gates on exact reproduction of the canonical estimates (max diff 0.0e+00 after the 4-decimal storage rounding of `econometrics.json`) before estimating variants; the canonical `econometrics.json`, `robustness.json`, tables and figures are byte-identical to v1.1.x. See `output/robustness_ext/README.md`.
 
 ---
 

@@ -9,8 +9,8 @@ title: >-
 authors:
   - family-names: Freire
     given-names: Marcelo Moura
-version: 1.1.0
-date-released: "2026-09-16"
+version: 1.2.0
+date-released: "2026-09-18"
 license: BSD-3-Clause
 keywords:
   - artificial intelligence

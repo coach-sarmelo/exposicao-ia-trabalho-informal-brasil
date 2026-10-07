@@ -21,6 +21,7 @@
   - R econometric test suite (`test_econometrics.R`): **~2.80 seconds** documented; **~3s** measured on 2026-09-15, 100% pass (58 executed expectation successes)
   - Python dual-engine pipeline (`scripts/run_all.py paper`, **shipped and runnable in this package** — auto-detects the package layout; see `scripts/README.md`): **~2 minutes** end-to-end in the verification run of 2026-09-15, dominated by ~5 downloads of `PNADC_012026.zip` (228.6 MB each, streamed in memory) from IBGE's public FTP; the analysis steps themselves take **~5 seconds**
   - Python test suite (`python scripts/run_all.py test`; the package does not ship the upstream `tests/` directory — the driver reports this and exits cleanly. Upstream repository: **~2.20 seconds**)
+- **Robustness extensions (v1.2.0, measured 2026-09-18):** `code/06_polish_variants.R` **~60 s** (27 WLS/GLM models: 23 variants + 4 baselines + forest figure), `code/07_design_inference.R` **~40 s** (clustering battery + `svyglm`), `scripts/compute_robustness_ext.py` **~45 s** (wild cluster bootstrap, 1,000 draws), `scripts/build_exposure_variants.py` **~2 s** (122/122 gate), `scripts/build_design_extract.py` **~6 min** when downloading `PNADC_012026.zip` (228.6 MB) or ~40 s with a cached archive (`MICRODATA_ZIP`/`MICRODATA_TXT`)
 
 ---
 
@@ -36,6 +37,7 @@
 | **`testthat`** | 3.3.2 | Automated econometric test suite (24 assertions, 9 blocks; 58 executed successes) |
 | **`here`** | 1.0.2 | Robust cross-platform root path resolution |
 | **`sandwich`** | 3.1-3 | Heteroskedasticity and cluster-robust covariance matrices |
+| **`survey`** | 4.5 | Design-based (linearized) inference — v1.2.0 robustness extension only (`code/07_design_inference.R`); not required by the canonical pipeline |
 
 *(Complete package hierarchy and dependencies recorded in [`sessionInfo.txt`](sessionInfo.txt))*
 
