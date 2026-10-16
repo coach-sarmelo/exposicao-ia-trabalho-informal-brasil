@@ -8,14 +8,18 @@ from _paths import resolve_data_dir
 
 DATA_DIR = resolve_data_dir()
 
-with open(os.path.join(DATA_DIR, 'output', 'econometrics.json'), 'r', encoding='utf-8') as f:
-    econ = json.load(f)
 
-with open(os.path.join(DATA_DIR, 'output', 'robustness.json'), 'r', encoding='utf-8') as f:
-    rob = json.load(f)
+def load_json(data_dir: str, filename: str):
+    for subdir in ('analysis', 'output'):
+        path = os.path.join(data_dir, subdir, filename)
+        if os.path.isfile(path):
+            with open(path, 'r', encoding='utf-8') as f:
+                return json.load(f)
+    raise FileNotFoundError(f'{filename} not found in analysis/ or output/ under {data_dir}')
 
-with open(os.path.join(DATA_DIR, 'output', 'statistics.json'), 'r', encoding='utf-8') as f:
-    stats = json.load(f)
+
+econ = load_json(DATA_DIR, 'econometrics.json')
+rob = load_json(DATA_DIR, 'robustness.json')
 
 print("="*70)
 print("1. ECONOMETRIC SPECIFICATIONS AUDIT (S1 - S4)")
