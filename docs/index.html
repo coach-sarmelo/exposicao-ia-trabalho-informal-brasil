@@ -60,15 +60,44 @@ table#dataTable{width:100%;border-collapse:collapse;font-size:12.5px}
 .btn{border:1px solid var(--accent);background:var(--accent);color:#fff;border-radius:8px;padding:5px 13px;font-size:12.5px;cursor:pointer;font-family:inherit}
 .btn:disabled{opacity:.4;cursor:default}
 .btn.ghost{background:#fff;color:var(--accent)}
+.author-header{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px 16px;padding:12px 18px;margin-bottom:18px;background:var(--card);border:1px solid var(--line);border-radius:12px;box-shadow:0 1px 3px rgba(16,24,40,.04)}
+.author-meta{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:13.5px}
+.author-name{font-weight:700;color:var(--ink);font-size:15px}
+.author-sep{color:var(--muted)}
+.author-title{color:var(--muted);font-weight:500}
+.author-bullet{color:var(--line);margin:0 2px}
+.author-email{color:var(--muted);text-decoration:none;display:inline-flex;align-items:center;gap:4px}
+.author-email:hover{color:var(--accent);text-decoration:underline}
+.author-actions{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.author-actions .btn{text-decoration:none;display:inline-flex;align-items:center;gap:6px;font-weight:600;line-height:1.4}
+.author-actions .btn-primary{background:var(--accent);border-color:var(--accent);color:#fff;box-shadow:0 1px 2px rgba(0,114,178,.25)}
+.author-actions .btn-primary:hover{opacity:.92}
+.author-actions .btn.ghost{border-color:var(--line);color:#374151;font-weight:500}
+.author-actions .btn.ghost:hover{border-color:var(--accent);color:var(--accent);background:#fbfcfe}
 footer{color:var(--muted);font-size:12px;margin-top:6px}
 footer h3{font-size:13px;color:#374151;margin:12px 0 4px}
 footer ul{margin:4px 0;padding-left:18px}
 footer li{margin:2px 0}
-@media (max-width:780px){.plot{height:300px}#bubble{height:430px}.wrap{padding:12px 12px 30px}header.site h1{font-size:20px}#activeCount{margin-left:0}}
+@media (max-width:780px){.plot{height:300px}#bubble{height:430px}.wrap{padding:12px 12px 30px}header.site h1{font-size:20px}#activeCount{margin-left:0}.author-header{flex-direction:column;align-items:flex-start}.author-actions{width:100%;justify-content:flex-start}}
 </style>
 </head>
 <body>
 <div class="wrap">
+
+<header class="author-header" aria-label="Identificação do autor">
+  <div class="author-meta">
+    <span class="author-name">Marcelo Moura Freire</span>
+    <span class="author-sep">—</span>
+    <span class="author-title">Economista</span>
+    <span class="author-bullet">·</span>
+    <a href="mailto:marcelo.moura.freire@gmail.com" class="author-email" title="Contato por e-mail">✉️ marcelo.moura.freire@gmail.com</a>
+  </div>
+  <div class="author-actions">
+    <a href="./paper.pdf" class="btn btn-primary" target="_blank" rel="noopener">📄 Artigo Completo (PDF)</a>
+    <a href="https://github.com/coach-sarmelo/exposicao-ia-trabalho-informal-brasil" class="btn ghost" target="_blank" rel="noopener">💻 Código no GitHub</a>
+    <a href="https://www.linkedin.com/in/marcelomfreire" class="btn ghost" target="_blank" rel="noopener">🔗 LinkedIn</a>
+  </div>
+</header>
 
 <header class="site">
   <div class="eyebrow">Dashboard interativo · dados públicos</div>
@@ -4084,10 +4113,10 @@ return Plotly;
     var cards = [
       { v: fmtInt(idx.length), l: 'Indivíduos na amostra', s: 'respondem aos filtros ativos' },
       { v: fmtPop(wsum), l: 'População ocupada estimada', s: 'Σ pesos amostrais (V1028)' },
-      { v: expo.n ? nf2.format(expo.mean) : '—', l: 'Exposição média à IA', s: 'índice 0–10 · ' + fmtInt(expo.n) + ' com escore válido' },
-      { v: nf1.format(100 * inf.mean) + '%', l: 'Taxa de informalidade', s: 'ponderada' },
-      { v: fmtBRL(inc.mean), l: 'Rendimento habitual médio', s: 'R$/mês · mediana ' + (isNaN(inc.med) ? '—' : fmtBRL(inc.med)) },
-      { v: nf1.format(edu.mean), l: 'Escolaridade média', s: 'anos completos de estudo' }
+      { v: (expo.n && !isNaN(expo.mean)) ? nf2.format(expo.mean) : '—', l: 'Exposição média à IA', s: 'índice 0–10 · ' + fmtInt(expo.n) + ' com escore válido' },
+      { v: isNaN(inf.mean) ? '—' : nf1.format(100 * inf.mean) + '%', l: 'Taxa de informalidade', s: 'ponderada' },
+      { v: isNaN(inc.mean) ? '—' : fmtBRL(inc.mean), l: 'Rendimento habitual médio', s: 'R$/mês · mediana ' + (isNaN(inc.med) ? '—' : fmtBRL(inc.med)) },
+      { v: isNaN(edu.mean) ? '—' : nf1.format(edu.mean), l: 'Escolaridade média', s: 'anos completos de estudo' }
     ];
     var host = document.getElementById('kpiRow');
     host.innerHTML = '';
@@ -4133,14 +4162,17 @@ return Plotly;
     for (var e = 0; e <= 20; e++) H.expo.push(e * 0.5);
     for (var d = 0; d <= 16; d++) H.edu.push(d);
   }
-  function binLabel(edges, b, dec) {
+  function binLabel(edges, b, dec, openUpper) {
     var lo = edges[b], hi = edges[b + 1];
-    if (b === edges.length - 2) return '≥ ' + fmtInt(lo);
+    var isLast = (b === edges.length - 2);
+    var isOpen = (openUpper !== undefined) ? openUpper : (!dec && (hi - lo > 1));
+    if (isLast && isOpen) return '≥ ' + fmtInt(lo);
+    if (!dec && (hi - lo === 1)) return fmtInt(lo);
     if (dec) return nf1.format(lo) + '–' + nf1.format(hi);
     return fmtInt(lo) + '–' + fmtInt(hi - 1);
   }
-  /* renderHistBar(id, edges, get, idx, yTitle, ticks:[{v,l}], mode:'lin'|'logpos'|, dec) */
-  function renderHistBar(id, edges, get, idx, yTitle, ticks, dec) {
+  /* renderHistBar(id, edges, get, idx, yTitle, ticks:[{v,l}], mode:'lin'|'logpos'|, dec, openUpper) */
+  function renderHistBar(id, edges, get, idx, yTitle, ticks, dec, openUpper) {
     var hh = wHist(get, V, idx, edges);
     var tot = 0; for (var z = 0; z < hh.counts.length; z++) tot += hh.counts[z];
     if (!tot) { react(id, [], emptyLayout()); return; }
@@ -4156,7 +4188,7 @@ return Plotly;
       ws.push((x1 - x0) * 0.96);
       ys.push(isPct ? 100 * c / tot : c / 1e6);
       cus.push({
-        lab: binLabel(edges, b, dec), val: isPct ? nf1.format(100 * c / tot) + '% da população' : nf2.format(c / 1e6) + ' milhões',
+        lab: binLabel(edges, b, dec, openUpper), val: isPct ? nf1.format(100 * c / tot) + '% da população' : nf2.format(c / 1e6) + ' milhões',
         pop: fmtPop(c), n: fmtInt(hh.nobs[b])
       });
     }
@@ -4175,13 +4207,13 @@ return Plotly;
   }
   function renderHists(idx) {
     renderHistBar('histExpo', H.expo, function (i) { return V.expo[i]; }, idx, 'Exposição à IA (índice 0–10)',
-      [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(function (v) { return { v: v, l: String(v) }; }), true);
+      [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(function (v) { return { v: v, l: String(v) }; }), true, false);
     renderHistBar('histEdu', H.edu, function (i) { return V.edu[i]; }, idx, 'Escolaridade (anos)',
-      [0, 2, 4, 6, 8, 10, 12, 14, 16].map(function (v) { return { v: v, l: String(v) }; }), false);
+      [0, 2, 4, 6, 8, 10, 12, 14, 16].map(function (v) { return { v: v, l: String(v) }; }), false, false);
     renderHistBar('histAge', H.age, function (i) { return V.age[i]; }, idx, 'Idade (anos)',
-      [16.5, 24.5, 34.5, 44.5, 54.5, 64.5, 86].map(function (v, j) { return { v: v, l: ['14–19', '20–29', '30–39', '40–49', '50–59', '60–69', '70+'][j] }; }), false);
+      [16.5, 24.5, 34.5, 44.5, 54.5, 64.5, 86].map(function (v, j) { return { v: v, l: ['14–19', '20–29', '30–39', '40–49', '50–59', '60–69', '70+'][j] }; }), false, true);
     renderHistBar('histInc', H.inc, function (i) { return V.inc[i]; }, idx, 'Rendimento mensal (R$, escala log)',
-      [0, 100, 1000, 10000, 100000].map(function (v) { return { v: Math.log10(v + 1), l: v === 0 ? '0' : fmtInt(v) }; }), false);
+      [0, 100, 1000, 10000, 100000].map(function (v) { return { v: Math.log10(v + 1), l: v === 0 ? '0' : fmtInt(v) }; }), false, true);
     var isPct = state.histMode === 'pct';
     setSub('sub-hist', 'barras ponderadas pelos pesos amostrais · eixo y: ' + (isPct ? '% da população estimada' : 'milhões de pessoas') +
       ' · ocupações sem escore excluídas do painel 2a · rendas zero incluídas na 1ª faixa de 2d');
