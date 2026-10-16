@@ -51,8 +51,8 @@ print(f"S1 Schooling beta: {b_s1:.4f} vs Paper 0,23 | SE: {se_s1:.4f} vs Paper 0
 # S2
 b_s2_e = econ['specifications']['S2']['results_clustered_occupation']['beta'][1]
 se_s2_e = econ['specifications']['S2']['results_clustered_occupation']['se'][1]
-b_s2_w = econ['specifications']['S2']['results_clustered_occupation']['beta'][2] * 1000.0
-se_s2_w = econ['specifications']['S2']['results_clustered_occupation']['se'][2] * 1000.0
+b_s2_w = econ['specifications']['S2']['results_clustered_occupation']['beta'][2]
+se_s2_w = econ['specifications']['S2']['results_clustered_occupation']['se'][2]
 print(f"S2 Schooling beta: {b_s2_e:.4f} vs Paper 0,21 | SE: {se_s2_e:.4f} vs Paper 0,03 [MATCH: {abs(b_s2_e - 0.21) < 0.005}]")
 print(f"S2 Income/1k beta: {b_s2_w:.4f} vs Paper 0,043 | SE: {se_s2_w:.4f} vs Paper 0,010 [MATCH: {abs(b_s2_w - 0.043) < 0.001}]")
 
@@ -103,7 +103,9 @@ print(f"R1 OLS Schooling: {b_ols:.4f} (SE {se_ols:.4f}) vs Paper 0,21 (0,03) [MA
 
 # R2 Wild Bootstrap
 w_boot = rob['R2_wild_bootstrap_s4']['bootstrap_region']
-print(f"R2 Wild Cluster Bootstrap (27 UFs) S4 interaction p-value: {w_boot.get('p_value', 'N/A')}")
+p_boot = w_boot.get('p_value', w_boot.get('p', 'N/A'))
+p_boot_fmt = f"{p_boot:.4f}" if isinstance(p_boot, (int, float)) else str(p_boot)
+print(f"R2 Wild Cluster Bootstrap (27 UFs) S4 interaction p-value: {p_boot_fmt}")
 
 # R4 log outcome
 b_log = rob['R4_log_outcome']['results']['beta'][1]
