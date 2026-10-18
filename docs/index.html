@@ -11,17 +11,21 @@
 html,body{margin:0;padding:0}
 body{font-family:Inter,'Segoe UI',system-ui,-apple-system,'Helvetica Neue',Arial,sans-serif;background:var(--bg);color:var(--ink);font-size:14.5px;line-height:1.45}
 .wrap{max-width:1440px;margin:0 auto;padding:18px 20px 40px}
-.eyebrow{font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-top:6px}
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-top:6px}
 header.site h1{font-size:24px;margin:2px 0 6px;letter-spacing:-.01em}
 .subtitle{color:var(--muted);font-size:13px;max-width:1050px}
 .navline{margin-top:8px;font-size:12.5px;color:var(--muted)}
 .navline b{color:var(--ink)}
 .filterbar{position:sticky;top:0;z-index:60;background:rgba(246,247,249,.95);backdrop-filter:blur(5px);border:1px solid var(--line);border-radius:12px;padding:10px 14px;margin:14px 0 18px;display:flex;flex-wrap:wrap;gap:10px 20px;align-items:center;box-shadow:0 1px 3px rgba(16,24,40,.06)}
 .fgroup{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
-.flabel{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-right:2px}
-.chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:3px 11px;font-size:12.5px;cursor:pointer;color:#374151;font-family:inherit}
+.flabel{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-right:2px}
+.chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 14px;min-height:36px;margin:2px 0;display:inline-flex;align-items:center;justify-content:center;font-size:12.5px;cursor:pointer;color:#374151;font-family:inherit;box-sizing:border-box}
 .chip.on{background:var(--accent);border-color:var(--accent);color:#fff}
-.chip:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.chip:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+#dataTable th:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.skip-link{position:absolute;top:-40px;left:0;background:var(--accent);color:#fff;padding:8px 14px;z-index:100;text-decoration:none;font-weight:600;border-radius:0 0 6px 0;transition:top .15s ease}
+.skip-link:focus{top:0}
+#mainContent:focus{outline:none}
 #activeCount{font-size:12.5px;color:var(--muted);margin-left:auto;white-space:nowrap;font-variant-numeric:tabular-nums}
 .panel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px 16px;margin-bottom:18px;box-shadow:0 1px 2px rgba(16,24,40,.04)}
 .panel>h2{font-size:16.5px;margin:0 0 3px}
@@ -30,19 +34,19 @@ header.site h1{font-size:24px;margin:2px 0 6px;letter-spacing:-.01em}
 .kpi{border:1px solid var(--line);border-radius:11px;padding:10px 12px;background:#fbfcfe}
 .kpi-v{font-size:21px;font-weight:750;color:var(--accent);font-variant-numeric:tabular-nums}
 .kpi-l{font-size:12.5px;font-weight:600;margin-top:1px}
-.kpi-s{font-size:11.5px;color:var(--muted)}
+.kpi-s{font-size:12px;color:var(--muted)}
 .tscroll{overflow:auto;border:1px solid var(--line);border-radius:10px}
 table#descTable{width:100%;border-collapse:collapse;font-size:12.5px}
 #descTable th,#descTable td{padding:6px 9px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
 #descTable th{color:var(--muted);font-weight:600;background:#fbfcfe;position:sticky;top:0}
 #descTable .tl{text-align:left}
-.note{color:var(--muted);font-weight:400;font-size:11.5px}
+.note{color:var(--muted);font-weight:400;font-size:12px}
 .hgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:16px}
 .sgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));gap:16px}
 .fig{margin:0;display:flex;flex-direction:column;min-width:0}
 .ph{margin-bottom:6px}
 .ph b{font-size:13.5px}
-.ph span{display:block;font-size:11.5px;color:var(--muted);margin-top:2px}
+.ph span{display:block;font-size:12px;color:var(--muted);margin-top:2px}
 .plot{width:100%;height:335px}
 #bubble{height:540px}
 .tools{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;margin:2px 0 12px}
@@ -55,7 +59,7 @@ table#dataTable{width:100%;border-collapse:collapse;font-size:12.5px}
 #dataTable th{position:sticky;top:0;background:#f3f5f9;color:#374151;font-weight:600;padding:7px 9px;text-align:left;cursor:pointer;white-space:nowrap;border-bottom:2px solid var(--line);z-index:2}
 #dataTable td{padding:5px 9px;border-bottom:1px solid #eef0f4;white-space:nowrap}
 #dataTable .tr{text-align:right;font-variant-numeric:tabular-nums}
-.dim{color:#9ca3af;font-style:italic}
+.dim{color:#4b5563;font-style:italic}
 .pager{display:flex;gap:8px;align-items:center;margin-top:10px;font-size:12.5px;color:var(--muted);flex-wrap:wrap}
 .btn{border:1px solid var(--accent);background:var(--accent);color:#fff;border-radius:8px;padding:5px 13px;font-size:12.5px;cursor:pointer;font-family:inherit}
 .btn:disabled{opacity:.4;cursor:default}
@@ -78,39 +82,39 @@ footer{color:var(--muted);font-size:12px;margin-top:6px}
 footer h3{font-size:13px;color:#374151;margin:12px 0 4px}
 footer ul{margin:4px 0;padding-left:18px}
 footer li{margin:2px 0}
-@media (max-width:780px){.plot{height:300px}#bubble{height:430px}.wrap{padding:12px 12px 30px}header.site h1{font-size:20px}#activeCount{margin-left:0}.author-header{flex-direction:column;align-items:flex-start}.author-actions{width:100%;justify-content:flex-start}}
+@media (max-width:780px){.plot{height:300px}#bubble{height:430px}.wrap{padding:12px 12px 30px}header.site h1{font-size:20px}#activeCount{margin-left:0}.author-header{flex-direction:column;align-items:flex-start}.author-actions{width:100%;justify-content:flex-start}.filterbar{position:relative;top:auto}}
 
 /* Econometric & Causality Section Styles */
 .econ-table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--line);border-radius:10px;margin:14px 0 10px;background:#fff}
 table.econ-table{width:100%;border-collapse:collapse;font-size:12.5px;line-height:1.4}
 table.econ-table thead tr:first-child th{border-top:2px solid var(--ink);border-bottom:1px solid var(--line);padding:7px 10px;text-align:right;background:#fbfcfe;font-weight:700}
 table.econ-table thead tr:first-child th:first-child{text-align:left}
-table.econ-table thead tr.desc-row th{border-bottom:1.5px solid var(--ink);padding:4px 10px 7px;text-align:right;background:#fbfcfe;font-weight:400;font-size:11px;color:var(--muted)}
+table.econ-table thead tr.desc-row th{border-bottom:1.5px solid var(--ink);padding:4px 10px 7px;text-align:right;background:#fbfcfe;font-weight:400;font-size:12px;color:var(--muted)}
 table.econ-table thead tr.desc-row th:first-child{text-align:left;font-weight:600;color:var(--ink)}
 table.econ-table tbody td{padding:4px 10px;text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
 table.econ-table tbody td:first-child{text-align:left;font-weight:500;white-space:normal}
-table.econ-table tbody tr.se-row td{padding-top:0;padding-bottom:5px;font-size:11px;color:var(--muted)}
+table.econ-table tbody tr.se-row td{padding-top:0;padding-bottom:5px;font-size:12px;color:var(--muted)}
 table.econ-table tbody tr.mid-sep td{border-top:1px solid var(--line);padding-top:7px}
 table.econ-table tbody tr:last-child td{border-bottom:2px solid var(--ink);padding-bottom:7px}
-table.econ-table tfoot td{padding:8px 10px;font-size:11px;color:var(--muted);text-align:left;line-height:1.45;background:#fbfcfe}
+table.econ-table tfoot td{padding:8px 10px;font-size:12px;color:var(--muted);text-align:left;line-height:1.45;background:#fbfcfe}
 .star{font-weight:700;color:var(--accent);margin-left:1px}
 .econ-cards-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin-top:16px}
 .econ-card{border:1px solid var(--line);border-radius:11px;padding:14px 16px;background:#fbfcfe;display:flex;flex-direction:column;justify-content:space-between;min-width:0;box-sizing:border-box}
 .econ-card-h{font-size:13px;font-weight:700;color:var(--ink);margin-bottom:6px;display:flex;align-items:center;justify-content:space-between}
-.econ-badge{font-size:10.5px;font-weight:600;padding:2px 7px;border-radius:6px;background:#e6f4ea;color:#137333}
-.econ-badge.blue{background:#e8f0fe;color:#1a73e8}
+.econ-badge{font-size:12px;font-weight:600;padding:2px 7px;border-radius:6px;background:#e6f4ea;color:#137333}
+.econ-badge.blue{background:#e8f0fe;color:#174ea6}
 .decomp-visual{margin:10px 0 8px}
 .decomp-bar-wrap{height:24px;border-radius:6px;overflow:hidden;display:flex;background:#e5e7eb}
-.decomp-seg-edu{background:#56B4E9;color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700}
-.decomp-seg-dir{background:#0072B2;color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700}
-.decomp-legend{display:flex;flex-wrap:wrap;gap:12px;font-size:11px;margin-top:7px}
+.decomp-seg-edu{background:#56B4E9;color:#0c2a4a;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700}
+.decomp-seg-dir{background:#0072B2;color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700}
+.decomp-legend{display:flex;flex-wrap:wrap;gap:12px;font-size:12px;margin-top:7px}
 .decomp-legend-item{display:flex;align-items:center;gap:5px}
 .decomp-dot{width:9px;height:9px;border-radius:2px}
-.decomp-desc{font-size:11.5px;color:var(--muted);margin-top:6px;line-height:1.4}
+.decomp-desc{font-size:12px;color:var(--muted);margin-top:6px;line-height:1.4}
 .oster-stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:8px 0;text-align:center}
 .oster-stat{border:1px solid var(--line);border-radius:7px;padding:6px 4px;background:#fff}
 .oster-stat-val{font-size:16px;font-weight:750;color:var(--accent);font-variant-numeric:tabular-nums}
-.oster-stat-lbl{font-size:10.5px;color:var(--muted);margin-top:1px}
+.oster-stat-lbl{font-size:12px;color:var(--muted);margin-top:1px}
 .oster-gauge-wrap{background:#e5e7eb;border-radius:999px;height:10px;position:relative;margin:10px 0 4px}
 .oster-gauge-fill{background:linear-gradient(90deg,#56B4E9,#0072B2);height:100%;border-radius:999px;width:77%}
 .oster-gauge-mark{position:absolute;top:-3px;bottom:-3px;width:2px;background:#d93025;left:40%}
@@ -118,6 +122,7 @@ table.econ-table tfoot td{padding:8px 10px;font-size:11px;color:var(--muted);tex
 </style>
 </head>
 <body>
+<a href="#mainContent" class="skip-link">Pular para o conteúdo principal</a>
 <div class="wrap">
 
 <header class="author-header" aria-label="Identificação do autor">
@@ -126,12 +131,12 @@ table.econ-table tfoot td{padding:8px 10px;font-size:11px;color:var(--muted);tex
     <span class="author-sep">—</span>
     <span class="author-title">Economista</span>
     <span class="author-bullet">·</span>
-    <a href="mailto:marcelo.moura.freire@gmail.com" class="author-email" title="Contato por e-mail">✉️ marcelo.moura.freire@gmail.com</a>
+    <a href="mailto:marcelo.moura.freire@gmail.com" class="author-email" title="Contato por e-mail" aria-label="E-mail de contato: marcelo.moura.freire@gmail.com"><span aria-hidden="true">✉️ </span>marcelo.moura.freire@gmail.com</a>
   </div>
   <div class="author-actions">
-    <a href="./paper.pdf" class="btn btn-primary" target="_blank" rel="noopener">📄 Artigo Completo (PDF)</a>
-    <a href="https://github.com/coach-sarmelo/exposicao-ia-trabalho-informal-brasil" class="btn ghost" target="_blank" rel="noopener">💻 Código no GitHub</a>
-    <a href="https://www.linkedin.com/in/marcelomfreire" class="btn ghost" target="_blank" rel="noopener">🔗 LinkedIn</a>
+    <a href="./paper.pdf" class="btn btn-primary" target="_blank" rel="noopener"><span aria-hidden="true">📄 </span>Artigo Completo (PDF)</a>
+    <a href="https://github.com/coach-sarmelo/exposicao-ia-trabalho-informal-brasil" class="btn ghost" target="_blank" rel="noopener"><span aria-hidden="true">💻 </span>Código no GitHub</a>
+    <a href="https://www.linkedin.com/in/marcelomfreire" class="btn ghost" target="_blank" rel="noopener"><span aria-hidden="true">🔗 </span>LinkedIn</a>
   </div>
 </header>
 
@@ -142,16 +147,16 @@ table.econ-table tfoot td{padding:8px 10px;font-size:11px;color:var(--muted);tex
   <p class="navline">Ordem de leitura — <b>1</b> Estatísticas resumidas · <b>2</b> Distribuições-chave · <b>3</b> Correlações e gradientes · <b>Achados econométricos</b> Modelos S1–S4 e causalidade · <b>4</b> Tabela de dados · <b>5</b> Panorama regional × ocupação.</p>
 </header>
 
-<div class="filterbar" id="filterbar" role="group" aria-label="Filtros globais">
-  <div class="fgroup"><span class="flabel">Região</span><span id="fRegions" class="fgroup"></span></div>
-  <div class="fgroup"><span class="flabel">Sexo</span><span id="fSexes" class="fgroup"></span></div>
-  <div class="fgroup"><span class="flabel">Cor/raça</span><span id="fRaces" class="fgroup"></span></div>
-  <div class="fgroup"><span class="flabel">Formalidade</span><span id="fForms" class="fgroup"></span></div>
-  <div class="fgroup"><button id="fClear" class="btn ghost" type="button">Limpar filtros</button></div>
-  <span id="activeCount">…</span>
+<div class="filterbar" id="filterbar" role="toolbar" aria-label="Filtros globais">
+  <div class="fgroup" role="group" aria-labelledby="flabel-reg"><span class="flabel" id="flabel-reg">Região</span><span id="fRegions" class="fgroup"></span></div>
+  <div class="fgroup" role="group" aria-labelledby="flabel-sex"><span class="flabel" id="flabel-sex">Sexo</span><span id="fSexes" class="fgroup"></span></div>
+  <div class="fgroup" role="group" aria-labelledby="flabel-race"><span class="flabel" id="flabel-race">Cor/raça</span><span id="fRaces" class="fgroup"></span></div>
+  <div class="fgroup" role="group" aria-labelledby="flabel-form"><span class="flabel" id="flabel-form">Formalidade</span><span id="fForms" class="fgroup"></span></div>
+  <div class="fgroup"><button id="fClear" class="btn ghost" type="button" aria-label="Limpar todos os filtros">Limpar filtros</button></div>
+  <span id="activeCount" aria-live="polite">…</span>
 </div>
 
-<main>
+<main id="mainContent" tabindex="-1">
 
 <section class="panel" id="p1" aria-labelledby="h1p">
   <h2 id="h1p">1 · Estatísticas resumidas</h2>
@@ -164,7 +169,7 @@ table.econ-table tfoot td{padding:8px 10px;font-size:11px;color:var(--muted);tex
   <h2 id="h2p">2 · Distribuições-chave</h2>
   <div class="tools">
     <label for="histMode">Eixo y dos histogramas</label>
-    <select id="histMode">
+    <select id="histMode" aria-label="Eixo y dos histogramas">
       <option value="pct">% da população estimada</option>
       <option value="abs">População estimada (milhões)</option>
     </select>
@@ -402,7 +407,7 @@ table.econ-table tfoot td{padding:8px 10px;font-size:11px;color:var(--muted);tex
           <div class="oster-gauge-fill" style="width:77%"></div>
           <div class="oster-gauge-mark" style="left:40%" title="Limiar crítico δ = 1,0"></div>
         </div>
-        <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--muted);margin-bottom:6px">
+        <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:6px">
           <span>0,0</span>
           <span style="color:#d93025;font-weight:600">Limiar canônico (δ = 1,0)</span>
           <span style="color:var(--accent);font-weight:700">δ = 1,93</span>
@@ -427,7 +432,7 @@ table.econ-table tfoot td{padding:8px 10px;font-size:11px;color:var(--muted);tex
             <div class="oster-stat-lbl">Limiar e* (anos)</div>
           </div>
           <div class="oster-stat">
-            <div class="oster-stat-val">+0,28<span style="font-size:11px">***</span></div>
+            <div class="oster-stat-val">+0,28<span style="font-size:12px">***</span></div>
             <div class="oster-stat-lbl">Interação S4</div>
           </div>
           <div class="oster-stat">
@@ -448,19 +453,19 @@ table.econ-table tfoot td{padding:8px 10px;font-size:11px;color:var(--muted);tex
   <p class="pnote">Microdados individuais completos sob os filtros ativos. Busca e intervalos aplicam-se ao conjunto inteiro (não apenas à página exibida); clique nos cabeçalhos para ordenar; o botão exporta em CSV <b>todas</b> as linhas filtradas.</p>
   <div class="tools">
     <label for="tq">Buscar</label>
-    <input type="text" id="tq" placeholder="ocupação ou UF (ex.: vendedor, SP)">
-    <label>Exposição mín. <input type="number" id="tExpoMin" min="0" max="10" step="0.5"></label>
-    <label>máx. <input type="number" id="tExpoMax" min="0" max="10" step="0.5"></label>
-    <label>Renda mín. (R$) <input type="number" id="tIncMin" min="0" step="100"></label>
-    <label>máx. (R$) <input type="number" id="tIncMax" min="0" step="100"></label>
+    <input type="text" id="tq" aria-label="Buscar por ocupação ou UF" placeholder="ocupação ou UF (ex.: vendedor, SP)">
+    <label for="tExpoMin">Exposição mín. <input type="number" id="tExpoMin" aria-label="Exposição mínima à IA" min="0" max="10" step="0.5"></label>
+    <label for="tExpoMax">máx. <input type="number" id="tExpoMax" aria-label="Exposição máxima à IA" min="0" max="10" step="0.5"></label>
+    <label for="tIncMin">Renda mín. (R$) <input type="number" id="tIncMin" aria-label="Rendimento mínimo em reais" min="0" step="100"></label>
+    <label for="tIncMax">máx. (R$) <input type="number" id="tIncMax" aria-label="Rendimento máximo em reais" min="0" step="100"></label>
   </div>
   <div class="twrap"><table id="dataTable"></table></div>
   <div class="pager">
-    <button class="btn ghost" id="btnPrev" type="button">‹ Anterior</button>
-    <button class="btn ghost" id="btnNext" type="button">Próxima ›</button>
-    <span id="pageInfo"></span>
-    <span id="tableInfo" style="margin-left:auto"></span>
-    <button class="btn" id="btnCsv" type="button">⬇ Baixar CSV filtrado</button>
+    <button class="btn ghost" id="btnPrev" type="button" aria-label="Página anterior"><span aria-hidden="true">‹ </span>Anterior</button>
+    <button class="btn ghost" id="btnNext" type="button" aria-label="Próxima página">Próxima <span aria-hidden="true"> ›</span></button>
+    <span id="pageInfo" aria-live="polite"></span>
+    <span id="tableInfo" style="margin-left:auto" aria-live="polite"></span>
+    <button class="btn" id="btnCsv" type="button" aria-label="Baixar dados filtrados em formato CSV"><span aria-hidden="true">⬇ </span>Baixar CSV filtrado</button>
   </div>
 </section>
 
@@ -705,8 +710,8 @@ table.econ-table tfoot td{padding:8px 10px;font-size:11px;color:var(--muted);tex
     var l = {
       font: FONT, margin: { l: 56, r: 14, t: 10, b: 46 },
       paper_bgcolor: 'rgba(0,0,0,0)', plot_bgcolor: 'rgba(0,0,0,0)',
-      xaxis: { gridcolor: GRIDCOL, zeroline: false, linecolor: AXISC, tickfont: { size: 11.5 }, title: { font: { size: 12, color: AXISC }, standoff: 8 } },
-      yaxis: { gridcolor: GRIDCOL, zeroline: false, linecolor: AXISC, tickfont: { size: 11.5 }, title: { font: { size: 12, color: AXISC }, standoff: 8 } },
+      xaxis: { gridcolor: GRIDCOL, zeroline: false, linecolor: AXISC, tickfont: { size: 12 }, title: { font: { size: 12, color: AXISC }, standoff: 8 } },
+      yaxis: { gridcolor: GRIDCOL, zeroline: false, linecolor: AXISC, tickfont: { size: 12 }, title: { font: { size: 12, color: AXISC }, standoff: 8 } },
       hoverlabel: { font: { size: 12.5 }, bgcolor: 'white', bordercolor: '#9ca3af' },
       showlegend: false
     };
@@ -738,6 +743,7 @@ table.econ-table tfoot td{padding:8px 10px;font-size:11px;color:var(--muted);tex
     var b = document.createElement('button');
     b.type = 'button'; b.className = 'chip' + (on ? ' on' : ''); b.textContent = label;
     b.setAttribute('aria-pressed', on ? 'true' : 'false');
+    b.setAttribute('aria-label', label);
     if (title) b.title = title;
     return b;
   }
@@ -765,14 +771,6 @@ table.econ-table tfoot td{padding:8px 10px;font-size:11px;color:var(--muted);tex
       races.map(function (c) { return { label: D.raceLabels[c], v: c, title: 'n = ' + fmtInt(raceCounts[c] || 0) }; }), state.races, onChange);
     chipGroup(document.getElementById('fForms'),
       D.formLabels.map(function (nm, ix) { return { label: nm, v: ix }; }), state.forms, onChange);
-    document.getElementById('fClear').addEventListener('click', function () {
-      state.regions = new Set(D.regions.map(function (_, ix) { return ix; }));
-      state.sexes = new Set([0, 1]);
-      state.races = new Set(races);
-      state.forms = new Set([0, 1]);
-      buildFilterBar(onChange); onChange();
-    });
-    document.getElementById('histMode').addEventListener('change', function () { state.histMode = this.value; onChange(); });
   }
 
   /* ============================ PAINEL 1: RESUMO ============================= */
@@ -1096,14 +1094,69 @@ table.econ-table tfoot td{padding:8px 10px;font-size:11px;color:var(--muted);tex
     { k: 'form', label: 'Formalidade' },
     { k: 'wt', label: 'Peso amostral', num: true }
   ];
+  var UF_NAMES = {
+    AC: 'Acre', AL: 'Alagoas', AP: 'Amapá', AM: 'Amazonas', BA: 'Bahia',
+    CE: 'Ceará', DF: 'Distrito Federal', ES: 'Espírito Santo', GO: 'Goiás',
+    MA: 'Maranhão', MT: 'Mato Grosso', MS: 'Mato Grosso do Sul', MG: 'Minas Gerais',
+    PA: 'Pará', PB: 'Paraíba', PR: 'Paraná', PE: 'Pernambuco', PI: 'Piauí',
+    RJ: 'Rio de Janeiro', RN: 'Rio Grande do Norte', RS: 'Rio Grande do Sul',
+    RO: 'Rondônia', RR: 'Roraima', SC: 'Santa Catarina', SP: 'São Paulo',
+    SE: 'Sergipe', TO: 'Tocantins'
+  };
+  var occSearchStrings = null, ufSearchData = null;
+  function getSearchStrings() {
+    if (!occSearchStrings && D && D.occs) {
+      occSearchStrings = D.occs.map(function (o) { return deacc(o.name + ' ' + o.code); });
+    }
+    if (!ufSearchData && D && D.ufs) {
+      ufSearchData = D.ufs.map(function (u) {
+        var fullName = UF_NAMES[u] || '';
+        var fullNorm = deacc(u + ' ' + fullName);
+        var words = fullNorm.split(/[\s,]+/).filter(Boolean);
+        return { abbr: u.toLowerCase(), words: words };
+      });
+    }
+    return { occs: occSearchStrings, ufs: ufSearchData };
+  }
+
   function tableFilterIndices(idx) {
-    var q = deacc(state.q.trim()), out = [];
-    var names = q ? D.occs.map(function (o) { return deacc(o.name + ' ' + o.code); }) : null;
+    var rawQ = state.q ? state.q.trim() : '';
+    var tokens = rawQ ? deacc(rawQ).split(/[\s,]+/).filter(Boolean) : [];
+    var searchData = tokens.length > 0 ? getSearchStrings() : null;
+    var tokenInfos = null;
+    if (tokens.length > 0) {
+      tokenInfos = tokens.map(function (tok) {
+        var tokUpper = tok.toUpperCase();
+        var isUfCode = tok.length === 2 && Boolean(UF_NAMES[tokUpper]);
+        var wordRegex = isUfCode ? new RegExp('\\b' + tok + '\\b') : null;
+        return { tok: tok, isUfCode: isUfCode, wordRegex: wordRegex };
+      });
+    }
     var eMin = parseFloat(state.expoMin), eMax = parseFloat(state.expoMax),
         iMin = parseFloat(state.incMin), iMax = parseFloat(state.incMax);
+    var out = [];
     for (var k = 0; k < idx.length; k++) {
       var i = idx[k];
-      if (q && (names[V.occ[i]] + ' ' + deacc(D.ufs[V.uf[i]])).indexOf(q) < 0) continue;
+      if (tokenInfos) {
+        var oStr = searchData.occs[V.occ[i]];
+        var ufObj = searchData.ufs[V.uf[i]];
+        var match = true;
+        for (var t = 0; t < tokenInfos.length; t++) {
+          var tInfo = tokenInfos[t];
+          var tok = tInfo.tok;
+          var matchUf = tInfo.isUfCode
+            ? (ufObj.abbr === tok)
+            : ufObj.words.some(function (w) { return w.indexOf(tok) === 0; });
+          var matchOcc = tInfo.isUfCode
+            ? tInfo.wordRegex.test(oStr)
+            : (oStr.indexOf(tok) >= 0);
+          if (!matchOcc && !matchUf) {
+            match = false;
+            break;
+          }
+        }
+        if (!match) continue;
+      }
       if (!isNaN(eMin) && (isNaN(V.expo[i]) || V.expo[i] < eMin)) continue;
       if (!isNaN(eMax) && (isNaN(V.expo[i]) || V.expo[i] > eMax)) continue;
       if (!isNaN(iMin) && V.inc[i] < iMin) continue;
@@ -1151,42 +1204,60 @@ table.econ-table tfoot td{padding:8px 10px;font-size:11px;color:var(--muted);tex
     var host = document.getElementById('dataTable');
     var thead = '<thead><tr>' + COLS.map(function (c) {
       var arrow = state.sortKey === c.k ? (state.sortDir > 0 ? ' ▲' : ' ▼') : '';
-      return '<th data-k="' + c.k + '" title="Clique para ordenar">' + c.label + arrow + '</th>';
+      var ariaSort = state.sortKey === c.k ? (state.sortDir > 0 ? ' aria-sort="ascending"' : ' aria-sort="descending"') : ' aria-sort="none"';
+      return '<th data-k="' + c.k + '"' + ariaSort + ' tabindex="0" role="columnheader" title="Clique para ordenar por ' + c.label + '" aria-label="' + c.label + ': clique para ordenar">' + c.label + '<span aria-hidden="true">' + arrow + '</span></th>';
     }).join('') + '</tr></thead>';
     var rowsH = '';
-    for (var r = s; r < e; r++) {
-      var i = tableIdx[r];
-      rowsH += '<tr>';
-      for (var c = 0; c < COLS.length; c++) {
-        var v = cellValue(i, COLS[c].k);
-        var cls = COLS[c].num ? ' class="tr"' : '';
-        var txt;
-        if (v === null) txt = '<span class="dim">sem escore</span>';
-        else if (COLS[c].k === 'expo') txt = nf1.format(v);
-        else if (COLS[c].k === 'inc') txt = fmtInt(v);
-        else if (COLS[c].k === 'wt') txt = nf1.format(v);
-        else txt = String(v);
-        rowsH += '<td' + cls + '>' + txt + '</td>';
+    if (total === 0) {
+      rowsH = '<tr><td colspan="' + COLS.length + '" style="text-align:center;padding:24px;color:var(--muted)">Nenhum registro encontrado para os filtros selecionados.</td></tr>';
+    } else {
+      for (var r = s; r < e; r++) {
+        var i = tableIdx[r];
+        rowsH += '<tr>';
+        for (var c = 0; c < COLS.length; c++) {
+          var v = cellValue(i, COLS[c].k);
+          var cls = COLS[c].num ? ' class="tr"' : '';
+          var txt;
+          if (v === null) txt = '<span class="dim">sem escore</span>';
+          else if (COLS[c].k === 'expo') txt = nf1.format(v);
+          else if (COLS[c].k === 'inc') txt = fmtInt(v);
+          else if (COLS[c].k === 'wt') txt = nf1.format(v);
+          else txt = String(v);
+          rowsH += '<td' + cls + '>' + txt + '</td>';
+        }
+        rowsH += '</tr>';
       }
-      rowsH += '</tr>';
     }
     host.innerHTML = thead + '<tbody>' + rowsH + '</tbody>';
     Array.prototype.forEach.call(host.querySelectorAll('th'), function (th) {
-      th.addEventListener('click', function () {
+      function toggle() {
         var k = th.getAttribute('data-k');
         if (state.sortKey === k) state.sortDir *= -1; else { state.sortKey = k; state.sortDir = 1; }
         renderTable();
+        var newTh = host.querySelector('th[data-k="' + k + '"]');
+        if (newTh) newTh.focus();
+      }
+      th.addEventListener('click', toggle);
+      th.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          toggle();
+        }
       });
     });
     document.getElementById('tableInfo').textContent =
       (total === filteredIdx.length ? fmtInt(total) : fmtInt(total) + ' de ' + fmtInt(filteredIdx.length)) +
       ' linhas · filtros globais' + (total !== filteredIdx.length ? ' + filtros da tabela' : '') + ' aplicados ao conjunto completo';
-    document.getElementById('pageInfo').textContent = 'Página ' + (state.page + 1) + ' de ' + pages + ' · exibindo ' + fmtInt(s + 1) + '–' + fmtInt(e);
-    document.getElementById('btnPrev').disabled = state.page <= 0;
-    document.getElementById('btnNext').disabled = state.page >= pages - 1;
+    document.getElementById('pageInfo').textContent = (total === 0)
+      ? '0 registros'
+      : ('Página ' + (state.page + 1) + ' de ' + pages + ' · exibindo ' + fmtInt(s + 1) + '–' + fmtInt(e));
+    document.getElementById('btnPrev').disabled = (total === 0) || (state.page <= 0);
+    document.getElementById('btnNext').disabled = (total === 0) || (state.page >= pages - 1);
+    document.getElementById('btnCsv').disabled = (total === 0);
   }
   function exportCSV() {
     var idx = tableIdx;
+    if (!idx || !idx.length) return;
     var head = ['uf', 'regiao', 'cod_ocupacao', 'ocupacao', 'exposicao_ia_0_10', 'renda_brl', 'anos_estudo', 'idade', 'sexo', 'cor_raca', 'formalidade', 'peso_amostral'];
     var lines = [head.join(',')];
     for (var k = 0; k < idx.length; k++) {
@@ -1227,6 +1298,8 @@ table.econ-table tfoot td{padding:8px 10px;font-size:11px;color:var(--muted);tex
   function init() {
     D = global.DASH_DATA;
     V = decodeData(D);
+    occSearchStrings = null;
+    ufSearchData = null;
     buildHistDefs();
     state.regions = new Set(D.regions.map(function (_, ix) { return ix; }));
     state.sexes = new Set([0, 1]);
@@ -1238,6 +1311,30 @@ table.econ-table tfoot td{padding:8px 10px;font-size:11px;color:var(--muted);tex
       if (deb) clearTimeout(deb);
       deb = setTimeout(function () { deb = null; state.page = 0; renderTable(); }, 180);
     }
+    document.getElementById('fClear').addEventListener('click', function () {
+      if (deb) { clearTimeout(deb); deb = null; }
+      state.regions = new Set(D.regions.map(function (_, ix) { return ix; }));
+      state.sexes = new Set([0, 1]);
+      state.races = new Set(Object.keys(D.raceLabels).map(Number));
+      state.forms = new Set([0, 1]);
+      state.q = '';
+      state.expoMin = '';
+      state.expoMax = '';
+      state.incMin = '';
+      state.incMax = '';
+      state.page = 0;
+      document.getElementById('tq').value = '';
+      document.getElementById('tExpoMin').value = '';
+      document.getElementById('tExpoMax').value = '';
+      document.getElementById('tIncMin').value = '';
+      document.getElementById('tIncMax').value = '';
+      buildFilterBar(scheduleUpdate);
+      scheduleUpdate();
+    });
+    document.getElementById('histMode').addEventListener('change', function () {
+      state.histMode = this.value;
+      renderHists(filteredIdx);
+    });
     document.getElementById('tq').addEventListener('input', function () { state.q = this.value; tableChanged(); });
     var keyMap = { tExpoMin: 'expoMin', tExpoMax: 'expoMax', tIncMin: 'incMin', tIncMax: 'incMax' };
     Object.keys(keyMap).forEach(function (id) {
@@ -1254,7 +1351,14 @@ table.econ-table tfoot td{padding:8px 10px;font-size:11px;color:var(--muted);tex
     init: init, update: update,
     decodeData: decodeData, filterIndices: filterIndices, wSummary: wSummary, wHist: wHist,
     wPearson: wPearson, binMeans2: binMeans2, regionOccCells: regionOccCells,
-    hash01: hash01, subSample: subSample, b64ToBytes: b64ToBytes, toU32: toU32, toF32: toF32
+    hash01: hash01, subSample: subSample, b64ToBytes: b64ToBytes, toU32: toU32, toF32: toF32,
+    tableFilterIndices: tableFilterIndices, state: state, deacc: deacc,
+    setData: function (dashData) {
+      D = dashData;
+      V = decodeData(D);
+      occSearchStrings = null;
+      ufSearchData = null;
+    }
   };
   global.DashApp = api;
   if (typeof module !== 'undefined' && module.exports) module.exports = api;

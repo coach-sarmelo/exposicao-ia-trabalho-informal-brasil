@@ -4,6 +4,7 @@
 
 [![Dashboard Interativo](https://img.shields.io/badge/🚀%20Dashboard-Interativo-0072B2?style=for-the-badge)](https://coach-sarmelo.github.io/exposicao-ia-trabalho-informal-brasil/)
 [![Artigo Completo](https://img.shields.io/badge/📄%20Artigo%20Completo-(PDF)-D55E00?style=for-the-badge)](https://coach-sarmelo.github.io/exposicao-ia-trabalho-informal-brasil/paper.pdf)
+[![CI](https://github.com/coach-sarmelo/exposicao-ia-trabalho-informal-brasil/actions/workflows/ci.yml/badge.svg)](https://github.com/coach-sarmelo/exposicao-ia-trabalho-informal-brasil/actions/workflows/ci.yml)
 
 > Acesso rápido: [🚀 Dashboard Interativo](https://coach-sarmelo.github.io/exposicao-ia-trabalho-informal-brasil/) · [📄 Artigo Completo (PDF)](./docs/paper.pdf)
 
