@@ -82,6 +82,8 @@ MICRODATA_TXT=/path/to/PNADC_012026.txt python scripts/run_all.py paper
 | `build_paper_tables.py` | Paper tables from the Python results. |
 | `reference/` | Layout and code mappings used by the pipeline (kept local because the scripts resolve it relative to themselves). |
 | `check-dashboard-integrity.py`, `generate_paper_figures.py` | Upstream site/exhibit utilities; not part of `run_all.py`. |
+| `build_dashboard.py` | Reproducibility script: serializes microdata into binary/Base64 arrays and embeds `window.DASH_DATA` into `docs/index.html`. |
+| `test_build_dashboard.py` | Unit test suite for `build_dashboard.py` data pipeline and HTML embedding. |
 
 ## Dual-engine note
 

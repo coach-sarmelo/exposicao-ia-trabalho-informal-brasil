@@ -61,6 +61,31 @@ while ((m = smallFontRegex.exec(html)) !== null) {
 assert.strictEqual(matches.length, 0, `Found sub-12px font size matches: ${JSON.stringify(matches)}`);
 console.log('  [PASS] Zero sub-12px font declarations found in file');
 
+// 8. Fonts and Open Graph / Twitter Card metadata
+assert(html.includes('rel="preconnect" href="https://fonts.googleapis.com"'), 'Google Fonts preconnect missing');
+assert(html.includes('rel="preconnect" href="https://fonts.gstatic.com"'), 'Google Fonts gstatic preconnect missing');
+assert(html.includes('fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700'), 'Inter font stylesheet missing');
+assert(html.includes('rel="canonical" href="https://coach-sarmelo.github.io/exposicao-ia-trabalho-informal-brasil/"'), 'canonical link missing');
+assert(html.includes('property="og:title"'), 'og:title missing');
+assert(html.includes('property="og:description"'), 'og:description missing');
+assert(html.includes('property="og:type" content="website"'), 'og:type website missing');
+assert(html.includes('property="og:url" content="https://coach-sarmelo.github.io/exposicao-ia-trabalho-informal-brasil/"'), 'og:url missing');
+assert(html.includes('property="og:locale" content="pt_BR"'), 'og:locale pt_BR missing');
+assert(html.includes('property="og:site_name"'), 'og:site_name missing');
+assert(html.includes('property="og:image" content="https://coach-sarmelo.github.io/exposicao-ia-trabalho-informal-brasil/og-image.png"'), 'og:image missing or wrong URL');
+assert(html.includes('property="og:image:width" content="1950"'), 'og:image:width missing');
+assert(html.includes('property="og:image:height" content="1260"'), 'og:image:height missing');
+assert(html.includes('name="twitter:card" content="summary_large_image"'), 'twitter:card summary_large_image missing');
+assert(html.includes('name="twitter:title"'), 'twitter:title missing');
+assert(html.includes('name="twitter:description"'), 'twitter:description missing');
+assert(html.includes('name="twitter:image" content="https://coach-sarmelo.github.io/exposicao-ia-trabalho-informal-brasil/og-image.png"'), 'twitter:image missing or wrong URL');
+assert(html.includes('name="twitter:image:alt"'), 'twitter:image:alt missing');
+
+// 9. Verify absence of low-contrast colors (#6b7280 and #d93025)
+assert(!html.includes('#6b7280'), 'Found deprecated low-contrast color #6b7280');
+assert(!html.includes('#d93025'), 'Found deprecated low-contrast color #d93025');
+console.log('  [PASS] Google Fonts Inter, Open Graph / Twitter Card metadata, and color contrast validated');
+
 console.log('\n======================================================================');
 console.log('2. JAVASCRIPT EXECUTION & DASHBOARD DATA ENGINE AUDIT');
 console.log('======================================================================');

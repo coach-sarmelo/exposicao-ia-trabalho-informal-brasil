@@ -27,5 +27,11 @@ jobs:
       - name: Run econometric audit
         run: python scripts/audit_econometrics.py
 
+      - name: Test dashboard builder
+        run: python scripts/test_build_dashboard.py
+
+      - name: Verify dashboard data parity
+        run: python scripts/build_dashboard.py --check
+
       - name: Run dashboard tests
         run: node scripts/test_dashboard_full.js
