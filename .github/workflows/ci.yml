@@ -27,6 +27,9 @@ jobs:
       - name: Run econometric audit
         run: python scripts/audit_econometrics.py
 
+      - name: Audit Quarto dashboard source integrity
+        run: python scripts/check-dashboard-integrity.py Quarto/index.qmd
+
       - name: Test dashboard builder
         run: python scripts/test_build_dashboard.py
 

@@ -1,0 +1,1039 @@
+<noscript><p style="text-align:center;padding:30px">Este dashboard requer JavaScript habilitado.</p></noscript>
+<script>/* =============================================================================
+ * Dashboard "Exposição à IA no Mercado de Trabalho Brasileiro" (Quarto Edition)
+ * Aplicação cliente (vanilla JS + Plotly). Núcleo puro testável + renderizadores.
+ * Contrato de dados: window.DASH_DATA (ver build_dashboard.py).
+ * ========================================================================== */
+(function (global) {
+  'use strict';
+
+  /* ----------------------------- Okabe–Ito (colorblind-safe) ---------------- */
+  var OI = {
+    blue: '#0072B2', orange: '#E69F00', green: '#009E73', vermillion: '#D55E00',
+    pink: '#CC79A7', sky: '#56B4E9', yellow: '#F0E442', black: '#000000'
+  };
+  var REGION_COLORS = { 0: OI.sky, 1: OI.orange, 2: OI.blue, 3: OI.green, 4: OI.pink };
+
+  /* ----------------------------- Formatação pt-BR --------------------------- */
+  var nfi = new Intl.NumberFormat('pt-BR', { maximumFractionDigits: 0 });
+  var nf1 = new Intl.NumberFormat('pt-BR', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+  var nf2 = new Intl.NumberFormat('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  var nf3 = new Intl.NumberFormat('pt-BR', { minimumFractionDigits: 3, maximumFractionDigits: 3 });
+  function fmtInt(x) { return nfi.format(x); }
+  function fmtPop(x) {
+    if (!isFinite(x)) return '—';
+    if (x >= 1e6) return nf1.format(x / 1e6) + ' mi';
+    if (x >= 1e3) return nf1.format(x / 1e3) + ' mil';
+    return nfi.format(x);
+  }
+  function fmtBRL(x) { return 'R$ ' + nfi.format(Math.round(x)); }
+  function deacc(s) { return String(s).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase(); }
+
+  /* =============================== NÚCLEO PURO =============================== */
+
+  function b64ToBytes(b64) {
+    var bin = atob(b64), n = bin.length, u = new Uint8Array(n);
+    for (var i = 0; i < n; i++) u[i] = bin.charCodeAt(i);
+    return u;
+  }
+  function toU8(b64) { return b64ToBytes(b64); }
+  function toU32(b64) { var t = b64ToBytes(b64); return new Uint32Array(t.buffer, 0, t.byteLength >> 2); }
+  function toF32(b64) { var t = b64ToBytes(b64); return new Float32Array(t.buffer, 0, t.byteLength >> 2); }
+
+  function decodeData(D) {
+    var n = D.n;
+    var uf = toU8(D.b64.uf), occ = toU8(D.b64.occ), inc = toU32(D.b64.inc),
+        w = toF32(D.b64.w), demo = toU8(D.b64.demo), age = toU8(D.b64.age), edu = toU8(D.b64.edu);
+    var region = new Uint8Array(n), female = new Uint8Array(n), race = new Uint8Array(n), informal = new Uint8Array(n);
+    for (var i = 0; i < n; i++) {
+      region[i] = D.ufRegion[uf[i]];
+      informal[i] = demo[i] & 1;
+      female[i] = (demo[i] >> 1) & 1;
+      race[i] = (demo[i] >> 2) & 15;
+    }
+    var occExpo = new Float32Array(D.occs.length);
+    for (var k = 0; k < D.occs.length; k++) occExpo[k] = (D.occs[k].expo === null || D.occs[k].expo === undefined) ? NaN : D.occs[k].expo;
+    var expo = new Float32Array(n);
+    for (var j = 0; j < n; j++) expo[j] = occExpo[occ[j]];
+    return { n: n, uf: uf, occ: occ, inc: inc, w: w, age: age, edu: edu,
+      region: region, female: female, race: race, informal: informal, expo: expo, meta: D.meta || {} };
+  }
+
+  function filterIndices(V, sel) {
+    var out = [], reg = sel.regions, frm = sel.forms;
+    for (var i = 0; i < V.n; i++) {
+      if (reg && !reg.has(V.region[i])) continue;
+      if (frm && !frm.has(V.informal[i])) continue;
+      out.push(i);
+    }
+    return out;
+  }
+
+  /* resumo ponderado; get(i) -> valor (NaN/undefined ignorados) */
+  function wSummary(get, V, idx) {
+    var vals = [], ws = [];
+    for (var k = 0; k < idx.length; k++) {
+      var i = idx[k], v = get(i);
+      if (v === undefined || v === null || isNaN(v)) continue;
+      vals.push(v); ws.push(V.w[i]);
+    }
+    var n = vals.length;
+    if (!n) return { n: 0, wsum: 0, mean: NaN, sd: NaN, min: NaN, q25: NaN, med: NaN, q75: NaN, max: NaN };
+    var ord = new Array(n); for (var a = 0; a < n; a++) ord[a] = a;
+    ord.sort(function (p, q) { return vals[p] - vals[q]; });
+    var sv = new Float64Array(n), sw = new Float64Array(n), s = 0;
+    for (var b = 0; b < n; b++) { var o = ord[b]; sv[b] = vals[o]; sw[b] = ws[o]; s += ws[o]; }
+    function qAt(q) {
+      var t = q * s, cw = 0;
+      for (var c = 0; c < n; c++) { cw += sw[c]; if (cw >= t) return sv[c]; }
+      return sv[n - 1];
+    }
+    var mean = 0; for (var d = 0; d < n; d++) mean += sv[d] * sw[d]; mean /= s;
+    var varr = 0; for (var e = 0; e < n; e++) { var dv = sv[e] - mean; varr += sw[e] * dv * dv; } varr /= s;
+    return { n: n, wsum: s, mean: mean, sd: Math.sqrt(varr), min: sv[0], q25: qAt(0.25), med: qAt(0.5), q75: qAt(0.75), max: sv[n - 1] };
+  }
+
+  /* histograma ponderado; edges crescentes; último bin fechado à direita */
+  function wHist(get, V, idx, edges) {
+    var m = edges.length - 1, counts = new Float64Array(m), nobs = new Float64Array(m);
+    for (var k = 0; k < idx.length; k++) {
+      var i = idx[k], v = get(i);
+      if (v === undefined || v === null || isNaN(v)) continue;
+      if (v < edges[0] || v > edges[m]) continue;
+      var b = -1;
+      for (var e = 0; e < m; e++) {
+        if (v >= edges[e] && (v < edges[e + 1] || (e === m - 1 && v <= edges[e + 1]))) { b = e; break; }
+      }
+      if (b < 0) continue;
+      counts[b] += V.w[i]; nobs[b] += 1;
+    }
+    return { counts: counts, nobs: nobs };
+  }
+
+  function wPearson(getX, getY, V, idx) {
+    var sx = 0, sy = 0, sxx = 0, syy = 0, sxy = 0, sw = 0;
+    for (var k = 0; k < idx.length; k++) {
+      var i = idx[k], x = getX(i), y = getY(i);
+      if (isNaN(x) || isNaN(y)) continue;
+      var w = V.w[i];
+      sw += w; sx += w * x; sy += w * y; sxx += w * x * x; syy += w * y * y; sxy += w * x * y;
+    }
+    if (!sw) return NaN;
+    var cov = sxy / sw - (sx / sw) * (sy / sw);
+    var vx = sxx / sw - (sx / sw) * (sx / sw), vy = syy / sw - (sy / sw) * (sy / sw);
+    if (vx <= 0 || vy <= 0) return NaN;
+    return cov / Math.sqrt(vx * vy);
+  }
+
+  /* médias ponderadas de x e y por bin; getBinX(i) -> índice de bin ou -1 */
+  function binMeans2(getX, getY, V, idx, getBinX, m) {
+    var sw = new Float64Array(m), sy = new Float64Array(m), sx = new Float64Array(m), nn = new Float64Array(m);
+    for (var k = 0; k < idx.length; k++) {
+      var i = idx[k], b = getBinX(i), y = getY(i), x = getX(i);
+      if (b < 0 || isNaN(y) || isNaN(x)) continue;
+      var w = V.w[i];
+      sw[b] += w; sy[b] += w * y; sx[b] += w * x; nn[b] += 1;
+    }
+    var cx = [], cy = [], wn = [], nc = [];
+    for (var e = 0; e < m; e++) {
+      if (sw[e] > 0) { cx.push(sx[e] / sw[e]); cy.push(sy[e] / sw[e]); wn.push(sw[e]); nc.push(nn[e]); }
+    }
+    return { cx: cx, cy: cy, w: wn, n: nc };
+  }
+
+  /* células região × ocupação (painel 5) */
+  function regionOccCells(V, idx, minN) {
+    var occMeta = global.DASH_DATA.occs, O = occMeta.length, acc = {};
+    for (var k = 0; k < idx.length; k++) {
+      var i = idx[k], key = V.region[i] * O + V.occ[i];
+      var c = acc[key];
+      if (!c) c = acc[key] = { region: V.region[i], occ: V.occ[i], w: 0, winf: 0, winc: 0, wedu: 0, n: 0 };
+      var w = V.w[i];
+      c.w += w; c.winf += w * V.informal[i]; c.winc += w * V.inc[i]; c.wedu += w * V.edu[i]; c.n += 1;
+    }
+    var cells = [];
+    for (var kk in acc) {
+      var cc = acc[kk], meta = occMeta[cc.occ];
+      if (meta.expo === null || meta.expo === undefined) continue;
+      if (cc.n < minN) continue;
+      cells.push({ region: cc.region, occ: cc.occ, code: meta.code, name: meta.name,
+        jobs: cc.w, inf: 100 * cc.winf / cc.w, inc: cc.winc / cc.w, edu: cc.wedu / cc.w,
+        n: cc.n, expo: meta.expo });
+    }
+    cells.sort(function (a, b) { return b.jobs - a.jobs; });
+    return cells;
+  }
+
+  /* amostragem determinística: hash estável por índice de linha */
+  function hash01(i) {
+    var h = (i + 0x9E3779B9) >>> 0;
+    h = (h ^ (h >>> 16)) >>> 0; h = Math.imul(h, 0x45d9f3b) >>> 0;
+    h = (h ^ (h >>> 16)) >>> 0; h = Math.imul(h, 0x45d9f3b) >>> 0;
+    h = (h ^ (h >>> 16)) >>> 0;
+    return h / 4294967296;
+  }
+  function subSample(idx, target) {
+    if (idx.length <= target) return idx.slice();
+    var rate = target / idx.length, out = [];
+    for (var k = 0; k < idx.length; k++) if (hash01(idx[k]) < rate) out.push(idx[k]);
+    return out;
+  }
+
+  /* ================================ ESTADO ================================== */
+  var V = null, D = null;
+  var state = {
+    regions: null, forms: null,
+    q: '', expoMin: '', expoMax: '', incMin: '', incMax: '',
+    sortKey: null, sortDir: 1, page: 0, histMode: 'pct'
+  };
+  var filteredIdx = [], tableIdx = [];
+  var SCATTER_TARGET = 4000;
+  var PLOT_IDS = ['histExpo', 'histEdu', 'histAge', 'histInc', 'scatEdu', 'scatInc', 'scatInf', 'bubble'];
+  var plotSpecs = {};
+  var plotDirty = {};
+
+  /* ------------------------------- Plotly base ------------------------------ */
+  var FONT = { family: "Inter, 'Segoe UI', system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif", size: 13, color: '#1f2937' };
+  var GRIDCOL = '#e5e7eb', AXISC = '#4b5563';
+  function deepMerge(dst, src) {
+    for (var k in src) {
+      if (!Object.prototype.hasOwnProperty.call(src, k)) continue;
+      if (src[k] && typeof src[k] === 'object' && !Array.isArray(src[k]) && dst[k] && typeof dst[k] === 'object' && !Array.isArray(dst[k])) deepMerge(dst[k], src[k]);
+      else dst[k] = src[k];
+    }
+    return dst;
+  }
+  function baseLayout(extra) {
+    var l = {
+      font: FONT, margin: { l: 64, r: 22, t: 20, b: 56 },
+      paper_bgcolor: 'rgba(0,0,0,0)', plot_bgcolor: 'rgba(0,0,0,0)',
+      xaxis: { gridcolor: GRIDCOL, zeroline: false, linecolor: AXISC, automargin: true, tickfont: { size: 12, color: '#374151' }, title: { font: { size: 12.5, color: '#1f2937' }, standoff: 12 } },
+      yaxis: { gridcolor: GRIDCOL, zeroline: false, linecolor: AXISC, automargin: true, tickfont: { size: 12, color: '#374151' }, title: { font: { size: 12.5, color: '#1f2937' }, standoff: 12 } },
+      hoverlabel: { font: { size: 12.5 }, bgcolor: 'white', bordercolor: '#9ca3af' },
+      showlegend: false
+    };
+    if (extra) deepMerge(l, extra);
+    return l;
+  }
+  var PLCFG = {
+    displaylogo: false, responsive: true, doubleClick: false,
+    modeBarButtonsToRemove: ['lasso2d', 'select2d', 'autoScale2d', 'toggleSpikelines'],
+    toImageButtonOptions: { format: 'png', scale: 2, filename: 'painel_exposicao_ia' }
+  };
+  function isPlotVisible(el) {
+    if (!el) return false;
+    if (el.offsetParent === undefined) return true;
+    return el.offsetParent !== null && el.clientWidth > 50;
+  }
+  function drawPlotNow(id, el) {
+    var spec = plotSpecs[id];
+    if (!spec || !el || typeof Plotly === 'undefined') return;
+    var lay = deepMerge({}, spec.layout);
+    if (el.clientWidth > 50) lay.width = el.clientWidth;
+    lay.height = (id === 'bubble') ? (el.clientHeight >= 400 ? el.clientHeight : 560) : (el.clientHeight >= 260 ? el.clientHeight : 350);
+    Plotly.react(el, spec.traces, lay, PLCFG);
+    plotDirty[id] = false;
+  }
+  function react(id, traces, layout) {
+    plotSpecs[id] = { traces: traces, layout: layout };
+    plotDirty[id] = true;
+    var el = document.getElementById(id);
+    if (el && typeof Plotly !== 'undefined' && isPlotVisible(el)) {
+      drawPlotNow(id, el);
+    }
+  }
+  function emptyLayout(msg) {
+    return baseLayout({
+      xaxis: { visible: false }, yaxis: { visible: false }, margin: { t: 30 },
+      annotations: [{ text: msg || 'Sem registros nos filtros atuais.', showarrow: false, font: { size: 13, color: '#4b5563' } }]
+    });
+  }
+  function setSub(id, text) {
+    var el = document.getElementById(id);
+    if (el) el.textContent = text;
+  }
+  function flushVisiblePlots(forceRedraw) {
+    if (typeof Plotly === 'undefined') return;
+    PLOT_IDS.forEach(function (id) {
+      var el = document.getElementById(id);
+      if (!el || !isPlotVisible(el)) return;
+      if (plotDirty[id] || forceRedraw || !el.data) {
+        drawPlotNow(id, el);
+      } else if (Plotly.Plots) {
+        try {
+          var spec = plotSpecs[id];
+          if (spec && el.clientWidth > 50) {
+            Plotly.relayout(el, { width: el.clientWidth });
+          } else {
+            Plotly.Plots.resize(el);
+          }
+        } catch (e) {}
+      }
+    });
+  }
+
+  /* ============================= FILTROS (chips) ============================= */
+  function chip(label, on, title) {
+    var b = document.createElement('button');
+    b.type = 'button'; b.className = 'chip' + (on ? ' on' : ''); b.textContent = label;
+    b.setAttribute('aria-pressed', on ? 'true' : 'false');
+    b.setAttribute('aria-label', label);
+    if (title) b.title = title;
+    return b;
+  }
+  function chipGroup(host, items, set, onChange) {
+    if (!host) return;
+    host.innerHTML = '';
+    items.forEach(function (it) {
+      var b = chip(it.label, set.has(it.v), it.title);
+      b.addEventListener('click', function () {
+        if (set.has(it.v)) set.delete(it.v); else set.add(it.v);
+        b.classList.toggle('on'); b.setAttribute('aria-pressed', set.has(it.v) ? 'true' : 'false');
+        onChange();
+      });
+      host.appendChild(b);
+    });
+  }
+  function buildFilterBar(onChange) {
+    chipGroup(document.getElementById('fRegions'),
+      D.regions.map(function (nm, ix) { return { label: nm, v: ix }; }), state.regions, onChange);
+    chipGroup(document.getElementById('fForms'),
+      D.formLabels.map(function (nm, ix) { return { label: nm, v: ix }; }), state.forms, onChange);
+  }
+
+  /* ============================ PAINEL 1: RESUMO ============================= */
+  function renderKPIs(idx) {
+    var wsum = 0; for (var k = 0; k < idx.length; k++) wsum += V.w[idx[k]];
+    var inf = wSummary(function (i) { return V.informal[i]; }, V, idx);
+    var inc = wSummary(function (i) { return V.inc[i]; }, V, idx);
+    var edu = wSummary(function (i) { return V.edu[i]; }, V, idx);
+    var age = wSummary(function (i) { return V.age[i]; }, V, idx);
+    var expo = wSummary(function (i) { return V.expo[i]; }, V, idx);
+    var cards = [
+      { v: fmtInt(idx.length), l: 'Indivíduos na amostra', s: 'respondem aos filtros ativos' },
+      { v: fmtPop(wsum), l: 'População ocupada estimada', s: 'Σ pesos amostrais (V1028)' },
+      { v: (expo.n && !isNaN(expo.mean)) ? nf2.format(expo.mean) : '—', l: 'Exposição média à IA', s: 'índice 0–10 · ' + fmtInt(expo.n) + ' com escore válido' },
+      { v: isNaN(inf.mean) ? '—' : nf1.format(100 * inf.mean) + '%', l: 'Taxa de informalidade', s: 'ponderada' },
+      { v: isNaN(inc.mean) ? '—' : fmtBRL(inc.mean), l: 'Rendimento habitual médio', s: 'R$/mês · mediana ' + (isNaN(inc.med) ? '—' : fmtBRL(inc.med)) },
+      { v: isNaN(edu.mean) ? '—' : nf1.format(edu.mean), l: 'Escolaridade média', s: 'anos completos de estudo' }
+    ];
+    var host = document.getElementById('kpiRow');
+    if (host) {
+      host.innerHTML = '';
+      cards.forEach(function (c) {
+        var d = document.createElement('div');
+        d.className = 'kpi';
+        var v = document.createElement('div'); v.className = 'kpi-v'; v.textContent = c.v;
+        var l = document.createElement('div'); l.className = 'kpi-l'; l.textContent = c.l;
+        var s = document.createElement('div'); s.className = 'kpi-s'; s.textContent = c.s;
+        d.appendChild(v); d.appendChild(l); d.appendChild(s);
+        host.appendChild(d);
+      });
+    }
+    var vars = [
+      { label: 'Exposição à IA (0–10)', note: 'ocupações com escore', s: expo, dec: 2 },
+      { label: 'Escolaridade (anos)', note: '', s: edu, dec: 1 },
+      { label: 'Idade (anos)', note: '', s: age, dec: 1 },
+      { label: 'Rendimento mensal habitual (R$)', note: 'inclui rendas zero', s: inc, money: true },
+      { label: 'Informalidade (0/1)', note: 'média ponderada = taxa', s: inf, dec: 1 }
+    ];
+    var t = document.getElementById('descTable');
+    if (t) {
+      var head = '<thead><tr><th class="tl">Variável</th><th>N</th><th>População</th><th>Média</th><th>DP</th><th>Mín</th><th>P25</th><th>Mediana</th><th>P75</th><th>Máx</th></tr></thead>';
+      var rowsH = vars.map(function (v) {
+        var s = v.s;
+        function f(x) {
+          if (isNaN(x)) return '—';
+          if (v.money) return fmtInt(Math.round(x));
+          return (v.dec === 1 ? nf1 : nf2).format(x);
+        }
+        return '<tr><td class="tl">' + v.label + (v.note ? ' <span class="note">(' + v.note + ')</span>' : '') + '</td>' +
+          '<td>' + fmtInt(s.n) + '</td><td>' + fmtPop(s.wsum) + '</td>' +
+          '<td>' + f(s.mean) + '</td><td>' + f(s.sd) + '</td><td>' + f(s.min) + '</td>' +
+          '<td>' + f(s.q25) + '</td><td>' + f(s.med) + '</td><td>' + f(s.q75) + '</td><td>' + f(s.max) + '</td></tr>';
+      }).join('');
+      t.innerHTML = head + '<tbody>' + rowsH + '</tbody>';
+    }
+  }
+
+  /* ========================= PAINEL 2: HISTOGRAMAS =========================== */
+  var H = {
+    expo: [], edu: [], age: [14, 20, 30, 40, 50, 60, 70, 103],
+    inc: [0, 100, 200, 500, 1000, 2000, 3500, 5000, 8000, 12000, 20000, 35000, 60000, 100000, 450000]
+  };
+  function buildHistDefs() {
+    H.expo = []; H.edu = [];
+    for (var e = 0; e <= 20; e++) H.expo.push(e * 0.5);
+    for (var d = 0; d <= 16; d++) H.edu.push(d);
+  }
+  function binLabel(edges, b, dec, openUpper) {
+    var lo = edges[b], hi = edges[b + 1];
+    var isLast = (b === edges.length - 2);
+    var isOpen = (openUpper !== undefined) ? openUpper : (!dec && (hi - lo > 1));
+    if (isLast && isOpen) return '≥ ' + fmtInt(lo);
+    if (!dec && (hi - lo === 1)) return fmtInt(lo);
+    if (dec) return nf1.format(lo) + '–' + nf1.format(hi);
+    return fmtInt(lo) + '–' + fmtInt(hi - 1);
+  }
+  function renderHistBar(id, edges, get, idx, yTitle, ticks, dec, openUpper) {
+    var hh = wHist(get, V, idx, edges);
+    var tot = 0; for (var z = 0; z < hh.counts.length; z++) tot += hh.counts[z];
+    if (!tot) { react(id, [], emptyLayout()); return; }
+    var m = edges.length - 1, xs = [], ws = [], ys = [], cus = [];
+    var logPos = (id === 'histInc');
+    var isPct = state.histMode === 'pct';
+    for (var b = 0; b < m; b++) {
+      var c = hh.counts[b];
+      var x0 = logPos ? Math.log10(edges[b] + 1) : edges[b];
+      var x1 = logPos ? Math.log10(edges[b + 1] + 1) : edges[b + 1];
+      if (c <= 0) { xs.push(NaN); ws.push(0.0001); ys.push(null); cus.push(''); continue; }
+      xs.push((x0 + x1) / 2);
+      ws.push((x1 - x0) * 0.96);
+      ys.push(isPct ? 100 * c / tot : c / 1e6);
+      cus.push({
+        lab: binLabel(edges, b, dec, openUpper), val: isPct ? nf1.format(100 * c / tot) + '% da população' : nf2.format(c / 1e6) + ' milhões',
+        pop: fmtPop(c), n: fmtInt(hh.nobs[b])
+      });
+    }
+    var trace = {
+      type: 'bar', x: xs, y: ys, width: ws, marker: { color: OI.blue },
+      customdata: cus,
+      hovertemplate: '<b>%{customdata.lab}</b><br>%{customdata.val}<br>População: %{customdata.pop} · n amostral: %{customdata.n}<extra></extra>'
+    };
+    var xcfg = { title: { text: yTitle }, tickvals: ticks.map(function (t) { return t.v; }), ticktext: ticks.map(function (t) { return t.l; }) };
+    if (logPos) xcfg.range = [-0.02, Math.log10(450001)];
+    react(id, [trace], baseLayout({
+      xaxis: xcfg,
+      yaxis: { title: { text: isPct ? 'População estimada (%)' : 'População estimada (milhões)' }, rangemode: 'tozero' },
+      bargap: 0.05
+    }));
+  }
+  function renderHists(idx) {
+    renderHistBar('histExpo', H.expo, function (i) { return V.expo[i]; }, idx, 'Exposição à IA (índice 0–10)',
+      [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(function (v) { return { v: v, l: String(v) }; }), true, false);
+    renderHistBar('histEdu', H.edu, function (i) { return V.edu[i]; }, idx, 'Escolaridade (anos)',
+      [0, 2, 4, 6, 8, 10, 12, 14, 16].map(function (v) { return { v: v, l: String(v) }; }), false, false);
+    renderHistBar('histAge', H.age, function (i) { return V.age[i]; }, idx, 'Idade (anos)',
+      [16.5, 24.5, 34.5, 44.5, 54.5, 64.5, 86].map(function (v, j) { return { v: v, l: ['14–19', '20–29', '30–39', '40–49', '50–59', '60–69', '70+'][j] }; }), false, true);
+    renderHistBar('histInc', H.inc, function (i) { return V.inc[i]; }, idx, 'Rendimento mensal (R$, escala log)',
+      [0, 100, 1000, 10000, 100000].map(function (v) { return { v: Math.log10(v + 1), l: v === 0 ? '0' : fmtInt(v) }; }), false, true);
+    var isPct = state.histMode === 'pct';
+    setSub('sub-hist', 'barras ponderadas pelos pesos amostrais · eixo y: ' + (isPct ? '% da população estimada' : 'milhões de pessoas') +
+      ' · ocupações sem escore excluídas do painel 2a · rendas zero incluídas na 1ª faixa de 2d');
+  }
+
+  /* ======================= PAINEL 3: CORRELAÇÕES ============================= */
+  function rowTooltip(i) {
+    return {
+      occ: D.occs[V.occ[i]].name,
+      rest: '<br>UF: ' + D.ufs[V.uf[i]] + ' (' + D.regions[V.region[i]] + ')' +
+        '<br>Idade: ' + V.age[i] + ' anos · Escolaridade: ' + V.edu[i] + ' anos' +
+        '<br>' + D.sexLabels[V.female[i]] + ' · ' + D.raceLabels[V.race[i]] +
+        '<br>' + D.formLabels[V.informal[i]] + ' · Peso amostral: ' + nf1.format(V.w[i])
+    };
+  }
+  function renderScatterEdu(idx) {
+    var valid = idx.filter(function (i) { return !isNaN(V.expo[i]); });
+    if (!valid.length) { react('scatEdu', [], emptyLayout()); setSub('sub-scatEdu', ''); return; }
+    var r = wPearson(function (i) { return V.edu[i]; }, function (i) { return V.expo[i]; }, V, valid);
+    var smp = subSample(valid, SCATTER_TARGET);
+    var xs = [], ys = [], cus = [];
+    for (var k = 0; k < smp.length; k++) {
+      var i = smp[k], c = rowTooltip(i);
+      c.edu = V.edu[i]; c.exp = nf1.format(V.expo[i]);
+      xs.push(V.edu[i]); ys.push(V.expo[i]); cus.push(c);
+    }
+    var dots = {
+      type: 'scatter', mode: 'markers', x: xs, y: ys, name: 'Indivíduos (amostra)',
+      marker: { size: 4.5, color: OI.blue, opacity: 0.28 },
+      customdata: cus,
+      hovertemplate: '<b>%{customdata.occ}</b><br>Escolaridade: %{customdata.edu} anos · Exposição: %{customdata.exp}%{customdata.rest}<extra></extra>'
+    };
+    var bm = binMeans2(function (i) { return V.edu[i]; }, function (i) { return V.expo[i]; }, V, valid,
+      function (i) { return V.edu[i]; }, 17);
+    var tx = [], ty = [], tc = [];
+    for (var b = 0; b < bm.cx.length; b++) {
+      tx.push(bm.cx[b]); ty.push(bm.cy[b]);
+      tc.push({ xlab: nf1.format(bm.cx[b]) + ' anos', ylab: nf2.format(bm.cy[b]), pop: fmtPop(bm.w[b]), n: fmtInt(bm.n[b]) });
+    }
+    var trend = {
+      type: 'scatter', mode: 'lines+markers', x: tx, y: ty, name: 'Média ponderada por ano',
+      line: { color: OI.vermillion, width: 3 }, marker: { size: 7, color: OI.vermillion },
+      customdata: tc,
+      hovertemplate: '<b>Média por escolaridade</b><br>%{customdata.xlab} → exposição %{customdata.ylab}<br>População: %{customdata.pop} · n: %{customdata.n}<extra></extra>'
+    };
+    react('scatEdu', [dots, trend], baseLayout({
+      xaxis: { title: { text: 'Escolaridade (anos completos)' }, dtick: 2 },
+      yaxis: { title: { text: 'Exposição à IA (índice 0–10)' }, range: [0, 10] }
+    }));
+    setSub('sub-scatEdu', 'r ponderado = ' + nf3.format(r) + ' · pontos: amostra determinística de até ' + fmtInt(SCATTER_TARGET) +
+      ' indivíduos (hash estável) · linha vermelha: médias ponderadas exatas com todos os ' + fmtInt(valid.length) + ' indivíduos');
+  }
+  function renderScatterInc(idx) {
+    var valid = idx.filter(function (i) { return !isNaN(V.expo[i]); });
+    if (!valid.length) { react('scatInc', [], emptyLayout()); setSub('sub-scatInc', ''); return; }
+    var r = wPearson(function (i) { return Math.log10(V.inc[i] + 1); }, function (i) { return V.expo[i]; }, V, valid);
+    var smp = subSample(valid, SCATTER_TARGET);
+    var xs = [], ys = [], cus = [];
+    for (var k = 0; k < smp.length; k++) {
+      var i = smp[k];
+      if (V.inc[i] <= 0) continue;
+      var c = rowTooltip(i);
+      c.inc = fmtInt(V.inc[i]); c.exp = nf1.format(V.expo[i]);
+      xs.push(V.inc[i]); ys.push(V.expo[i]); cus.push(c);
+    }
+    var dots = {
+      type: 'scatter', mode: 'markers', x: xs, y: ys, name: 'Indivíduos (amostra)',
+      marker: { size: 4.5, color: OI.green, opacity: 0.28 },
+      customdata: cus,
+      hovertemplate: '<b>%{customdata.occ}</b><br>Renda: R$ %{customdata.inc} · Exposição: %{customdata.exp}%{customdata.rest}<extra></extra>'
+    };
+    var ds = incomeDeciles(valid);
+    var tx = [], ty = [], tc = [];
+    for (var d = 0; d < 10; d++) {
+      var mm = ds.means[d];
+      if (!mm || isNaN(mm.cx)) continue;
+      tx.push(Math.pow(10, mm.cx) - 1); ty.push(mm.cy);
+      tc.push({ med: fmtInt(Math.round(ds.medians[d])), ylab: nf2.format(mm.cy), pop: fmtPop(ds.w[d]), n: fmtInt(ds.n[d]), d: d + 1 });
+    }
+    var trend = {
+      type: 'scatter', mode: 'lines+markers', x: tx, y: ty, name: 'Média ponderada por decil',
+      line: { color: OI.vermillion, width: 3 }, marker: { size: 7, color: OI.vermillion },
+      customdata: tc,
+      hovertemplate: '<b>Decil %{customdata.d} de renda</b> (mediana R$ %{customdata.med})<br>Exposição média: %{customdata.ylab}<br>População: %{customdata.pop} · n: %{customdata.n}<extra></extra>'
+    };
+    react('scatInc', [dots, trend], baseLayout({
+      xaxis: { type: 'log', range: [0.8, 5.7], title: { text: 'Rendimento mensal habitual (R$, escala log)' },
+        tickvals: [10, 100, 1000, 10000, 100000], ticktext: ['10', '100', '1.000', '10.000', '100.000'] },
+      yaxis: { title: { text: 'Exposição à IA (índice 0–10)' }, range: [0, 10] }
+    }));
+    setSub('sub-scatInc', 'r ponderado (log₁₀ renda) = ' + nf3.format(r) + ' · eixo x logarítmico · rendas zero não aparecem como pontos (o eixo log não as representa), mas entram na linha (por decis) e em todas as estatísticas');
+  }
+  function incomeDeciles(idx) {
+    var pairs = [];
+    for (var k = 0; k < idx.length; k++) {
+      var i = idx[k];
+      if (isNaN(V.expo[i])) continue;
+      pairs.push({ i: i, v: V.inc[i], w: V.w[i] });
+    }
+    pairs.sort(function (a, b) { return a.v - b.v; });
+    var wsum = 0; pairs.forEach(function (p) { wsum += p.w; });
+    var means = [], medians = [], ws = [], ns = [];
+    var cw = 0, d = 0;
+    var acc = { sw: 0, sy: 0, sx: 0, n: 0, vals: [], vw: [] };
+    function closeDecile() {
+      if (acc.sw > 0) {
+        means.push({ cx: acc.sx / acc.sw, cy: acc.sy / acc.sw });
+        medians.push(weightedMedian(acc.vals, acc.vw));
+        ws.push(acc.sw); ns.push(acc.n);
+      } else { means.push({ cx: NaN, cy: NaN }); medians.push(NaN); ws.push(0); ns.push(0); }
+      acc = { sw: 0, sy: 0, sx: 0, n: 0, vals: [], vw: [] };
+    }
+    for (var p = 0; p < pairs.length; p++) {
+      var pr = pairs[p];
+      acc.sw += pr.w; acc.sy += pr.w * V.expo[pr.i]; acc.sx += pr.w * Math.log10(pr.v + 1); acc.n += 1;
+      acc.vals.push(pr.v); acc.vw.push(pr.w); cw += pr.w;
+      while (d < 9 && cw >= (d + 1) * wsum / 10) { closeDecile(); d++; }
+    }
+    closeDecile();
+    while (means.length < 10) { means.push({ cx: NaN, cy: NaN }); medians.push(NaN); ws.push(0); ns.push(0); }
+    return { means: means, medians: medians, w: ws, n: ns };
+  }
+  function weightedMedian(vals, ws) {
+    var s = 0; for (var j = 0; j < ws.length; j++) s += ws[j];
+    var cw = 0;
+    for (var i = 0; i < vals.length; i++) { cw += ws[i]; if (cw >= s / 2) return vals[i]; }
+    return vals.length ? vals[vals.length - 1] : NaN;
+  }
+  function renderInfByExpo(idx) {
+    var sw = new Float64Array(10), swi = new Float64Array(10), nn = new Float64Array(10);
+    for (var k = 0; k < idx.length; k++) {
+      var i = idx[k], e = V.expo[i];
+      if (isNaN(e)) continue;
+      var b = Math.min(9, Math.floor(e));
+      sw[b] += V.w[i]; swi[b] += V.w[i] * V.informal[i]; nn[b] += 1;
+    }
+    var xs = [], ys = [], cus = [];
+    for (var b2 = 0; b2 < 10; b2++) {
+      if (!sw[b2]) continue;
+      xs.push(b2 + 0.5); ys.push(100 * swi[b2] / sw[b2]);
+      cus.push({ band: b2 + '–' + (b2 + 1), rate: nf1.format(100 * swi[b2] / sw[b2]) + '%', pop: fmtPop(sw[b2]), n: fmtInt(nn[b2]) });
+    }
+    if (!xs.length) { react('scatInf', [], emptyLayout()); setSub('sub-scatInf', ''); return; }
+    var trace = {
+      type: 'scatter', mode: 'lines+markers', x: xs, y: ys,
+      line: { color: OI.vermillion, width: 3 }, marker: { size: 8, color: OI.vermillion },
+      customdata: cus,
+      hovertemplate: '<b>Exposição %{customdata.band}</b><br>Taxa de informalidade: %{customdata.rate}<br>População: %{customdata.pop} · n: %{customdata.n}<extra></extra>'
+    };
+    react('scatInf', [trace], baseLayout({
+      xaxis: { title: { text: 'Exposição à IA (faixas de 1 ponto)' }, range: [0, 10], dtick: 1 },
+      yaxis: { title: { text: 'Taxa de informalidade (%)' }, rangemode: 'tozero' }
+    }));
+    setSub('sub-scatInf', 'agregação exata e ponderada de todos os indivíduos (sem amostragem) · ocupações sem escore excluídas');
+  }
+
+  /* ==================== PAINEL 5: REGIÃO × OCUPAÇÃO ========================== */
+  var REGION_ABBR = { 0: 'N', 1: 'NE', 2: 'SE', 3: 'S', 4: 'CO' };
+  function shortOccLabel(name, regIx) {
+    var clean = String(name || '')
+      .replace(/^Trabalhadores\s+(dos\s+|da\s+|de\s+)?/i, 'Trab. ')
+      .replace(/^Profissionais\s+(das\s+|da\s+|de\s+)?/i, 'Prof. ')
+      .replace(/^Operadores\s+(de\s+)?/i, 'Oper. ')
+      .replace(/^Especialistas\s+em\s+/i, 'Espec. ');
+    if (clean.length > 26) clean = clean.slice(0, 24).replace(/\s+\S*$/, '') + '…';
+    return clean + ' (' + (REGION_ABBR[regIx] || D.regions[regIx]) + ')';
+  }
+  function renderBubbles(idx) {
+    var minN = V.meta.minCellN || 30;
+    var cells = regionOccCells(V, idx, minN);
+    if (!cells.length) {
+      setSub('sub-bubble', '0 células região × ocupação nos filtros atuais.');
+      react('bubble', [], emptyLayout());
+      return;
+    }
+    var totJobs = 0, wExpo = 0, wInf = 0;
+    cells.forEach(function (c) {
+      totJobs += c.jobs;
+      wExpo += c.jobs * c.expo;
+      wInf += c.jobs * c.inf;
+    });
+    var meanExpo = wExpo / totJobs;
+    var meanInf = wInf / totJobs;
+    var sxx = 0, sxy = 0, minX = 10, maxX = 0;
+    cells.forEach(function (c) {
+      var dx = c.expo - meanExpo, dy = c.inf - meanInf;
+      sxx += c.jobs * dx * dx;
+      sxy += c.jobs * dx * dy;
+      if (c.expo < minX) minX = c.expo;
+      if (c.expo > maxX) maxX = c.expo;
+    });
+    var slope = sxx > 0 ? (sxy / sxx) : NaN;
+    var intercept = meanInf - slope * meanExpo;
+
+    setSub('sub-bubble', fmtInt(cells.length) + ' células ativas (n ≥ ' + minN + ') · população representada: ' +
+      fmtPop(totJobs) + ' · exposição média: θ = ' + nf2.format(meanExpo) +
+      ' · informalidade média: ' + nf1.format(meanInf) + '% · inclinação WLS: ' +
+      (isNaN(slope) ? '—' : nf2.format(slope) + ' p.p./ponto de θ') +
+      ' · clique na legenda acima para isolar uma macrorregião');
+
+    var maxJobs = cells[0].jobs, byRegion = {};
+    cells.forEach(function (c) { (byRegion[c.region] = byRegion[c.region] || []).push(c); });
+    var traces = [];
+    Object.keys(byRegion).map(Number).sort(function (a, b) { return a - b; }).forEach(function (rg) {
+      var cs = byRegion[rg];
+      traces.push({
+        type: 'scatter', mode: 'markers', name: D.regions[rg],
+        x: cs.map(function (c) { return c.expo; }),
+        y: cs.map(function (c) { return c.inf; }),
+        marker: {
+          size: cs.map(function (c) { return c.jobs; }),
+          sizemode: 'area', sizeref: 2.0 * maxJobs / (52 * 52), sizemin: 5,
+          color: REGION_COLORS[rg], opacity: 0.80, line: { color: '#ffffff', width: 1.3 }
+        },
+        customdata: cs.map(function (c) {
+          return {
+            name: c.name, code: c.code, jobs: fmtPop(c.jobs), n: fmtInt(c.n),
+            inc: fmtInt(Math.round(c.inc)), edu: nf1.format(c.edu),
+            exp: nf1.format(c.expo), inf: nf1.format(c.inf)
+          };
+        }),
+        hovertemplate: '<b>%{customdata.name}</b> (COD %{customdata.code})<br>' +
+          'Macrorregião: <b>' + D.regions[rg] + '</b><br>' +
+          'Postos estimados: <b>%{customdata.jobs}</b> (n amostral = %{customdata.n})<br>' +
+          'Exposição à IA (θ): <b>%{customdata.exp}</b> · Informalidade: <b>%{customdata.inf}%</b><br>' +
+          'Rendimento médio: R$ %{customdata.inc} · Escolaridade média: %{customdata.edu} anos<extra></extra>'
+      });
+    });
+
+    if (!isNaN(slope) && maxX > minX) {
+      var x0 = Math.max(0, minX - 0.1), x1 = Math.min(9.0, maxX + 0.1);
+      var y0 = Math.max(0, Math.min(100, intercept + slope * x0));
+      var y1 = Math.max(0, Math.min(100, intercept + slope * x1));
+      traces.push({
+        type: 'scatter', mode: 'lines',
+        name: 'Ajuste WLS (' + nf1.format(slope) + ' p.p./θ)',
+        x: [x0, x1], y: [y0, y1],
+        line: { color: '#012169', width: 2.5, dash: 'dash' },
+        hovertemplate: '<b>Tendência estrutural WLS ponderada</b><br>Inclinação: ' +
+          nf2.format(slope) + ' p.p. de informalidade por ponto de exposição (θ)<extra></extra>'
+      });
+    }
+
+    var picked = [];
+    for (var m = 0; m < cells.length && picked.length < 4; m++) {
+      var cand = cells[m];
+      if (cand.inf > 92 || cand.inf < 6) continue;
+      var conflict = picked.some(function (p) {
+        return Math.abs(p.expo - cand.expo) < 1.85 && Math.abs(p.inf - cand.inf) < 22;
+      });
+      if (!conflict) picked.push(cand);
+    }
+    var annotations = picked.map(function (c, idxAnn) {
+      var dy = (c.inf > 55) ? 28 : ((idxAnn % 2 === 0) ? -28 : 26);
+      var dx = (c.expo > 6.0) ? -36 : ((c.expo < 1.5) ? 36 : 24);
+      return {
+        x: c.expo, y: c.inf, xref: 'x', yref: 'y',
+        text: '<b>' + shortOccLabel(c.name, c.region) + '</b>',
+        showarrow: true, arrowhead: 2, arrowsize: 0.9, arrowwidth: 1.2, arrowcolor: '#4b5563',
+        ax: dx, ay: dy,
+        font: { size: 12, color: '#111827' },
+        bgcolor: 'rgba(255,255,255,0.92)', bordercolor: '#cbd5e1', borderwidth: 1, borderpad: 4
+      };
+    });
+
+    var shapes = [
+      {
+        type: 'line', xref: 'x', yref: 'paper', x0: meanExpo, x1: meanExpo, y0: 0, y1: 1,
+        line: { color: '#9ca3af', width: 1.2, dash: 'dot' }, layer: 'below'
+      },
+      {
+        type: 'line', xref: 'paper', yref: 'y', x0: 0, x1: 1, y0: meanInf, y1: meanInf,
+        line: { color: '#9ca3af', width: 1.2, dash: 'dot' }, layer: 'below'
+      }
+    ];
+
+    react('bubble', traces, baseLayout({
+      height: 560,
+      showlegend: true,
+      legend: {
+        orientation: 'h', x: 0, y: 1.03, xanchor: 'left', yanchor: 'bottom',
+        bgcolor: 'rgba(255,255,255,0.94)', bordercolor: '#e5e7eb', borderwidth: 1,
+        font: { size: 12.5, color: '#111827' }, itemsizing: 'constant'
+      },
+      xaxis: {
+        title: { text: 'Índice de Exposição Ocupacional à IA — θ (escala 0 a 10)', font: { size: 13, color: '#111827' }, standoff: 16 },
+        range: [-0.35, 9.2], dtick: 1, tick0: 0, automargin: true,
+        tickfont: { size: 12.5, color: '#374151' }
+      },
+      yaxis: {
+        title: { text: 'Taxa de Informalidade na Célula (%)', font: { size: 13, color: '#111827' }, standoff: 12 },
+        range: [-4, 105], dtick: 20, tick0: 0, ticksuffix: '%', automargin: true,
+        tickfont: { size: 12.5, color: '#374151' }
+      },
+      shapes: shapes,
+      annotations: annotations,
+      margin: { l: 74, r: 32, t: 58, b: 68 }
+    }));
+  }
+
+  /* ========================= PAINEL 4: TABELA ================================ */
+  var PAGE = 25;
+  var COLS = [
+    { k: 'uf', label: 'UF' },
+    { k: 'region', label: 'Região' },
+    { k: 'occName', label: 'Ocupação (COD)' },
+    { k: 'expo', label: 'Exposição', num: true },
+    { k: 'inc', label: 'Renda (R$)', num: true },
+    { k: 'edu', label: 'Escolaridade (anos)', num: true },
+    { k: 'age', label: 'Idade (anos)', num: true },
+    { k: 'sex', label: 'Sexo' },
+    { k: 'race', label: 'Cor/raça' },
+    { k: 'form', label: 'Formalidade' },
+    { k: 'wt', label: 'Peso amostral', num: true }
+  ];
+  var UF_NAMES = {
+    AC: 'Acre', AL: 'Alagoas', AP: 'Amapá', AM: 'Amazonas', BA: 'Bahia',
+    CE: 'Ceará', DF: 'Distrito Federal', ES: 'Espírito Santo', GO: 'Goiás',
+    MA: 'Maranhão', MT: 'Mato Grosso', MS: 'Mato Grosso do Sul', MG: 'Minas Gerais',
+    PA: 'Pará', PB: 'Paraíba', PR: 'Paraná', PE: 'Pernambuco', PI: 'Piauí',
+    RJ: 'Rio de Janeiro', RN: 'Rio Grande do Norte', RS: 'Rio Grande do Sul',
+    RO: 'Rondônia', RR: 'Roraima', SC: 'Santa Catarina', SP: 'São Paulo',
+    SE: 'Sergipe', TO: 'Tocantins'
+  };
+  var occSearchStrings = null, ufSearchData = null;
+  function getSearchStrings() {
+    if (!occSearchStrings && D && D.occs) {
+      occSearchStrings = D.occs.map(function (o) { return deacc(o.name + ' ' + o.code); });
+    }
+    if (!ufSearchData && D && D.ufs) {
+      ufSearchData = D.ufs.map(function (u) {
+        var fullName = UF_NAMES[u] || '';
+        var fullNorm = deacc(u + ' ' + fullName);
+        var words = fullNorm.split(/[\s,]+/).filter(Boolean);
+        return { abbr: u.toLowerCase(), words: words };
+      });
+    }
+    return { occs: occSearchStrings, ufs: ufSearchData };
+  }
+
+  function tableFilterIndices(idx) {
+    var rawQ = state.q ? state.q.trim() : '';
+    var tokens = rawQ ? deacc(rawQ).split(/[\s,]+/).filter(Boolean) : [];
+    var searchData = tokens.length > 0 ? getSearchStrings() : null;
+    var tokenInfos = null;
+    if (tokens.length > 0) {
+      tokenInfos = tokens.map(function (tok) {
+        var tokUpper = tok.toUpperCase();
+        var isUfCode = tok.length === 2 && Boolean(UF_NAMES[tokUpper]);
+        var wordRegex = isUfCode ? new RegExp('\\b' + tok + '\\b') : null;
+        return { tok: tok, isUfCode: isUfCode, wordRegex: wordRegex };
+      });
+    }
+    var eMin = parseFloat(state.expoMin), eMax = parseFloat(state.expoMax),
+        iMin = parseFloat(state.incMin), iMax = parseFloat(state.incMax);
+    var out = [];
+    for (var k = 0; k < idx.length; k++) {
+      var i = idx[k];
+      if (tokenInfos) {
+        var oStr = searchData.occs[V.occ[i]];
+        var ufObj = searchData.ufs[V.uf[i]];
+        var match = true;
+        for (var t = 0; t < tokenInfos.length; t++) {
+          var tInfo = tokenInfos[t];
+          var tok = tInfo.tok;
+          var matchUf = tInfo.isUfCode
+            ? (ufObj.abbr === tok)
+            : ufObj.words.some(function (w) { return w.indexOf(tok) === 0; });
+          var matchOcc = tInfo.isUfCode
+            ? tInfo.wordRegex.test(oStr)
+            : (oStr.indexOf(tok) >= 0);
+          if (!matchOcc && !matchUf) {
+            match = false;
+            break;
+          }
+        }
+        if (!match) continue;
+      }
+      if (!isNaN(eMin) && (isNaN(V.expo[i]) || V.expo[i] < eMin)) continue;
+      if (!isNaN(eMax) && (isNaN(V.expo[i]) || V.expo[i] > eMax)) continue;
+      if (!isNaN(iMin) && V.inc[i] < iMin) continue;
+      if (!isNaN(iMax) && V.inc[i] > iMax) continue;
+      out.push(i);
+    }
+    return out;
+  }
+  function cellValue(i, k) {
+    switch (k) {
+      case 'uf': return D.ufs[V.uf[i]];
+      case 'region': return D.regions[V.region[i]];
+      case 'occName': return D.occs[V.occ[i]].name + ' (' + D.occs[V.occ[i]].code + ')';
+      case 'expo': return isNaN(V.expo[i]) ? null : V.expo[i];
+      case 'inc': return V.inc[i];
+      case 'edu': return V.edu[i];
+      case 'age': return V.age[i];
+      case 'sex': return D.sexLabels[V.female[i]];
+      case 'race': return D.raceLabels[V.race[i]];
+      case 'form': return D.formLabels[V.informal[i]];
+      case 'wt': return V.w[i];
+    }
+    return null;
+  }
+  function applySort() {
+    if (!state.sortKey) return;
+    var k = state.sortKey, dir = state.sortDir;
+    tableIdx.sort(function (a, b) {
+      var va = cellValue(a, k), vb = cellValue(b, k);
+      var na = va === null || (typeof va === 'number' && isNaN(va));
+      var nb = vb === null || (typeof vb === 'number' && isNaN(vb));
+      if (na && nb) return 0; if (na) return 1; if (nb) return -1;
+      if (typeof va === 'number' && typeof vb === 'number') return (va - vb) * dir;
+      return String(va).localeCompare(String(vb), 'pt') * dir;
+    });
+  }
+  function renderTable() {
+    tableIdx = tableFilterIndices(filteredIdx);
+    applySort();
+    var total = tableIdx.length;
+    var pages = Math.max(1, Math.ceil(total / PAGE));
+    if (state.page >= pages) state.page = pages - 1;
+    if (state.page < 0) state.page = 0;
+    var s = state.page * PAGE, e = Math.min(total, s + PAGE);
+    var host = document.getElementById('dataTable');
+    if (!host) return;
+    var thead = '<thead><tr>' + COLS.map(function (c) {
+      var arrow = state.sortKey === c.k ? (state.sortDir > 0 ? ' ▲' : ' ▼') : '';
+      var ariaSort = state.sortKey === c.k ? (state.sortDir > 0 ? ' aria-sort="ascending"' : ' aria-sort="descending"') : ' aria-sort="none"';
+      return '<th data-k="' + c.k + '"' + ariaSort + ' tabindex="0" role="columnheader" title="Clique para ordenar por ' + c.label + '" aria-label="' + c.label + ': clique para ordenar">' + c.label + '<span aria-hidden="true">' + arrow + '</span></th>';
+    }).join('') + '</tr></thead>';
+    var rowsH = '';
+    if (total === 0) {
+      rowsH = '<tr><td colspan="' + COLS.length + '" style="text-align:center;padding:24px;color:var(--muted)">Nenhum registro encontrado para os filtros selecionados.</td></tr>';
+    } else {
+      for (var r = s; r < e; r++) {
+        var i = tableIdx[r];
+        rowsH += '<tr>';
+        for (var c = 0; c < COLS.length; c++) {
+          var v = cellValue(i, COLS[c].k);
+          var cls = COLS[c].num ? ' class="tr"' : '';
+          var txt;
+          if (v === null) txt = '<span class="dim">sem escore</span>';
+          else if (COLS[c].k === 'expo') txt = nf1.format(v);
+          else if (COLS[c].k === 'inc') txt = fmtInt(v);
+          else if (COLS[c].k === 'wt') txt = nf1.format(v);
+          else txt = String(v);
+          rowsH += '<td' + cls + '>' + txt + '</td>';
+        }
+        rowsH += '</tr>';
+      }
+    }
+    host.innerHTML = thead + '<tbody>' + rowsH + '</tbody>';
+    Array.prototype.forEach.call(host.querySelectorAll('th'), function (th) {
+      function toggle() {
+        var k = th.getAttribute('data-k');
+        if (state.sortKey === k) state.sortDir *= -1; else { state.sortKey = k; state.sortDir = 1; }
+        renderTable();
+        var newTh = host.querySelector('th[data-k="' + k + '"]');
+        if (newTh) newTh.focus();
+      }
+      th.addEventListener('click', toggle);
+      th.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          toggle();
+        }
+      });
+    });
+    var elTInfo = document.getElementById('tableInfo');
+    if (elTInfo) {
+      elTInfo.textContent =
+        (total === filteredIdx.length ? fmtInt(total) : fmtInt(total) + ' de ' + fmtInt(filteredIdx.length)) +
+        ' linhas · filtros globais' + (total !== filteredIdx.length ? ' + filtros da tabela' : '') + ' aplicados ao conjunto completo';
+    }
+    var elPInfo = document.getElementById('pageInfo');
+    if (elPInfo) {
+      elPInfo.textContent = (total === 0)
+        ? '0 registros'
+        : ('Página ' + (state.page + 1) + ' de ' + pages + ' · exibindo ' + fmtInt(s + 1) + '–' + fmtInt(e));
+    }
+    var bPrev = document.getElementById('btnPrev'); if (bPrev) bPrev.disabled = (total === 0) || (state.page <= 0);
+    var bNext = document.getElementById('btnNext'); if (bNext) bNext.disabled = (total === 0) || (state.page >= pages - 1);
+    var bCsv = document.getElementById('btnCsv'); if (bCsv) bCsv.disabled = (total === 0);
+  }
+  function exportCSV() {
+    var idx = tableIdx;
+    if (!idx || !idx.length) return;
+    var head = ['uf', 'regiao', 'cod_ocupacao', 'ocupacao', 'exposicao_ia_0_10', 'renda_brl', 'anos_estudo', 'idade', 'sexo', 'cor_raca', 'formalidade', 'peso_amostral'];
+    var lines = [head.join(',')];
+    for (var k = 0; k < idx.length; k++) {
+      var i = idx[k], o = D.occs[V.occ[i]];
+      lines.push([D.ufs[V.uf[i]], D.regions[V.region[i]], '"' + o.code + '"', '"' + o.name.replace(/"/g, '""') + '"',
+        isNaN(V.expo[i]) ? '' : V.expo[i], V.inc[i], V.edu[i], V.age[i],
+        D.sexLabels[V.female[i]], D.raceLabels[V.race[i]], D.formLabels[V.informal[i]], V.w[i]].join(','));
+    }
+    var blob = new Blob(['\uFEFF' + lines.join('\n')], { type: 'text/csv;charset=utf-8' });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'dados_filtrados_pnad_ia.csv';
+    document.body.appendChild(a); a.click();
+    setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 500);
+  }
+
+  /* ============================== PIPELINE =================================== */
+  function update() {
+    filteredIdx = filterIndices(V, state);
+    var wsum = 0; for (var k = 0; k < filteredIdx.length; k++) wsum += V.w[filteredIdx[k]];
+    var elCount = document.getElementById('activeCount');
+    if (elCount) {
+      elCount.textContent = fmtInt(filteredIdx.length) + ' indivíduos · população estimada ' + fmtPop(wsum);
+    }
+    renderKPIs(filteredIdx);
+    renderHists(filteredIdx);
+    renderScatterEdu(filteredIdx);
+    renderScatterInc(filteredIdx);
+    renderInfByExpo(filteredIdx);
+    renderBubbles(filteredIdx);
+    state.page = 0;
+    renderTable();
+  }
+  var pending = null;
+  function scheduleUpdate() {
+    if (pending) clearTimeout(pending);
+    pending = setTimeout(function () { pending = null; update(); }, 60);
+  }
+
+  function init() {
+    D = global.DASH_DATA;
+    V = decodeData(D);
+    occSearchStrings = null;
+    ufSearchData = null;
+    buildHistDefs();
+    state.regions = new Set(D.regions.map(function (_, ix) { return ix; }));
+    state.forms = new Set([0, 1]);
+    buildFilterBar(scheduleUpdate);
+    var deb = null;
+    function tableChanged() {
+      if (deb) clearTimeout(deb);
+      deb = setTimeout(function () { deb = null; state.page = 0; renderTable(); }, 180);
+    }
+    var elClear = document.getElementById('fClear');
+    if (elClear) {
+      elClear.addEventListener('click', function () {
+        if (deb) { clearTimeout(deb); deb = null; }
+        state.regions = new Set(D.regions.map(function (_, ix) { return ix; }));
+        state.forms = new Set([0, 1]);
+        state.q = '';
+        state.expoMin = '';
+        state.expoMax = '';
+        state.incMin = '';
+        state.incMax = '';
+        state.page = 0;
+        ['tq', 'tExpoMin', 'tExpoMax', 'tIncMin', 'tIncMax'].forEach(function (id) {
+          var el = document.getElementById(id);
+          if (el) el.value = '';
+        });
+        buildFilterBar(scheduleUpdate);
+        scheduleUpdate();
+      });
+    }
+    var elHistMode = document.getElementById('histMode');
+    if (elHistMode) {
+      elHistMode.addEventListener('change', function () {
+        state.histMode = this.value;
+        renderHists(filteredIdx);
+      });
+    }
+    var elTq = document.getElementById('tq');
+    if (elTq) {
+      elTq.addEventListener('input', function () { state.q = this.value; tableChanged(); });
+    }
+    var keyMap = { tExpoMin: 'expoMin', tExpoMax: 'expoMax', tIncMin: 'incMin', tIncMax: 'incMax' };
+    Object.keys(keyMap).forEach(function (id) {
+      var el = document.getElementById(id);
+      if (el) el.addEventListener('input', function () { state[keyMap[id]] = this.value; tableChanged(); });
+    });
+    var bPrev = document.getElementById('btnPrev'); if (bPrev) bPrev.addEventListener('click', function () { state.page--; renderTable(); });
+    var bNext = document.getElementById('btnNext'); if (bNext) bNext.addEventListener('click', function () { state.page++; renderTable(); });
+    var bCsv = document.getElementById('btnCsv'); if (bCsv) bCsv.addEventListener('click', exportCSV);
+    if (typeof document !== 'undefined' && document.addEventListener) {
+      document.addEventListener('shown.bs.tab', function () {
+        flushVisiblePlots(true);
+        setTimeout(function () { flushVisiblePlots(true); }, 50);
+      });
+    }
+    if (typeof window !== 'undefined' && window.addEventListener) {
+      window.addEventListener('resize', function () {
+        flushVisiblePlots(false);
+      });
+      if (typeof window.ResizeObserver === 'function') {
+        var ro = new window.ResizeObserver(function () {
+          flushVisiblePlots(false);
+        });
+        PLOT_IDS.forEach(function (id) {
+          var el = document.getElementById(id);
+          if (el) ro.observe(el);
+        });
+      }
+    }
+    update();
+  }
+
+  /* ------------------------------- exports ---------------------------------- */
+  var api = {
+    init: init, update: update,
+    decodeData: decodeData, filterIndices: filterIndices, wSummary: wSummary, wHist: wHist,
+    wPearson: wPearson, binMeans2: binMeans2, regionOccCells: regionOccCells,
+    hash01: hash01, subSample: subSample, b64ToBytes: b64ToBytes, toU32: toU32, toF32: toF32,
+    tableFilterIndices: tableFilterIndices, state: state, deacc: deacc,
+    setData: function (dashData) {
+      D = dashData;
+      V = decodeData(D);
+      occSearchStrings = null;
+      ufSearchData = null;
+    }
+  };
+  global.DashApp = api;
+  if (typeof module !== 'undefined' && module.exports) module.exports = api;
+})(typeof window !== 'undefined' ? window : globalThis);
+</script>
+<script>try{if(window.DASH_DATA){window.DashApp.init()}}catch(e){document.body.insertAdjacentHTML('afterbegin','<pre style="color:#b91c1c;padding:12px">Erro ao inicializar: '+e+'</pre>');throw e}</script>

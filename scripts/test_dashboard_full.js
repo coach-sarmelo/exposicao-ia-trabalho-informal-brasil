@@ -4,10 +4,18 @@ const vm = require('vm');
 const assert = require('assert');
 
 console.log('======================================================================');
-console.log('1. STATIC ACCESSIBILITY & WCAG 2.1 AA CHECKS');
+console.log('1. QUARTO DASHBOARD, ACCESSIBILITY & WCAG 2.1 AA CHECKS');
 console.log('======================================================================');
 
 const html = fs.readFileSync(path.join(__dirname, '../docs/index.html'), 'utf8');
+
+// 0. Quarto Dashboard structure & filter configuration
+assert(html.includes('quarto-dashboard'), 'Quarto dashboard body/layout class missing');
+assert(html.includes('id="fRegions"'), 'Region filter container #fRegions missing');
+assert(html.includes('id="fForms"'), 'Formality filter container #fForms missing');
+assert(!html.includes('id="fSexes"'), 'Sex filter #fSexes should be removed');
+assert(!html.includes('id="fRaces"'), 'Race filter #fRaces should be removed');
+console.log('  [PASS] Quarto dashboard layout & global filters (Region + Formality only) verified');
 
 // 1. Skip link
 assert(html.includes('.skip-link{position:absolute;'), 'Skip link CSS missing');
@@ -51,7 +59,7 @@ assert(html.includes('id="pageInfo" aria-live="polite"'), 'pageInfo aria-live mi
 assert(html.includes('id="tableInfo" style="margin-left:auto" aria-live="polite"'), 'tableInfo aria-live missing');
 console.log('  [PASS] Live regions configured with aria-live="polite"');
 
-// 7. Verify no sub-12px font sizes in CSS or Oster gauge
+// 7b. Verify no sub-12px font sizes in custom styles
 const smallFontRegex = /font-size:\s*(10|10\.[0-9]|11|11\.[0-9])px/g;
 const matches = [];
 let m;
@@ -93,8 +101,10 @@ console.log('===================================================================
 const scriptMatches = [...html.matchAll(/<script(?:\s+[^>]*)?>([\s\S]*?)<\/script>/g)];
 assert(scriptMatches.length >= 3, 'Expected at least 3 script tags in index.html');
 
-// Script 0: DASH_DATA
-const dashDataCode = scriptMatches[0][1];
+// Locate DASH_DATA script by content
+const dashDataScript = scriptMatches.find(s => s[1].includes('window.DASH_DATA ='));
+assert(dashDataScript, 'Could not find <script> containing window.DASH_DATA =');
+const dashDataCode = dashDataScript[1];
 const dataSandbox = { window: {} };
 vm.createContext(dataSandbox);
 vm.runInContext(dashDataCode, dataSandbox);
@@ -102,13 +112,16 @@ const rawDashData = dataSandbox.window.DASH_DATA;
 assert(rawDashData, 'Could not evaluate window.DASH_DATA');
 console.log(`  [PASS] Loaded raw DASH_DATA successfully. n = ${rawDashData.n}, occs = ${rawDashData.occs.length}, ufs = ${rawDashData.ufs.length}`);
 
-// Script 2: DashApp code
-const dashAppCode = scriptMatches[2][1];
+// Locate DashApp script by content
+const dashAppScript = scriptMatches.find(s => s[1].includes('global.DashApp ='));
+assert(dashAppScript, 'Could not find <script> containing global.DashApp =');
+const dashAppCode = dashAppScript[1];
 
 // Create sandbox
 const sandbox = {
   window: {},
   document: {
+    addEventListener: () => {},
     getElementById: (id) => ({
       addEventListener: () => {},
       querySelectorAll: () => [],
@@ -158,11 +171,9 @@ assert(V.inc instanceof Uint32Array);
 assert(V.expo instanceof Float32Array);
 assert(V.w instanceof Float32Array);
 
-// Check filterIndices
+// Check filterIndices (Region & Formality only)
 const state = DashApp.state;
 state.regions = new Set(rawDashData.regions.map((_, i) => i));
-state.sexes = new Set([0, 1]);
-state.races = new Set(Object.keys(rawDashData.raceLabels).map(Number));
 state.forms = new Set([0, 1]);
 
 const allIdx = DashApp.filterIndices(V, state);

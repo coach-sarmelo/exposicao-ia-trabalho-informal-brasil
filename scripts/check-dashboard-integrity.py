@@ -17,7 +17,11 @@ Exit codes:
 import os
 import re
 import sys
-import yaml
+
+try:
+    import yaml  # type: ignore
+except ImportError:
+    yaml = None
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -37,6 +41,17 @@ COMMON_ICONS = {
     "exclamation-triangle", "info-circle", "book", "calculator",
     "award", "calendar", "clock", "globe", "search", "share"
 }
+
+
+def _parse_frontmatter_fallback(raw_yaml: str) -> dict:
+    """Minimal zero-dependency parser for Quarto dashboard YAML frontmatter."""
+    fm: dict = {}
+    if re.search(r"^\s*format\s*:\s*dashboard\s*$", raw_yaml, re.MULTILINE):
+        fm["format"] = "dashboard"
+    elif re.search(r"^\s*format\s*:\s*\n(?:\s+.*\n)*?\s+dashboard\s*:", raw_yaml, re.MULTILINE):
+        embed = bool(re.search(r"^\s+embed-resources\s*:\s*true\b", raw_yaml, re.MULTILINE))
+        fm["format"] = {"dashboard": {"embed-resources": embed}}
+    return fm
 
 
 def check_dashboard(qmd_path):
@@ -65,14 +80,18 @@ def check_dashboard(qmd_path):
         errors.append("Missing YAML frontmatter (must start with '---')")
         fm = {}
     else:
-        try:
-            fm = yaml.safe_load(frontmatter_match.group(1))
-            if not isinstance(fm, dict):
-                errors.append("Invalid YAML frontmatter structure")
+        raw_fm = frontmatter_match.group(1)
+        if yaml is not None:
+            try:
+                fm = yaml.safe_load(raw_fm)
+                if not isinstance(fm, dict):
+                    errors.append("Invalid YAML frontmatter structure")
+                    fm = {}
+            except Exception as e:
+                errors.append(f"YAML frontmatter parsing error: {e}")
                 fm = {}
-        except Exception as e:
-            errors.append(f"YAML frontmatter parsing error: {e}")
-            fm = {}
+        else:
+            fm = _parse_frontmatter_fallback(raw_fm)
 
     fmt = fm.get("format", {})
     if isinstance(fmt, str):
@@ -232,5 +251,5 @@ def check_dashboard(qmd_path):
 
 
 if __name__ == "__main__":
-    target = sys.argv[1] if len(sys.argv) > 1 else "Quarto/index.qmd"
+    target = sys.argv[1] if len(sys.argv.slice if hasattr(sys.argv, 'slice') else sys.argv) > 1 else "Quarto/index.qmd"
     sys.exit(check_dashboard(target))

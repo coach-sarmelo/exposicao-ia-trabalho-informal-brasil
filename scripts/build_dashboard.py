@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """Reproducibility script for the Brazilian labor market AI exposure dashboard.
 
-Reads the individual microdata CSV (PNAD Contínua 2026Q1) and associated metadata,
-serializes columns into compact binary buffers, Base64-encodes them, and embeds or
-updates the `window.DASH_DATA` block inside `docs/index.html`.
+Optionally renders `Quarto/index.qmd` via Quarto CLI, reads the individual
+microdata CSV (PNAD Contínua 2026Q1) and associated metadata, serializes columns
+into compact binary buffers, Base64-encodes them, and embeds or updates the
+`window.DASH_DATA` block inside `docs/index.html`.
 
 Adheres to:
   - AEA DCAS Open Science reproducibility standards
@@ -12,6 +13,7 @@ Adheres to:
 
 Usage:
     python scripts/build_dashboard.py
+    python scripts/build_dashboard.py --render
     python scripts/build_dashboard.py --check
     python scripts/build_dashboard.py --dry-run
     python scripts/build_dashboard.py --help
@@ -26,6 +28,8 @@ import datetime
 import json
 import os
 import re
+import shutil
+import subprocess
 import sys
 from pathlib import Path
 from typing import Any, Optional
@@ -34,6 +38,7 @@ from typing import Any, Optional
 SCRIPTS_DIR = Path(__file__).resolve().parent
 REPO_ROOT = SCRIPTS_DIR.parent
 DEFAULT_HTML_PATH = REPO_ROOT / "docs" / "index.html"
+DEFAULT_QMD_PATH = REPO_ROOT / "Quarto" / "index.qmd"
 
 sys.path.insert(0, str(SCRIPTS_DIR))
 from _paths import resolve_data_dir  # noqa: E402
@@ -61,6 +66,66 @@ REQUIRED_COLUMNS: set[str] = {
     "age",
     "years_of_study",
 }
+
+
+def find_quarto_executable() -> Optional[str]:
+    """Locate the Quarto CLI executable on PATH or standard install locations."""
+    found = shutil.which("quarto")
+    if found:
+        return found
+
+    candidates = [
+        Path.home() / "AppData" / "Local" / "Programs" / "Quarto" / "bin" / "quarto.exe",
+        Path("C:/Program Files/Quarto/bin/quarto.exe"),
+        Path("/usr/local/bin/quarto"),
+        Path("/opt/quarto/bin/quarto"),
+    ]
+    for candidate in candidates:
+        if candidate.is_file():
+            return str(candidate)
+    return None
+
+
+def render_quarto_dashboard(
+    qmd_path: Path | str = DEFAULT_QMD_PATH,
+    html_out_path: Path | str = DEFAULT_HTML_PATH,
+) -> Path:
+    """Render Quarto/index.qmd to HTML and copy it to docs/index.html.
+
+    Args:
+        qmd_path: Path to source .qmd file.
+        html_out_path: Destination HTML file path (typically docs/index.html).
+
+    Returns:
+        Path to the rendered destination HTML file.
+
+    Raises:
+        FileNotFoundError: If Quarto CLI or source .qmd file is missing.
+        RuntimeError: If `quarto render` exits with a non-zero status.
+    """
+    qmd = Path(qmd_path).resolve()
+    if not qmd.is_file():
+        raise FileNotFoundError(f"Quarto source file not found: {qmd}")
+
+    quarto_bin = find_quarto_executable()
+    if not quarto_bin:
+        raise FileNotFoundError("Quarto CLI executable not found on PATH or standard directories.")
+
+    cmd = [quarto_bin, "render", str(qmd)]
+    res = subprocess.run(cmd, cwd=str(qmd.parent), capture_output=True, text=True, check=False)
+    if res.returncode != 0:
+        raise RuntimeError(
+            f"quarto render failed (exit {res.returncode}):\n{res.stdout}\n{res.stderr}"
+        )
+
+    rendered_html = qmd.with_suffix(".html")
+    if not rendered_html.is_file():
+        raise FileNotFoundError(f"Expected rendered HTML not found at: {rendered_html}")
+
+    dest = Path(html_out_path).resolve()
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copyfile(rendered_html, dest)
+    return dest
 
 
 def load_reference_data(data_dir: Path | str) -> tuple[dict[str, Any], dict[str, Any]]:
@@ -348,7 +413,7 @@ def embed_dash_data_in_html(html_path: Path | str, dash_data: dict[str, Any]) ->
     # Pattern matching any script tag containing window.DASH_DATA assignment
     pattern = re.compile(r"<script\b[^>]*>\s*window\.DASH_DATA\s*=\s*[\s\S]*?;\s*<\/script>")
     if pattern.search(content):
-        updated_content = pattern.sub(replacement, content, count=1)
+        updated_content = pattern.sub(lambda _: replacement, content, count=1)
     elif "<!-- DASH_DATA -->" in content:
         updated_content = content.replace("<!-- DASH_DATA -->", replacement, 1)
     elif '<script src="https://cdn.plot.ly' in content:
@@ -388,6 +453,17 @@ def parse_args(args: Optional[list[str]] = None) -> argparse.Namespace:
         help="Path to dashboard index.html (defaults to <repo>/docs/index.html).",
     )
     parser.add_argument(
+        "--qmd",
+        type=str,
+        default=None,
+        help="Path to Quarto index.qmd (defaults to <repo>/Quarto/index.qmd).",
+    )
+    parser.add_argument(
+        "--render",
+        action="store_true",
+        help="Render Quarto/index.qmd to docs/index.html before embedding DASH_DATA.",
+    )
+    parser.add_argument(
         "--quarter",
         type=str,
         default="2026Q1",
@@ -418,6 +494,7 @@ def main(argv: Optional[list[str]] = None) -> int:
 
     data_dir = Path(args.data_dir) if args.data_dir else Path(resolve_data_dir())
     html_path = Path(args.html) if args.html else DEFAULT_HTML_PATH
+    qmd_path = Path(args.qmd) if args.qmd else DEFAULT_QMD_PATH
 
     print("=" * 70)
     print("REPRODUCIBILITY PIPELINE: BUILD INTERACTIVE DASHBOARD DATA")
@@ -425,6 +502,11 @@ def main(argv: Optional[list[str]] = None) -> int:
     print(f"  Data Directory : {data_dir}")
     print(f"  Target HTML    : {html_path}")
     print(f"  Reference Period: {args.quarter}")
+
+    if args.render:
+        print(f"\nRendering Quarto dashboard from {qmd_path}...")
+        render_quarto_dashboard(qmd_path, html_path)
+        print(f"  [OK] Quarto render complete -> {html_path}")
 
     start_time = datetime.datetime.now()
     dash_data = build_dash_data(data_dir, quarter=args.quarter)
